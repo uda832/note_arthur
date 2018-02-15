@@ -1,104 +1,35 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
 
-        <title>Note Arthur</title>
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
-
-
-        <link rel="stylesheet" href="css/ArthurStyles.css?v=1.0">
-
-
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
-
-
-
-        <script src="js/arthur.js"></script>
-        <!--lazy css - move me to the correct css file -->
-        <style>
-            .wrapper {
-                    display: flex;
-            }
-
-            #sidebar {
-                    min-width: 250px;
-                    max-width: 250px;
-                    height: 100vh;
-            }
-        </style>
-    </head>
-
-
-
-
-    <body>
-
-<!--************************************-->
-<div class="wrapper">
-
-        <nav id="sidebar">
-            <!-- Sidebar Header -->
-            <div class="sidebar-header">
-                <h3>Collapsible Sidebar</div>
-            </div>
-
-            <!-- Sidebar Links -->
-            <ul class="list-unstyled components">
-                <li class="active"><a href="#">Home</a></li>
-                <li><a href="#">About</a></li>
-                <li><!-- Link with dropdown items -->
-                    <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">Pages</a>
-                    <ul class="collapse list-unstyled" id="homeSubmenu">
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                        <li><a href="#">Page</a></li>
-                    </ul>
-                <li><a href="#">Portfolio</a></li>
-                <li><a href="#">Contact</a></li>
-            </ul>
-        </nav>
-
-        <div id="main-content">
-            <button type="button" id="sidebarCollapse" class="btn btn-info navbar-btn">
-                <i class="glyphicon glyphicon-align-left"></i>
-                Toggle Sidebar
-            </button>
-        <div>
-</div>
-
-
-
-<!--************************************-->
-
-    <script>
-        $(document).ready(function () {
-            $("#sidebar").mCustomScrollbar({
-                 theme: "minimal"
-            });
-
-            $('#sidebarCollapse').on('click', function () {
-                // open or close navbar
-                $('#sidebar').toggleClass('active');
-                // close dropdowns
-                $('.collapse.in').toggleClass('in');
-                // and also adjust aria-expanded attributes we use for the open/closed arrows
-                // in our CSS
-                $('a[aria-expanded=true]').attr('aria-expanded', 'false');
-            });
-        });
-
-    </script>
-
-    </body>
-</html>
+    <!-- This is the navBar Code: https://www.w3schools.com/howto/howto_js_sidenav.asp -->
+    <link rel="stylesheet" href="css/navStyle.css">
+    
+</head>
+<body>
+    <!-- Top bar Navigation -->
+    <div class="topnav" id="myTopnav">
+        <a href="#home" class="active"><span onclick="openNav()">open</span></a>
+        <!-- <href="javascript:void(0);" class="title">NoteArthur</a> -->
+        <h1>NoteArthur</h1>
+        <!-- <a href="#contact">Contact</a>
+        <a href="#about">About</a> -->
+        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+      </div>
+      
+    <!-- Side bar Navigation -->
+    <script src="js/navBar.js"></script>
+    <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="#">Contact</a>
+      </div>
+      <!-- Use any element to open the sidenav -->
+      
+      
+      <div id="main">
+     
+        ...
+      </div>
+    
+</body>
