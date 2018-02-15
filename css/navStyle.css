@@ -1,19 +1,23 @@
+body{
+    padding:0px;
+    margin:0px;
+}
+
 /*Top Bar Navigation*/
 .topnav {
-    background-color: #333;
+    background-color: #555;
     overflow: hidden;
 }
 
 .topnav .title
 {
-    font-size: 25px;
-    padding-left: 25%;
+    color: #f2f2f2;
+    display: block;
+    float: center;
+    font-size: 23px;
+    padding-top: 10px;
+    padding-right: 70px; /*Takes care of title offset from green box*/
     text-align: center;
-}
-
-.h2
-{
-    text-align:center;
 }
 
 /* Style the links inside the navigation bar */
@@ -53,9 +57,9 @@
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
     z-index: 1; /* Stay on top */
-    top: 8; /* Stay at the top */
+    top: 0; /* Stay at the top */
     left: 0;
-    background-color: #333; /* Black*/
+    background-color: #555; 
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 60px; /* Place content 60px from the top */
     transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
@@ -66,7 +70,7 @@
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
-    color: #818181;
+    color: #b4afaf;
     display: block;
     transition: 0.3s;
 }
