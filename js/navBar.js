@@ -1,16 +1,7 @@
 /* Set the width of the side navigation to 250px */
 function openNav() 
 {
-        if(window.innerHeight <= 450)
-        {
-            
-            document.getElementById("mySidenav").style.width = "100px";
-        }
-        else
-        {
-            document.getElementById("mySidenav").style.width = "200px"; 
-        }
- 
+    document.getElementById("mySidenav").style.minWidth = "15vw";
  
     
 }
@@ -18,4 +9,5 @@ function openNav()
 /* Set the width of the side navigation to 0 */
 function closeNav() {
     document.getElementById("mySidenav").style.width = "0";
+    document.getElementById("mySidenav").style.minWidth = "0";
 }
