@@ -22,6 +22,10 @@
     <!--<script type="text/javascript" src="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"> </script>-->
     <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
+    <script type="text/javascript" src="lib/jquery_jeditable/dist/jquery.jeditable.min.js"></script>
+
+
+    <script type="text/javascript" src="js/arthur.js"> </script>
 
     <style>
         #main-content {
@@ -29,9 +33,15 @@
         }
 
         .section {
-            min-height: 200px;
-            min-height: 200px;
+            max-width : 90vw;
+            margin-top: 20px;
+            margin-bottom: 30px;
         }
+        .note-text{
+            width: 90%;
+        }
+        /* .note-text-editing {
+        } */
     </style>
 
 </head>
@@ -91,79 +101,11 @@
 
     <script>
 
-/*
-
-[{  
-    "id":0,
-    "title":"Python",
-    "notes":[  
-        {"text": "do Python hw", "tags": ["hw", "school", "spring"]},
-        {"text": "install django", "tags": ["project", "school", "spring"]}
-    ]
-},
-{  
-    "id":1,
-    "title":"Software Eng",
-    "notes":[  
-        {"text": "complete presentation review", "tags": ["hw", "school", "spring"]},
-        {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]}
-    ]
-}]
-
-
-*/
-
-
-
-
-
-
-        var dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
-        var DataStore = [];         //global object used to pass data back/forth between server
-        DataStore = JSON.parse(dataStoreJSON);
-        
-
-    //Reads from the DataStore to update the DOM
-    function updateDOMFromDataStore() {
-        var $mainContent = $("#main-content");
-        
-        for (var s = 0; s < DataStore.length; ++s) {
-            //Render each section 
-            var curSection = `<li id="section-` + s +`" class="section">
-                <div>
-                    <div>` + DataStore[s].title + `</div>
-                    <ul class="notes-list">`;
-			for (var i = 0; i < DataStore[s].notes.length; ++i) {
-				curSection += ` <li>`+ DataStore[s].notes[i] +`</li>`;
-            }
-            curSection += `           
-                    </ul>
-                </div>
-            </li>`;
-        }
-		$mainContent.html(curSection);
-    }
-
-    function initPage() {
-        //Populate the DataStore
-        var dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
-        var DataStore = [];         //global object used to pass data back/forth between server
-        try {
-            DataStore = JSON.parse(dataStoreJSON);
-        }
-        catch(e){
-            console.error("initPage: failed to load DataStore");
-        }
-
-        updateDOMFromDataStore();
-    }
-
-
-
 
 
     //Load logic
-    $(window).on("load", function({
+    $(window).on("load", function(){
+
         initPage();
 
     });
