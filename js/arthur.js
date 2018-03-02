@@ -46,7 +46,7 @@ function updateDOMFromDataStore() {
                     <ul class="list-group list-group-flush notes-list">`;
 
         for (var i = 0; i < DataStore[s].notes.length; ++i) {
-            curSection += ` <li class='list-group-item'><span class='note-text'>`+ DataStore[s].notes[i].text +`</span></li>`;
+            curSection += ` <li class='list-group-item'><a class='note-text'>`+ DataStore[s].notes[i].text +`</a></li>`;
         }
         curSection += `           
                     </ul>
@@ -72,6 +72,24 @@ function initPage() {
     //Render the HTML
     //----------------------------------------
     updateDOMFromDataStore();
+
+    createListeners();
+}
+
+function createListeners() {
+
+    $('.note-text').editable(function(value, settings){
+        console.log("DEBUG: editing")
+        console.log(this);
+        console.log(value);
+        console.log(settings);
+        return(value);
+    }, {
+        event     : 'click',
+        cssclass  : 'note-text-editing',
+        type      : 'text',
+        tooltip   : 'Click to edit...'
+    });
 }
 
 
