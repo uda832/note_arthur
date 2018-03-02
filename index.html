@@ -12,6 +12,7 @@
     <!--<link href="../../acc/libraries/pretty-checkbox/dist/pretty-checkbox.min.css" rel="stylesheet">-->
     <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet">
     <!--<link href="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">-->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/css/jquery-editable.css" rel="stylesheet"/>
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
@@ -22,6 +23,9 @@
     <!--<script type="text/javascript" src="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"> </script>-->
     <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/x-editable/1.5.0/jquery-editable/js/jquery-editable-poshytip.min.js"></script>
+
+    <script type="text/javascript" src="js/arthur.js"> </script>
 
     <style>
         #main-content {
@@ -29,8 +33,12 @@
         }
 
         .section {
-            min-height: 200px;
-            min-height: 200px;
+            max-width : 90vw;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+        .note-text{
+            max-width: 90%;
         }
     </style>
 
@@ -91,79 +99,11 @@
 
     <script>
 
-/*
-
-[{  
-    "id":0,
-    "title":"Python",
-    "notes":[  
-        {"text": "do Python hw", "tags": ["hw", "school", "spring"]},
-        {"text": "install django", "tags": ["project", "school", "spring"]}
-    ]
-},
-{  
-    "id":1,
-    "title":"Software Eng",
-    "notes":[  
-        {"text": "complete presentation review", "tags": ["hw", "school", "spring"]},
-        {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]}
-    ]
-}]
-
-
-*/
-
-
-
-
-
-
-        var dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
-        var DataStore = [];         //global object used to pass data back/forth between server
-        DataStore = JSON.parse(dataStoreJSON);
-        
-
-    //Reads from the DataStore to update the DOM
-    function updateDOMFromDataStore() {
-        var $mainContent = $("#main-content");
-        
-        for (var s = 0; s < DataStore.length; ++s) {
-            //Render each section 
-            var curSection = `<li id="section-` + s +`" class="section">
-                <div>
-                    <div>` + DataStore[s].title + `</div>
-                    <ul class="notes-list">`;
-			for (var i = 0; i < DataStore[s].notes.length; ++i) {
-				curSection += ` <li>`+ DataStore[s].notes[i] +`</li>`;
-            }
-            curSection += `           
-                    </ul>
-                </div>
-            </li>`;
-        }
-		$mainContent.html(curSection);
-    }
-
-    function initPage() {
-        //Populate the DataStore
-        var dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
-        var DataStore = [];         //global object used to pass data back/forth between server
-        try {
-            DataStore = JSON.parse(dataStoreJSON);
-        }
-        catch(e){
-            console.error("initPage: failed to load DataStore");
-        }
-
-        updateDOMFromDataStore();
-    }
-
-
-
 
 
     //Load logic
-    $(window).on("load", function({
+    $(window).on("load", function(){
+
         initPage();
 
     });
