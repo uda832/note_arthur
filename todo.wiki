@@ -1,0 +1,55 @@
+[[#Dongling|Dongling]]
+[[#Mike|Mike]]
+[[#Uda|Uda]]
+[[#Zhen|Zhen]]
+
+[[#Feeling Ambitious?!|Feeling Ambitious?!]]
+    * Action items to consider if we have decent amount of time left or in the future
+
+
+== Dongling == 
+* [ ] Add input area
+
+== Mike == 
+* [ ] Use bootstrap for the left-side menu
+
+== Uda == 
+* [X] Create DataStore (js object to hold the data)
+* [ ] Create dom renderer (updateDOMFromDataStore)
+    * [ ] Add checkbox for "completed"
+    * [ ] Add edit/delete buttons to each list item
+    * [ ] Use x-editable jquery library
+* [ ] Add hover effect to each list item
+* [ ] Left-side menu sections
+    * [ ] Tags
+
+== Zhen == 
+* [ ] Search feature -- local (only search the DataStore)
+    * [ ] Create the UI element on the top bar
+    * [ ] Write the functionality to iterate over the DataStore to check if there exists a note that contains the searchKeyword
+        * [ ] Check sections with title ==  searchKeyword
+        * [ ] Check notes with text == searchKeyword
+        * [ ] Check notes with tags == searchKeyword
+
+    * [ ] Feeling Ambitious?! -- search through every note in the Database
+        * [ ] Create the functionality to make an ajax callback 
+        * [ ] Query the database to check if any record contains the text
+            * SQL: SELECT * FROM dataNotes WHERE fText LIKE '%keyword%';
+            * SQL: SELECT * FROM dataNotes WHERE fSection LIKE '%keyword%';
+            * SQL: SELECT * FROM dataNotes WHERE fTags LIKE '%keyword%';
+        * [ ] Potential issue: performance -- might need to restrict the search to only specific fields
+
+
+
+
+== Feeling Ambitious?! == 
+* Listen to the user entry's "done" action
+    * If the user input contains the keyword K:
+        * case "#XXX" -- create and attach a tag for this note
+        * case "due on XX/XX/XXXX" -- create and attach a due date at XX/XX/XXXX
+            * Can show a button to show a calendar selector (see Google Keep for reference)
+            * Need to add validation 
+            * Nede to support all kinds of date formats
+                * 12/31/2018
+                * December 31, 2018
+                * 12/31
