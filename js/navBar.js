@@ -23,12 +23,26 @@ function closeNav() {
 /*Select note to display*/
 function noteSelection(id) {
 
-    var myId = "section-" + id.substring(("section-").length);
+    var temp = id.split("-");
+    var myId = "#section-" + temp[1];
 
-    $(".section").each(function() {
-        if(this.id != myId)
-            this.style.display="none";
-        else 
-            this.style.display="block";
-    });
+    /*function grabNote(){
+        var curSection = 
+            `<li id="section-` + temp[1] +`" class="section">
+                <div class='card'>
+                    <div class='card-header'>` + DataStore[temp[1]].title + `</div>
+                    <ul class="list-group list-group-flush notes-list">`;
+
+        for (var i = 0; i < DataStore[temp[1]].notes.length; ++i) {
+            curSection += ` <li class='list-group-item'><a class='note-text'>`+ DataStore[temp[1]].notes[i].text +`</a></li>`;
+        }
+        curSection += `           
+                    </ul>
+                </div>
+            </li>`;
+    }      */
+
+    $(".section").css("display", "none");
+
+    $(myId).css("display", "block");
 }
