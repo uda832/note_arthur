@@ -22,6 +22,7 @@
 * [ ] Add hover effect to each list item
 * [ ] Left-side menu sections
     * [ ] Tags
+* [ ] For each section include an "add" button
 
 == Zhen == 
 * [ ] Search feature -- local (only search the DataStore)
