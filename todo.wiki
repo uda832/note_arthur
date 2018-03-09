@@ -15,11 +15,19 @@
 
 == Uda == 
 * [X] Create DataStore (js object to hold the data)
-* [ ] Create dom renderer (updateDOMFromDataStore)
+* [.] Create dom renderer (updateDOMFromDataStore)
+    * [X] Use jeditable jquery library
     * [ ] Add checkbox for "completed"
     * [ ] Add edit/delete buttons to each list item
-    * [ ] Use x-editable jquery library
+* [ ] Make the list items draggable/sortable
 * [ ] Add hover effect to each list item
+    * [ ] Onhover, show the action buttons
+        * [ ] Add child note
+            * [ ] Changes needed
+                * [ ] Database schema needs to change -- column for depth level
+        * [ ] Complete
+        * [ ] Delete
+        * [ ] More
 * [ ] Left-side menu sections
     * [ ] Tags
 * [ ] For each section include an "add" button
@@ -54,3 +62,6 @@
                 * 12/31/2018
                 * December 31, 2018
                 * 12/31
+ 
+* Add progress percentage for notes
+* 

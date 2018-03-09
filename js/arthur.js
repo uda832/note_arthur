@@ -35,9 +35,15 @@ var DataStore = [];         //global object used to pass data back/forth between
 
 //Reads from the DataStore to update the DOM
 function updateDOMFromDataStore() {
+    //Note:
+    //  Right now, this function completely redraws the sections
+    //  IMPLEMENT_ME_UDA: Modify this function to only update/redraw sections that have been modified
     var $mainContent = $("#main-content");
-    var content = ""; 
     for (var s = 0; s < DataStore.length; ++s) {
+        //Skip the non-modified sections
+        if (DataStore[s].modified != false)
+            continue;
+
         //Render each section 
         var curSection = 
             `<li id="section-` + s +`" class="section">
@@ -53,7 +59,17 @@ function updateDOMFromDataStore() {
                     </ul>
                 </div>
             </li>`;
-        content += curSection;
+        
+
+        //If the element exists, replace the DOM
+        if ($mainContent.find(`#section-` + s).length == 1) {
+            $("#section-" + s).html(curSection);
+        }
+        else {//else, append it
+            //IMPLEMENT_ME
+        }
+        DataStore[s].modified = false;
+        //IMPLEMENT_ME: call the listeners for each section individually
     }
     $mainContent.html(content);
 }
@@ -73,7 +89,6 @@ function initPage() {
     //Render the HTML
     //----------------------------------------
     updateDOMFromDataStore();
-
     createListeners();
 }
 
@@ -93,9 +108,13 @@ function createListeners() {
         var sectionId = parseInt(idTail.split("-")[0]);
 
         //Special case: "Add new" button
-        if( $(this).hasClass("note-text-addl")) {
+        if( $(this).hasClass("note-text-addl-container")) {
             //Create a new item in the DataStore[sectionId]
-            //IMPLEMENT_ME
+            DataStore[sectionId].notes.push({text: value, tags: []})
+
+
+            //Modify the DOM for this element (change the class/id etc.)
+            //Create a new note-text-addl-container
             console.log("Missing Feature: note-text-addl clicked");
         }
         else {
