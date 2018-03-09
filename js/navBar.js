@@ -23,6 +23,8 @@ function closeNav() {
 /*Select note to display*/
 function noteSelection(id) {
 
+    //updateDOMFromDataStore();
+
     var temp = id.split("-");
     var myId = "#section-" + temp[1];
 
