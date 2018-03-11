@@ -9,7 +9,7 @@ function greet() {
     "title":"Python",
     "notes":[  
         {"text": "do Python hw", "tags": ["hw", "school", "spring"]},
-        {"text": "install django", "tags": ["project", "school", "spring"]}
+        {"text": "fuck django", "tags": ["project", "school", "spring"]}
     ]
 },
 {  
@@ -60,7 +60,9 @@ function updateDOMFromDataStore() {
 function initPage() {
     //Populate the DataStore
     //----------------------------------
-    dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
+    dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "fuck django", "tags": ["project", "school", "spring"]} ] }, 
+	{  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] },
+		{"id":2,"title":"Operating System","notes":[{"text":"do project 2","tags":["hw","school","spring"]},{"text":"do project 3","tags":["aaaa","bbbb","cccc"]}]}]';
     DataStore = [];         //global object used to pass data back/forth between server
     try {
         DataStore = JSON.parse(dataStoreJSON);
