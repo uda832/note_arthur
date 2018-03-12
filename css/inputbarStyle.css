@@ -5,6 +5,25 @@
     background-color: #DDDDDD;
 }
 
+.main-content-container .inputBar .first {
+        height: 12%;
+        width: 50%;
+        margin: auto;
+    }
+.main-content-container .inputBar .first .form-group {
+        width: 50%;
+        height: 100%;
+        display: inline-block;
+        margin: auto
+    }
+    .main-content-container .inputBar .first .DoneButton {
+        display: inline-block;
+        width: 30%;
+        height: 100%;
+        position: absolute;
+        top: 3%;
+    }
+
 /*
 .topnav .title
 {
