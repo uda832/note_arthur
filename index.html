@@ -75,11 +75,11 @@
         <div id="main-content-container" class="inputBar">
             <div class="first">
                 <div class="form-group">
-                    <input type="Title" class="form-control" id="exampleInputTitle" placeholder="Title">
-                    <input type="TakeANote" class="form-control" id="exampleInputTakeANote" placeholder="Take a Note...">
+                    <input type="text" name="exampleInputTitle" class="form-control" id="exampleInputTitle" placeholder="Title">
+                    <input type="text1" name="exampleInputTakeANote" class="form-control" id="exampleInputTakeANote" placeholder="Take a Note...">
                 </div>
-                <div class="DoneButton" id="DoneButton" role="button" tabindex="0">
-                    <button class="button button1">Add</button>
+                <div class="DoneButton" >
+                    <button class="button button4">+</button>
                 </div>
             </div>
         </div>
@@ -126,6 +126,13 @@
     });
 
     </script>
-    
-    <!--hello Rohan and Bo-->
+        <script type="text/javascript" src="libs/jquery/2.1.4/jquery.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("button").click(function () {
+                    alert($(":text").val());
+                });
+            });
+        </script>
+        <!--hello Rohan and Bo-->
 </body>
