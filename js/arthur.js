@@ -46,8 +46,9 @@ function updateDOMFromDataStore() {
                     <ul class="list-group list-group-flush notes-list">`;
 
         for (var i = 0; i < DataStore[s].notes.length; ++i) {
-            curSection += ` <li class='list-group-item'><a class='note-text'>`+ DataStore[s].notes[i].text +`</a></li>`;
+            curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ DataStore[s].notes[i].text +`</a></li>`;
         }
+        curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-container note-text-addl-container'><a class='note-text note-text-addl'>+</a></li>`;
         curSection += `           
                     </ul>
                 </div>
@@ -78,18 +79,41 @@ function initPage() {
 
 function createListeners() {
 
-    $('.note-text').editable(function(value, settings){
-        console.log("DEBUG: editing")
-        console.log(this);
-        console.log(value);
-        console.log(settings);
+    //Click to Edit listener
+    $('.note-text-container').editable(function(value, settings){
+        // console.log("DEBUG: editing")
+        // console.log(this);
+        // console.log(value);
+        // console.log(settings);
+
+        //Modify the DataStore
+        //-------------------------------------------------------
+        var noteId = this.id;
+        var idTail = noteId.substring("note-".length);
+        var sectionId = parseInt(idTail.split("-")[0]);
+
+        //Special case: "Add new" button
+        if( $(this).hasClass("note-text-addl")) {
+            //Create a new item in the DataStore[sectionId]
+            //IMPLEMENT_ME
+            console.log("Missing Feature: note-text-addl clicked");
+        }
+        else {
+            console.log("Updating DataStore");
+            //Update the value in the DataStore
+            var noteId = parseInt(idTail.split("-")[1]);
+            DataStore[sectionId].notes[noteId].text = value;
+
+        }
         return(value);
     }, {
-        event     : 'click',
-        cssclass  : 'note-text-editing',
-        type      : 'text',
-        tooltip   : 'Click to edit...'
+        event       : 'click',
+        cssclass    : 'note-text-editing',
+        type        : 'text',
+        placeholder : "Edit...",
+        tooltip     : 'Click to Edit...',
+        width       : "100%",
+        
     });
+   
 }
-
-
