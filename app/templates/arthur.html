@@ -1,7 +1,8 @@
 <head>
 
     <!-- This is the navBar Code: https://www.w3schools.com/howto/howto_js_sidenav.asp -->
-    <link rel="stylesheet" href="css/navStyle.css">
+    <link rel="stylesheet" href="/static/css/navStyle.css">
+
     
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -22,10 +23,11 @@
     <!--<script type="text/javascript" src="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"> </script>-->
     <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
-    <script type="text/javascript" src="lib/jquery_jeditable/dist/jquery.jeditable.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
 
 
-    <script type="text/javascript" src="js/arthur.js"> </script>
+
+    <script type="text/javascript" src="static/js/arthur.js"></script>
 
     <style>
         #main-content {
@@ -62,7 +64,7 @@
 
 
     <!-- Side bar Navigation -->
-    <script src="js/navBar.js"></script>
+    <script src="/static/js/navBar.js"></script>
     <div id="mySidenav" class="sidenav">
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
         <a href="#">Something1</a>

@@ -4,7 +4,8 @@ import sqlite3 as sql
 from flask import Flask, request, Response, json, jsonify, render_template
 import uuid
 
-app = Flask(__name__, template_folder='static')
+app = Flask(__name__, template_folder='static', static_folder='static')
+
 app.config["DEBUG"] = True
 
 #Route for /
