@@ -28,3 +28,16 @@ def login():
             form.username.data, form.remember_me.data))
         return redirect(url_for('index'))
     return render_template('login.html',  title='Sign In', form=form)
+
+
+@app.route('/arthur', methods=['GET', 'POST'])
+def main_arthur():
+    return render_template('arthur.html')
+
+@app.route('/save', methods=['POST'])
+def save_request():
+    # Grab the json
+    # req
+    '[{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]}]'
+    # Build DataStore object
+    request.form["json"]
