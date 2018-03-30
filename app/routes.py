@@ -1,4 +1,7 @@
-from flask import render_template, flash, redirect, url_for
+from flask import Flask, request, Response, json, jsonify, render_template, flash, redirect, url_for
+from urllib.parse import unquote
+import json
+
 from app import app
 from app.forms import LoginForm
 
@@ -37,7 +40,16 @@ def main_arthur():
 @app.route('/save', methods=['POST'])
 def save_request():
     # Grab the json
-    # req
-    '[{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]}]'
+    dsJSON = request.form["json"]
+    dsJSON = unquote(dsJSON)
+    ds = json.loads(dsJSON)
+    
+    print("***DEBUG***: YAAAY")
+    print(ds[0].id)
+
+
+    return "success"
+    
     # Build DataStore object
-    request.form["json"]
+
+
