@@ -10,6 +10,7 @@ The actual database schema is found in the app folder, in models.py. This file h
 
 
 #Instructions for running the website on a local host
+
 The commands you have to use in command prompt (assuming Windows) are:
       "set FLASK_APP = app.py"
 This command makes all your future commands with the word flask recognize you want to interact with your app.py
