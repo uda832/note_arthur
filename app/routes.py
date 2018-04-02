@@ -62,49 +62,56 @@ def save_request():
     return "success"
 
 # def update_db_from_datastore_demo(ds):
-    # '''
-        # Example function to demonstrate how we will access the DataStore object
-    # '''
-    # user_name = "Uda Yeruultsengel" # Note: this should probably be set somewhere globally for each request
+#     '''
+#         Example function to demonstrate how we will access the DataStore object
+#     '''
+#     user_name = "Uda Yeruultsengel" # Note: this should probably be set somewhere globally for each request
     
-    # for section in ds:
-        # # Check if the current section already exists
-        # my_sql = '''
-            # SELECT TOP 1 FROM dataSections A INNER JOIN dataUsers as B ON A.uID = B.uID
-            # WHERE A.uID = ''' + user_name + ''' AND A.Title = ''' + section['title'] + '''
-            # '''
-        # # Note: this is a pseudo function 
-        # section_exists = check_if_sql_returns_a_record(my_sql)
+#     for section in ds:
+#         # Check if the current section already exists
+#         my_sql = '''
+#             SELECT TOP 1 FROM dataSections A INNER JOIN dataUsers as B ON A.uID = B.uID
+#             WHERE A.uID = ''' + user_name + ''' AND A.Title = ''' + section['title'] + '''
+#             '''
+#         # Note: this is a pseudo function 
+#         section_exists = check_if_sql_returns_a_record(my_sql)
 
-        # # Section already exists. So iterate over notes and perform UPDATE statements
-        # if section_exists:
-            # for note in section['notes']:
-                # # Perform the same check for notes 
+#         # Section already exists. So iterate over notes and perform UPDATE statements
+#         if section_exists:
+#             for note in section['notes']:
+#                 # Perform the same check for notes 
 
-                # # If it already exists, perform UPDATE statement
+#                 # If it already exists, perform UPDATE statement
 
-                # # Else, if it it doesn't exist, create a new record
+#                 # Else, if it it doesn't exist, create a new record
 
-        # # Section does not exist. Run a INSERT INTO statement
-        # else:
-            # my_sql_1 = '''
-                # DECLARE @NEXTKEY as int = ''' + grab_next_key() + '''
-                # DECLARE @title as nvarchar(max) = ''' + section['title'] +'''
-                # DECLARE @uid as int = ''' + grab_user_pk() +'''
-                # DECLARE @tags as nvarchar(max) = ''' + ','.join(section['tags']) +'''
+#                 #
 
-                # INSERT INTO dataSections
-                # (sID, Title, uID, Tags, GETDATE(), GETDATE())
-                # VALUES
-                # (@NEXTKEY, @title, @uid, @tags)
-                # '''
-            # run_the_real_execute_function(my_sql_1)
+#                 for tag in note['tags']:
 
-            # # Do the same check and insertion or update for the dataNoteTags
 
-            # # Then insert the notes into dataNotes
-            # my_sql_2 = ''' the real sql to insert each notes'''
-            # run_the_real_execute_function(my_sql_1)
+#                     sql = "SELECT Top 1 from datanotetags where ntID = 
+
+#         # Section does not exist. Run a INSERT INTO statement
+#         else:
+#             my_sql_1 = '''
+#                 DECLARE @NEXTKEY as int = ''' + grab_next_key() + '''
+#                 DECLARE @title as nvarchar(max) = ''' + section['title'] +'''
+#                 DECLARE @uid as int = ''' + grab_user_pk() +'''
+#                 DECLARE @tags as nvarchar(max) = ''' + ','.join(section['tags']) +'''
+
+#                 INSERT INTO dataSections
+#                 (sID, Title, uID, Tags, GETDATE(), GETDATE())
+#                 VALUES
+#                 (@NEXTKEY, @title, @uid, @tags)
+#                 '''
+#             run_the_real_execute_function(my_sql_1)
+
+#             # Do the same check and insertion or update for the dataNoteTags
+
+#             # Then insert the notes into dataNotes
+#             my_sql_2 = ''' the real sql to insert each notes'''
+#             run_the_real_execute_function(my_sql_1)
 
             
 
