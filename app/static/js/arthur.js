@@ -118,7 +118,7 @@ function createListeners() {
    
 }
 
-//This function sends an ajax request to server to save the data
+//This function sends an ajax request to the server to save the data
 function saveDataStore() {
     console.log("DEBUG: invoking saveDataStore");
 
