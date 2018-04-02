@@ -15,8 +15,6 @@ body{
     display: block;
     float: center;
     font-size: 23px;
-    padding-top: 10px;
-    padding-right: 70px; /*Takes care of title offset from green box*/
     text-align: center;
 }
 
@@ -100,3 +98,7 @@ body{
     .sidenav {padding-top: 30px;}
     .sidenav a {font-size: 14px;}
 }
+
+/* .card {
+    max-width: 500px;
+} */
