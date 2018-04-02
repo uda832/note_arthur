@@ -106,17 +106,3 @@ def update_db_from_datastore_demo(ds):
             my_sql_2 = ''' the real sql to insert each notes'''
             run_the_real_execute_function(my_sql_1)
 """
-            
-
-            
-
-        
-
-
-
-
-
-
-    
-
-
