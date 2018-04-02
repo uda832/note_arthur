@@ -23,32 +23,32 @@ def dict_factory(cursor, row):
     return d
 
 
-#Post request method for saving
-@app.route('/save', methods=['POST'])
-def save():
-    print("****************************************************************************************************DEBUG: save called")
-    # dataStoreJSON = request.form['dataStore'];
-    # # parse the dataStore object
-    # # saves
-    # con = sql.connect("temp.db")
-    # con.row_factory = dict_factory
-    # cur = con.cursor()
+# #Post request method for saving
+# @app.route('/save', methods=['POST'])
+# def save():
+    # print("****************************************************************************************************DEBUG: save called")
+    # # dataStoreJSON = request.form['dataStore'];
+    # # # parse the dataStore object
+    # # # saves
+    # # con = sql.connect("temp.db")
+    # # con.row_factory = dict_factory
+    # # cur = con.cursor()
 
-    # cur.execute("SELECT * FROM users WHERE sectionId=?", (,))
-    # temp = cur.fetchone()
-    # cur.close()
-    # print(temp)
-    # if email == temp["email"] and password == temp["password"]:
-        # return jsonify({
-            # 'auth': True,
-            # 'user': {
-                # "email": email,
-                # "firstName": temp["firstName"],
-                # "lastName": temp["lastName"]
-                # }
-        # })
-    # else:
-        # return jsonify({
-            # 'auth': False
-        # })
+    # # cur.execute("SELECT * FROM users WHERE sectionId=?", (,))
+    # # temp = cur.fetchone()
+    # # cur.close()
+    # # print(temp)
+    # # if email == temp["email"] and password == temp["password"]:
+        # # return jsonify({
+            # # 'auth': True,
+            # # 'user': {
+                # # "email": email,
+                # # "firstName": temp["firstName"],
+                # # "lastName": temp["lastName"]
+                # # }
+        # # })
+    # # else:
+        # # return jsonify({
+            # # 'auth': False
+        # # })
 

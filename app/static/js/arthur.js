@@ -117,3 +117,32 @@ function createListeners() {
     });
    
 }
+
+//This function sends an ajax request to the server to save the data
+function saveDataStore() {
+    console.log("DEBUG: invoking saveDataStore");
+
+	var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/esi/'));
+    var tail = '/save';
+    var url = head + tail;
+    var dsJSON = encodeURIComponent(JSON.stringify(DataStore));
+    var res = "-1";
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: {
+            json: dsJSON,
+        },
+        success: function(r) {
+            if(r  == "success") {
+                console.log("save successful");
+            }
+            else {
+                console.log("save failed");
+            }
+        }
+    });
+}
+

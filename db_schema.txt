@@ -1,0 +1,31 @@
+dataSections
+    sID (PK)
+    Title (nvarchar(60)) -- 'Python' or 'Software Eng'
+    uID (FK) -- Foreign key to dataUsers table to indicate ownership of this section
+    Tags (nvarchar(max)) -- Comma separated list of integers which are FK's to the dataNoteTags table
+    Created
+    Updated
+
+dataUsers
+    uID (PK)
+    UserName (nvarchar(60))
+    UserEmail (nvarchar(60))
+    Password (nvarchar(60)) -- hash
+    Created
+    Updated
+
+dataNotes
+    nID (PK)
+    uID (FK) -- FK to dataUsers to indicate ownership of this note
+    sID (FK) -- FK to dataSections to indicate which section this belongs to
+    NoteText (nvarchar(max)) -- the actual text the user types in
+    Tags (nvarchar(max)) -- Comma separated list of integers which are FK's to the dataNoteTags table
+    Created
+    Updated
+
+dataNoteTags
+    ntID (PK)
+    TagText (nvarchar(max)) -- the actual tag text the user types in
+    Created
+    Updated
+     
