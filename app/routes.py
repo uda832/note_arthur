@@ -60,7 +60,7 @@ def save_request():
     update_db_from_datastore_demo(ds)
 
     return "success"
-
+"""
 def update_db_from_datastore_demo(ds):
     '''
         Example function to demonstrate how we will access the DataStore object
@@ -105,7 +105,7 @@ def update_db_from_datastore_demo(ds):
             # Then insert the notes into dataNotes
             my_sql_2 = ''' the real sql to insert each notes'''
             run_the_real_execute_function(my_sql_1)
-
+"""
             
 
             

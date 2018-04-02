@@ -1,0 +1,115 @@
+/*inputBar*/
+div {
+    margin:0px;border:0;padding:0;
+}
+.inputBar {
+    width: auto;
+    height: auto;
+    background-color: #DDDDDD;
+
+}
+
+.main-content-container .inputBar .first {
+        width: 450px;
+        margin: auto;
+        overflow:hidden;
+    }
+.form-group {
+        width: 400px;
+        height: 22px;
+        display: inline-block;
+    }
+.form-group1 {
+    width: 400px;
+    display: inline-block;
+    margin: auto
+}
+.DoneButton {
+        display: inline-block;
+        height: 50%£»
+        width: 50%£»
+        vertical-align: middle;
+    }
+.button {
+    background-color: #DDDDDD; /* Green */
+    border: none;
+    width: 47.2px;
+    border-radius: 50%;
+    position: absolute;
+    top: 65px;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-weight: bold;
+}
+.button4 {
+    background-color: white;
+    color: black;
+    border: 2px solid #7c7575;
+}
+
+    .button4:hover {
+        background-color: #7c7575;
+    }
+
+ .add_note{
+     position:absolute;
+     width:30px;
+     height:30px;
+     top:95px;
+     left:100px;
+     z-index:99;
+ }
+.ma
+/*
+.topnav .title
+{
+    color: #f2f2f2;
+    display: block;
+    float: center;
+    font-size: 23px;
+    padding-top: 10px;
+    padding-right: 70px; /*Takes care of title offset from green box*/
+text-align: center;
+}
+
+/* Style the links inside the navigation bar */
+/*
+.topnav a {
+    float: left;
+    display: block;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover *
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add an active class to highlight the current page *
+.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Hide the link that should open and close the topnav on small screens *
+.topnav .icon {
+    display: none;
+}
+
+
+
+
+]
