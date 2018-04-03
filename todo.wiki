@@ -14,15 +14,14 @@
 * [ ] Use bootstrap for the left-side menu
 
 == Uda == 
+* [ ] "Currently visible" property
+    * [ ] Add a column "LastViewed" to dataUsers table
+    * [ ] This should be a comma-delimited list of PK's to the dataSections table
+    * [ ] Modify the DataStore structure to hold this info
 * [X] Create DataStore (js object to hold the data)
-* [ ] Create dom renderer (updateDOMFromDataStore)
-    * [ ] Add checkbox for "completed"
-    * [ ] Add edit/delete buttons to each list item
-    * [ ] Use x-editable jquery library
-* [ ] Add hover effect to each list item
 * [ ] Left-side menu sections
-    * [ ] Tags
 * [ ] For each section include an "add" button
+    * [ ] Implement functionality
 
 == Zhen == 
 * [ ] Search feature -- local (only search the DataStore)
