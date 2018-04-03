@@ -13,8 +13,8 @@ function DoneFunction() {
     DataStore.push(temp);
     updateDOMFromDataStore();
 }
-function test() {
-    $("#EnterNote").append('<input type="text" name="UserInput" class="form-control" id="UserInputNote" placeholder="Take a Note..." onkeydown= "if (event.keyCode == 13) {test()}"/>');
+function createNewNoteInput() {
+    $("#EnterNote").append('<input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown= "if (event.keyCode == 13) {createNewNoteInput()}"/>');
 }
 
 $(function () {

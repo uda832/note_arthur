@@ -37,7 +37,7 @@ var DataStore = [];         //global object used to pass data back/forth between
 function updateDOMFromDataStore() {
     var $mainContent = $("#main-content");
     var content = ""; 
-    for (var s = 0; s < DataStore.length; ++s) {
+    for (var s = DataStore.length - 1; s >= 0; --s) {
         //Render each section 
         var curSection = 
             `<li id="section-` + s +`" class="section">
