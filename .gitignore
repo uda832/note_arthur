@@ -1,4 +1,5 @@
 !lib/jquery_jeditable/dist/*
+!lib/jquery-ui-touch-punch/*
 venv/**
 *.swp
 *.swo

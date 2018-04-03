@@ -13,6 +13,8 @@
     <!-- <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet"> -->
     <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet">
     <!--<link href="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">-->
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="//code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
@@ -26,10 +28,11 @@
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
 
+    <script defer src="//code.getmdl.io/1.3.0/material.min.js"></script>
 
     <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
+    <script src="static/lib/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
     <script type="text/javascript" src="static/js/arthur.js"></script>
     <script type="text/javascript" src="static/js/input.js"></script>
@@ -40,22 +43,19 @@
         }
 
         .section {
+            min-width: 400px;
             max-width: 90%;
-            margin-top: 20px;
-            margin-bottom: 30px;
+            margin: 25px;
+            cursor: move;
         }
-
+        .section-text, .note-text-container {
+            cursor: pointer;
+        }
         .note-text {
             width: 90%;
         }
 
-        /* .note-text-editing {
-            width: 100%
-        } */
 
-        .note-text-container {
-            cursor: pointer;
-        }
     </style>
 
 </head>
@@ -112,26 +112,47 @@
                 </div>
             </div>
         </div>
+
         <!-- Main Content -->
-        <ul id="main-content" class="main-content">
-            <li id="section-0" class="section">
-                <div>
-                    <div>SectionHeader</div>
-                    <ul class="notes-list">
-                        <li>Prep for Python exam</li>
-                        <li>Install Django</li>
-                        <li>Turn in SW essay due on 02/27</li>
+        <ul id="main-content" class="mdl-grid main-content">
+            <li id="section-1" class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-header">
+                            <span id="section-text-1" class="section-text">Software Eng</span>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush notes-list">
+                        <li id="note-1-0" class="list-group-item note-text-container" title="Click to Edit...">
+                            <a class="note-text">complete presentation review</a>
+                        </li>
+                        <li id="note-1-1" class="list-group-item note-text-container" title="Click to Edit...">
+                            <a class="note-text">schedule next team arthur meeting</a>
+                        </li>
+                        <li id="note-1-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
+                            <a class="note-text note-text-addl">+</a>
+                        </li>
                     </ul>
                 </div>
             </li>
+            <li id="section-0" class="section">
+                <div class="card">
 
-            <li id="section-1" class="section">
-                <div>
-                    <div>SectionHeader</div>
-                    <ul class="notes-list">
-                        <li>Prep for Python exam</li>
-                        <li>Install Django</li>
-                        <li>Turn in SW essay due on 12/27</li>
+                    <div class="card-header">
+                        <div class="card-header">
+                            <span id="section-text-0" class="section-text">Python</span>
+                        </div>
+                    </div>
+                    <ul class="list-group list-group-flush notes-list">
+                        <li id="note-0-0" class="list-group-item note-text-container" title="Click to Edit...">
+                            <a class="note-text">do Python hw</a>
+                        </li>
+                        <li id="note-0-1" class="list-group-item note-text-container" title="Click to Edit...">
+                            <a class="note-text">install django</a>
+                        </li>
+                        <li id="note-0-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
+                            <a class="note-text note-text-addl">+</a>
+                        </li>
                     </ul>
                 </div>
             </li>
