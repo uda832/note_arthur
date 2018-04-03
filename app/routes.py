@@ -57,7 +57,7 @@ def save_request():
     #   At this point, you can access the exact DataStore object which contains the new notes 
     #   I've written a demo function that iterates over the DataStore and accesses each information
     #   Please reference this and write the function to run the INSERT sql statements
-    update_db_from_datastore_demo(ds)
+    # update_db_from_datastore_demo(ds)
 
     return "success"
 """

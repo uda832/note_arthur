@@ -14,7 +14,8 @@
     <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet">
     <!--<link href="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">-->
 
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
@@ -24,7 +25,9 @@
     <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
-    <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
+    <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 
 
@@ -37,7 +40,7 @@
         }
 
         .section {
-            max-width: 90vw;
+            max-width: 90%;
             margin-top: 20px;
             margin-bottom: 30px;
         }
@@ -45,20 +48,23 @@
         .note-text {
             width: 90%;
         }
+
         /* .note-text-editing {
             width: 100%
         } */
+
         .note-text-container {
             cursor: pointer;
         }
     </style>
 
 </head>
+
 <body>
     <!-- Top bar Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top" style="height: 7vh; background-color: #007bff;">
-        <div style="color: white; cursor: pointer; display: inline-block; width: 50px; height: 50px; ">
-            <div style="font-size: 25px; width: 100%; height: 100%; margin: auto auto" onclick="openNav()">☰</div>
+        <div class="hamburger-wrapper">
+            <div class="hamburger hamburger-opener" onclick="openNav()">☰</div>
         </div>
         <div class="navbar-brand">
             <span style="color: white; font-weight: bold;">NoteArthur</span>
@@ -75,38 +81,30 @@
     <script src="/static/js/navBar.js"></script>
     <div id="mySidenav" class="sidenav">
         <nav class="navbar navbar-default navbar-fixed-top" style="height: 7vh; background-color: #007bff;">
-            <div style="color: white; cursor: pointer; display: inline-block; width: 50px; height: 50px; ">
-                <div style="font-size: 25px; width: 100%; height: 100%; margin: auto auto" onclick="openNav()">☰</div>
-            </div>
-            <div class="navbar-brand">
-                <span style="color: white; font-weight: bold;">NoteArthur</span>
-            </div>
-            <div class="filler">
-                <span style="color: white; font-weight: bold;"></span>
-            </div>
-            <div class="filler">
-                <span style="color: white; font-weight: bold;"></span>
+            <div class="ml-auto hamburger-wrapper">
+                <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
             </div>
         </nav>
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">☰</a>
+        <!-- <a href="javascript:void(0)" class="closebtn" >☰</a> -->
         <a href="#">Something1</a>
         <a href="#">Something2</a>
         <a href="#">Something3</a>
         <a href="#">Something4</a>
-      </div>
-      <!-- Use any element to open the sidenav -->
-      
-      
+    </div>
+    <!-- Use any element to open the sidenav -->
+
+
     <div id="main-content-container" class="main-content-container">
-        <div id="main-content-container" class="inputBar">
+        <!-- Input Bar -->
+        <div class="inputBar">
             <div class="first">
                 <div class="form-group">
                     <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
                 </div>
                 <div class="form-group1" id="EnterNote">
                     <div class="note_container">
-                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..."
-                               onkeydown="if (event.keyCode == 13) { test() }"/>
+                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown="if (event.keyCode == 13) { test() }"
+                        />
                     </div>
                 </div>
                 <div class="DoneButton">
@@ -114,8 +112,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div id="main-content-container" class="main-content-container">
+        <!-- Main Content -->
         <ul id="main-content" class="main-content">
             <li id="section-0" class="section">
                 <div>
@@ -141,21 +138,19 @@
 
         </ul>
 
-
     </div>
-        </div>
 
 
-        <script>
-            //Load logic
-            $(window).on("load", function () {
+    <script>
+        //Load logic
+        $(window).on("load", function () {
 
-                initPage();
+            initPage();
 
-            });
+        });
 
-        </script>
+    </script>
 
-        <!--hello Rohan and Bo-->
-        <!--hello-->
+    <!--hello Rohan and Bo-->
+    <!--hello-->
 </body>
