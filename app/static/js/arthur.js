@@ -61,7 +61,7 @@ function updateDOMFromDataStore() {
 function initPage() {
     //Populate the DataStore
     //----------------------------------
-    dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
+    dataStoreJSON = '[{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]}]';
     DataStore = [];         //global object used to pass data back/forth between server
     try {
         DataStore = JSON.parse(dataStoreJSON);
@@ -117,3 +117,32 @@ function createListeners() {
     });
    
 }
+
+//This function sends an ajax request to the server to save the data
+function saveDataStore() {
+    console.log("DEBUG: invoking saveDataStore");
+
+	var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/esi/'));
+    var tail = '/save';
+    var url = head + tail;
+    var dsJSON = encodeURIComponent(JSON.stringify(DataStore));
+    var res = "-1";
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: {
+            json: dsJSON,
+        },
+        success: function(r) {
+            if(r  == "success") {
+                console.log("save successful");
+            }
+            else {
+                console.log("save failed");
+            }
+        }
+    });
+}
+
