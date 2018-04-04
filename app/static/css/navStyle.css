@@ -2,13 +2,31 @@ body{
     padding:0px;
     margin:0px;
 }
-
+.main-top-nav{
+    height: 7vh; 
+    background-color: #007bff; 
+}
 /*Top Bar Navigation*/
 .topnav {
     background-color: #555;
     overflow: hidden;
 }
+#main-content {
+    list-style-type: none;
+}
 
+.section {
+    min-width: 400px;
+    max-width: 90%;
+    margin: 25px;
+    cursor: move;
+}
+.section-text, .note-text-container {
+    cursor: pointer;
+}
+.note-text {
+    width: 90%;
+}
 .topnav .title
 {
     color: #f2f2f2;
@@ -77,24 +95,23 @@ body{
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #555; 
-    overflow-x: hidden; /* Disable horizontal scroll */
+    overflow: hidden;
     transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
 }
 
 
-/* The navigation menu links */
-.side-nav a {
+.side-nav-sections a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 17px;
     color: #b4afaf;
     display: block;
     transition: 0.3s;
     cursor: pointer;
+    width: 100%;
 }
-
 /* When you mouse over the navigation links, change their color */
-.side-nav a:hover {
+.side-nav-sections a:hover {
     color: #f1f1f1;
 }
 
@@ -105,6 +122,15 @@ body{
     right: 20px;
     font-size: 36px;
     margin-left: 50px;
+}
+
+#side-nav-sections {
+    padding: 0;
+    margin: 0;
+    height: 93vh;
+    width: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 /* Style page content - use this if you want to push the page content to the right when you open the side navigation */
@@ -121,6 +147,7 @@ body{
 
 #main-content-container{
     transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
+    margin-top: 7vh; /* Topbar is fixed, so need this margin to prevent overlapping*/
 }
 
 .DoneButton .button {
