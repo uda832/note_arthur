@@ -35,6 +35,16 @@ var DataStore = [];         //global object used to pass data back/forth between
 
 //Reads from the DataStore to update the DOM
 function updateDOMFromDataStore() {
+    //Render the side-nav
+    var $sectionsContainer = $("#side-nav-sections");
+    var contentSide = "";
+    for (var s = DataStore.length - 1; s >= 0; --s) {
+        contentSide += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link">` + DataStore[s].title +`</a>`;
+    }
+
+
+
+    //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
     for (var s = DataStore.length - 1; s >= 0; --s) {

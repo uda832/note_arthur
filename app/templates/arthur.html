@@ -1,6 +1,5 @@
 <head>
 
-    <!-- This is the navBar Code: https://www.w3schools.com/howto/howto_js_sidenav.asp -->
     <link rel="stylesheet" href="/static/css/navStyle.css">
     <link rel="stylesheet" href="/static/css/inputbarStyle.css">
 
@@ -79,17 +78,19 @@
 
     <!-- Side bar Navigation -->
     <script src="/static/js/navBar.js"></script>
-    <div id="mySidenav" class="sidenav">
+    <div id="main-side-nav" class="side-nav">
         <nav class="navbar navbar-default navbar-fixed-top" style="height: 7vh; background-color: #007bff;">
             <div class="ml-auto hamburger-wrapper">
                 <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
             </div>
         </nav>
-        <!-- <a href="javascript:void(0)" class="closebtn" >☰</a> -->
-        <a href="#">Something1</a>
-        <a href="#">Something2</a>
-        <a href="#">Something3</a>
-        <a href="#">Something4</a>
+
+        <!-- List of Sections -->
+        <nav id="side-nav-sections" class="nav nav-pills flex-column side-nav-sections">
+            <a id="side-nav-0" class="nav-link active" href="#">Active</a>
+            <a class="nav-link" href="#">Link</a>
+            <a class="nav-link" href="#">Link</a>
+          </nav>
     </div>
     <!-- Use any element to open the sidenav -->
 

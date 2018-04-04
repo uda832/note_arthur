@@ -69,7 +69,7 @@ body{
 
 
 /* The side navigation menu */
-.sidenav {
+.side-nav {
     height: 100%; /* 100% Full-height */
     width: 0; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
@@ -78,27 +78,28 @@ body{
     left: 0;
     background-color: #555; 
     overflow-x: hidden; /* Disable horizontal scroll */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
 }
 
 
 /* The navigation menu links */
-.sidenav a {
+.side-nav a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 25px;
     color: #b4afaf;
     display: block;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 /* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
+.side-nav a:hover {
     color: #f1f1f1;
 }
 
 /* Position and style the close button (top right corner) */
-.sidenav .closebtn {
+.side-nav .closebtn {
     position: absolute;
     top: 0;
     right: 20px;
@@ -112,14 +113,14 @@ body{
     padding: 20px;
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+/* On smaller screens, where height is less than 450px, change the style of the side-nav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 30px;}
-    .sidenav a {font-size: 14px;}
+    .side-nav {padding-top: 30px;}
+    .side-nav a {font-size: 14px;}
 }
 
 #main-content-container{
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
 }
 
 .DoneButton .button {
