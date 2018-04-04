@@ -6,11 +6,6 @@ body{
     height: 7vh; 
     background-color: #007bff; 
 }
-/*Top Bar Navigation*/
-.topnav {
-    background-color: #555;
-    overflow: hidden;
-}
 #main-content {
     list-style-type: none;
 }
@@ -27,42 +22,7 @@ body{
 .note-text {
     width: 90%;
 }
-.topnav .title
-{
-    color: #f2f2f2;
-    display: block;
-    float: center;
-    font-size: 23px;
-    text-align: center;
-}
 
-/* Style the links inside the navigation bar */
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Add an active class to highlight the current page */
-.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-/* Hide the link that should open and close the topnav on small screens */
-.topnav .icon {
-    display: none;
-}
 
 .hamburger-wrapper {
     color: white;
@@ -85,38 +45,46 @@ body{
     text-align: right;
 }
 
-
-/* The side navigation menu */
-.side-nav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 100000; /* Stay on top */
-    top: 0; /* Stay at the top */
+.side-nav-sections-container {
+    background-color: #f2f2f2; 
+}
+#side-nav-sections {
+    padding: 0;
+    margin-top: 2vh;
+    height: 93vh;
+    width: 100%;
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
+}
+#main-side-nav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 100000;
+    top: 0;
     left: 0;
-    background-color: #555; 
     overflow: hidden;
-    transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
+    transition: 0.3s; /* 0.5 second transition effect to slide in the side-nav */
 }
 
 
 .side-nav-sections a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 17px;
-    color: #b4afaf;
+    font-size: 16px;
     display: block;
     transition: 0.3s;
     cursor: pointer;
-    width: 100%;
+    width: 85%;
+    margin: 0 auto;
 }
 /* When you mouse over the navigation links, change their color */
 .side-nav-sections a:hover {
-    color: #f1f1f1;
+    color:#999999 !important;
 }
 
 /* Position and style the close button (top right corner) */
-.side-nav .closebtn {
+.closebtn {
     position: absolute;
     top: 0;
     right: 20px;
@@ -124,29 +92,17 @@ body{
     margin-left: 50px;
 }
 
-#side-nav-sections {
-    padding: 0;
-    margin: 0;
-    height: 93vh;
-    width: 100%;
-    overflow-x: hidden;
-    overflow-y: scroll;
-}
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-    transition: margin-left .5s;
-    padding: 20px;
-}
+
 
 /* On smaller screens, where height is less than 450px, change the style of the side-nav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-    .side-nav {padding-top: 30px;}
-    .side-nav a {font-size: 14px;}
+    #main-side-nav {padding-top: 30px;}
+    #main-side-nav a {font-size: 14px;}
 }
 
 #main-content-container{
-    transition: 0.5s; /* 0.5 second transition effect to slide in the side-nav */
+    transition: 0.3s; /* 0.5 second transition effect to slide in the side-nav */
     margin-top: 7vh; /* Topbar is fixed, so need this margin to prevent overlapping*/
 }
 

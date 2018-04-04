@@ -26,8 +26,8 @@ div {
 }
 .DoneButton {
         display: inline-block;
-        height: 50%£»
-        width: 50%£»
+        height: 50%;
+        width: 50%;
         vertical-align: middle;
     }
 .button {
@@ -67,49 +67,3 @@ div {
      left:100px;
      z-index:99;
  }
-.ma
-/*
-.topnav .title
-{
-    color: #f2f2f2;
-    display: block;
-    float: center;
-    font-size: 23px;
-    padding-top: 10px;
-    padding-right: 70px; /*Takes care of title offset from green box*/
-text-align: center;
-}
-
-/* Style the links inside the navigation bar */
-/*
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-/* Change the color of links on hover *
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Add an active class to highlight the current page *
-.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-/* Hide the link that should open and close the topnav on small screens *
-.topnav .icon {
-    display: none;
-}
-
-
-
-
-]

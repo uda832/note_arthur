@@ -39,7 +39,7 @@ function updateDOMFromDataStore() {
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
     for (var s = DataStore.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link">` + DataStore[s].title +`</a>`;
+        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);
 
@@ -86,10 +86,10 @@ function initPage() {
     //----------------------------------------
     updateDOMFromDataStore();
 
-    createListeners();
+    postProcessing();
 }
 
-function createListeners() {
+function postProcessing() {
 
     //Sections -- Click to Edit listener for
     //Notes -- Click to Edit listener for
@@ -155,7 +155,18 @@ function createListeners() {
         width       : "100%",
         
     });
-   
+    
+    //Custom Scrollbar for the Side Nav
+    $("#side-nav-sections").mCustomScrollbar({
+        theme: "minimal-dark",
+    });
+
+    //Side Nav click handler
+    $(".side-nav-link").click(function(){
+        $(".side-nav-link").removeClass("active");
+        $(this).addClass("active");
+
+    });
 }
 
 //This function sends an ajax request to the server to save the data
@@ -163,7 +174,7 @@ function saveDataStore() {
     console.log("DEBUG: invoking saveDataStore");
 
 	var docUrl = document.URL.replace('%20', ' ');
-    var head = docUrl.substring(0, docUrl.indexOf('/esi/'));
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
     var tail = '/save';
     var url = head + tail;
     var dsJSON = encodeURIComponent(JSON.stringify(DataStore));
