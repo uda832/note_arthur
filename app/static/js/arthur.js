@@ -31,18 +31,27 @@ function greet() {
 
 var dataStoreJSON = '';
 var DataStore = [];         //global object used to pass data back/forth between the client and server
+var DataStoreStash = [];
     
-
-//Reads from the DataStore to update the DOM
-function updateDOMFromDataStore() {
+function renderSideNavFromDataStore() {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
-    var contentSideNav = "";
+    var contentSideNav = `<a id="side-nav-all" class="nav-link side-nav-link side-nav-link-special side-nav-link-all">All Notes</a><hr>`;
     for (var s = DataStore.length - 1; s >= 0; --s) {
         contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);
+    //Reset the scrollbar
+    $("#side-nav-sections").mCustomScrollbar({ theme: "minimal-dark", });
+}
 
+//Restores the DataStore object from the stash
+function restoreDataStore() {
+    DataStore= jQuery.extend(true, {}, DataStoreStash ); //Deep-copy
+}
+
+//Reads from the DataStore to update the DOM
+function renderSectionsFromDataStore() {
 
     //Render the main content
     var $mainContent = $("#main-content");
@@ -84,8 +93,11 @@ function initPage() {
 
     //Render the HTML
     //----------------------------------------
-    updateDOMFromDataStore();
+    renderSideNavFromDataStore();
+    renderSectionsFromDataStore();
 
+    //Post Processing
+    //-----------------
     postProcessing();
 }
 
@@ -156,15 +168,31 @@ function postProcessing() {
         
     });
     
-    //Custom Scrollbar for the Side Nav
-    $("#side-nav-sections").mCustomScrollbar({
-        theme: "minimal-dark",
-    });
 
     //Side Nav click handler
+    //----------------------------------------------------------------------------------
     $(".side-nav-link").click(function(){
+        //Set the active class
         $(".side-nav-link").removeClass("active");
         $(this).addClass("active");
+
+        //Special buttons
+        if ($(this).hasClass("side-nav-link-special")) {
+
+            //All Notes
+            if ($(this).hasClass("side-nav-link-all")) {
+            }
+        }
+        else {
+            //Show the selected section
+            //----------------------------------------------------------------
+            var index = parseInt(this.id.substring("side-nav-".length));
+            var selected = jQuery.extend(true, {}, DataStore[index]);       //Deepcopy
+            DataStoreStash = jQuery.extend(true, {}, DataStore);         //Temporarily save the object
+            DataStore = [];
+            DataStore.push(selected);
+            renderSectionsFromDataStore();
+        }
 
     });
 }

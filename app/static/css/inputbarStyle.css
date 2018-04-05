@@ -26,8 +26,8 @@ div {
 }
 .DoneButton {
         display: inline-block;
-        height: 50%;
-        width: 50%;
+        /* height: 50%;
+        width: 50%; */
         vertical-align: middle;
     }
 .button {
