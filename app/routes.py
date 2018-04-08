@@ -2,6 +2,7 @@ from flask import render_template, flash, redirect, url_for, request
 from app import app, db
 from app.forms import LoginForm, RegistrationForm
 from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import UserMixin
 from app.models import User
 from werkzeug.urls import url_parse
 from sqlalchemy import text
@@ -29,45 +30,25 @@ def index():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    '''if current_user.is_authenticated:
-        return redirect(url_for('index'))'''
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
+    con = db.engine.connect()
     if form.validate_on_submit():
-        '''user = User.query.filter_by(username=form.username.data).first()'''
-        name = form.username.data
-        flash(name)
-        sql=text('select * from User where username=="{0}"'.format(name))
-        try:
-            user=db.engine.execute(sql)
-        except e:
-            print(user.fetchone())
-            print(e)
-        if not user.fetchone():
-            print("the user is not in the databse")
-        if not user.fetchone() or not check_password_hash(user.fetchone()[3],form.password.data):
-            '''
-            record = user.fetchall()
-            record[3]
-            User.check_password(record[3])'''
-            
-            flash('Invalid username or password')
+        user = con.execute('SELECT * FROM User WHERE username=="{0}"'.format(form.username.data))
+        theUser = user.fetchone()
+        if not theUser:
+            flash("Invalid username or password")
             return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
+        if not check_password_hash(theUser[3],form.password.data):
+            flash("Invalid username or password")
+            return redirect(url_for('login'))
+        loginUser = User.query.filter_by(username=theUser[1]).first()
+        login_user(loginUser,remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
         return redirect(next_page)
-        '''
-        if user is None or not user.check_password(form.password.data):
-            flash('Invalid username or password')
-            return redirect(url_for('login'))
-        login_user(user, remember=form.remember_me.data)
-        next_page = request.args.get('next')
-        if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
-        return redirect(next_page)
-		'''
-        '''print(user.fetchmany())'''
     return render_template('login.html', title='Sign In', form=form)
 
 
