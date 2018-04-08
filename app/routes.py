@@ -1,36 +1,63 @@
 from flask import Flask, request, Response, json, jsonify, render_template, flash, redirect, url_for
 from urllib.parse import unquote
+from flask_login import current_user, login_user, logout_user, login_required
+from flask_login import UserMixin
+from app.models import User
+from werkzeug.urls import url_parse
+from sqlalchemy import text
+from werkzeug.security import generate_password_hash, check_password_hash
+import jinja2
 import json
 
-from app import app
-from app.forms import LoginForm
+from app import app, db
+from app.forms import LoginForm, RegistrationForm
 
 
 @app.route('/')
 @app.route('/index')
+@login_required
 def index():
     user = {'username': 'Rohan'}
     posts = [
         {
-            'author': {'username': 'Rohan1'},
-            'body': 'This should be the first textfile, username should show Rohan1'
+            'author': {'username': 'John'},
+            'body': 'Beautiful day in Portland!'
         },
         {
             'author': {'username': 'Susan'},
-            'body': 'This should be the second textfile, username should show Rohan2'
+            'body': 'The Avengers movie was so cool!'
         }
     ]
-    return render_template('index.html', title='Home', user=user, posts=posts)
+    return render_template('index.html', title='Home', posts=posts)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
+    if current_user.is_authenticated:
         return redirect(url_for('index'))
-    return render_template('login.html',  title='Sign In', form=form)
+    form = LoginForm()
+    con = db.engine.connect()
+    if form.validate_on_submit():
+        user = con.execute('SELECT * FROM User WHERE username=="{0}"'.format(form.username.data))
+        theUser = user.fetchone()
+        if not theUser:
+            flash("Invalid username or password")
+            return redirect(url_for('login'))
+        if not check_password_hash(theUser[3],form.password.data):
+            flash("Invalid username or password")
+            return redirect(url_for('login'))
+        loginUser = User.query.filter_by(username=theUser[1]).first()
+        login_user(loginUser,remember=form.remember_me.data)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('login.html', title='Sign In', form=form)
 
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 @app.route('/arthur', methods=['GET', 'POST'])
 def main_arthur():
@@ -41,6 +68,20 @@ def main_arthur():
 
     return render_template('arthur.html')
 
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    '''if current_user.is_authenticated:
+        return redirect(url_for('index'))'''
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data)
+        user.set_password(form.password.data)
+        db.session.add(user)
+        db.session.commit()
+        flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
+	
 @app.route('/save', methods=['POST'])
 def save_request():
     '''
@@ -56,7 +97,7 @@ def save_request():
     #   At this point, you can access the exact DataStore object which contains the new notes 
     #   I've written a demo function that iterates over the DataStore and accesses each information
     #   Please reference this and write the function to run the INSERT sql statements
-    # update_db_from_datastore_demo(ds)
+    #update_db_from_datastore_demo(ds)
 
     return "success"
 """
