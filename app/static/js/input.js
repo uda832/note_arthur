@@ -11,7 +11,7 @@ function DoneFunction() {
 
     });
     DataStore.push(temp);
-    updateDOMFromDataStore();
+    renderSectionsFromDataStore();
 }
 function createNewNoteInput() {
     $("#EnterNote").append('<input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown= "if (event.keyCode == 13) {createNewNoteInput()}"/>');
