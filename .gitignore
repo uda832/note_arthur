@@ -1,5 +1,6 @@
 !lib/*
-venv/**
 *.swp
 *.swo
 *.bak
+app/__pycache__/*
+venv/bin/*
