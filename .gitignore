@@ -1,2 +1,9 @@
-!lib/jquery_jeditable/dist/*
+!lib/*
+*.swp
+*.swo
+*.bak
+*.pyc
+app/__pycache__/*
+app/__pycache__/**
 venv/*
+__pycache__/*
