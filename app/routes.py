@@ -65,8 +65,11 @@ def main_arthur():
         Main page:
         - should be only accessible after the user successfully authenticates (signs in)
     '''
+    userno = 1
+    json = build_json_string(userno)
+    
 
-    return render_template('arthur.html')
+    return render_template('arthur.html', json=json)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -146,3 +149,70 @@ def update_db_from_datastore_demo(ds):
             my_sql_2 = ''' the real sql to insert each notes'''
             run_the_real_execute_function(my_sql_1)
 """
+
+
+# class UserInfo:
+#     def __init__(self, current_user):
+#         self.current_user = 
+#     #end-init
+
+
+
+def build_json_string(userno):
+    '''
+    This function builds the JSON string from the DB for the current user.
+    '''
+
+    '''
+    0 -- id
+    1 -- body
+    2 -- timestamp
+    3 -- user_id
+    4 -- notes
+    5 -- tags
+    '''
+
+    sql_sections = '''
+        SELECT * 
+        FROM Section 
+        WHERE user_id = {0}
+    ''' .format(userno)
+
+    con = db.engine.connect()
+    table = con.execute(sql_sections)
+    sections_rows = table.fetchall()
+
+    data_store = []
+
+    # Populate the DataStore with sections
+    for row in sections_rows:
+        cur_section = {}
+        cur_section.id = row[0]
+        cur_section.title = row[1]
+        cur_section.notes = []
+
+        sql_notes = '''
+            SELECT * 
+            FROM Note 
+            WHERE section_id = {0} 
+        ''' .format(cur_section.id)
+
+        con = db.engine.connect()
+        table = con.execute(sql_notes)
+        notes_rows = table.fetchall()
+
+        # Populate current section's notes array
+        for row in notes_rows:
+            cur_note.id = row[0]
+            cur_note.text = row[1]
+            cur_note.tags = []  # Default to empty right now
+
+            cur_section.notes.append(cur_note)
+        #end-for-notes
+
+        # Add this to the 
+        data_store.append(cur_section)
+    #end-for-sections
+
+
+    return json.dumps(data_store)

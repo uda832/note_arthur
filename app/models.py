@@ -5,6 +5,15 @@ from flask_login import UserMixin
 
 
 class User(UserMixin, db.Model):
+    '''
+    0 -- id
+    1 -- username
+    2 -- email
+    3 -- password_hash
+    4 -- sections (delimited FK's to Sections)
+    5 -- notes
+    6 -- section_tags
+    '''
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -29,6 +38,15 @@ def load_user(id):
 
 
 class Section(db.Model):
+    '''
+    0 -- id
+    1 -- body
+    2 -- timestamp
+    3 -- user_id
+    4 -- notes
+    5 -- tags
+
+    '''
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -45,7 +63,7 @@ class Note(db.Model):
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    note_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     tags = db.relationship('Tag', backref='note', lazy='dynamic')
 
     def __repr__(self):
