@@ -7,3 +7,4 @@ app/__pycache__/*
 app/__pycache__/**
 venv/*
 __pycache__/*
+.vscode/*
