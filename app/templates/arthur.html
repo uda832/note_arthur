@@ -1,156 +1,179 @@
 <head>
 
-    <!-- This is the navBar Code: https://www.w3schools.com/howto/howto_js_sidenav.asp -->
-    <link rel="stylesheet" href="/static/css/navStyle.css">
-    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
+        <!-- This is the navBar Code: https://www.w3schools.com/howto/howto_js_sidenav.asp -->
+        <link rel="stylesheet" href="/static/css/navStyle.css">
+        <link rel="stylesheet" href="/static/css/inputbarStyle.css">
+        <link rel="stylesheet" href="/static/css/searchBarStyle.css">    
 
-    <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
-    <!--<link href="../../acc/libraries/bootstrap-side-navbar/source/assets/stylesheets/navbar-fixed-side.css" rel="stylesheet">-->
-    <!--<link href="../../acc/libraries/bootstrap-material-design/css/style.css" rel="stylesheet">-->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet"> -->
-    <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet">
-    <!--<link href="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">-->
-
-    <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
-    <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
-    <!--<script type="text/javascript" src="../../acc/libraries/stickybits/dist/stickybits.min.js"></script>-->
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
-    <!--<script type="text/javascript" src="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"> </script>-->
-    <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
-    <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
-    <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
-
-
-    <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
-    <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
-
-    <script type="text/javascript" src="static/js/arthur.js"></script>
-    <script type="text/javascript" src="static/js/input.js"></script>
-
-    <style>
-        #main-content {
-            list-style-type: none;
-        }
-
-        .section {
-            max-width: 90%;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-
-        .note-text {
-            width: 90%;
-        }
-
-        /* .note-text-editing {
-            width: 100%
-        } */
-
-        .note-text-container {
-            cursor: pointer;
-        }
-    </style>
-
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css" integrity="sha384-5SOiIsAziJl6AWe0HWRKTXlfcSHKmYV4RBF18PPJ173Kzn7jzMyFuTtk8JA7QQG1" crossorigin="anonymous">
+        <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+        <!--<link href="../../acc/libraries/bootstrap-side-navbar/source/assets/stylesheets/navbar-fixed-side.css" rel="stylesheet">-->
+        <!--<link href="../../acc/libraries/bootstrap-material-design/css/style.css" rel="stylesheet">-->
+        <!-- <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet"> -->
+        <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet">
+        <!--<link href="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">-->
+        <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="stylesheet" href="//code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    
+        <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
+        <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+        <!--<script type="text/javascript" src="../../acc/libraries/stickybits/dist/stickybits.min.js"></script>-->
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
+        <!--<script type="text/javascript" src="../../acc/libraries/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"> </script>-->
+        <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
+        <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
+        <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
+    
+        <script defer src="//code.getmdl.io/1.3.0/material.min.js"></script>
+    
+        <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
+        <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+        <script src="static/lib/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+    
+        <script type="text/javascript" src="static/js/arthur.js"></script>
+        <script type="text/javascript" src="static/js/input.js"></script>
+    
+        <style>
+            #main-content {
+                list-style-type: none;
+            }
+    
+            .section {
+                min-width: 400px;
+                max-width: 90%;
+                margin: 25px;
+                cursor: move;
+            }
+            .section-text, .note-text-container {
+                cursor: pointer;
+            }
+            .note-text {
+                width: 90%;
+            }
+    
+    
+        </style>
+    
 </head>
-
-<body>
-    <!-- Top bar Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top" style="height: 7vh; background-color: #007bff;">
-        <div class="hamburger-wrapper">
-            <div class="hamburger hamburger-opener" onclick="openNav()">☰</div>
-        </div>
-        <div class="navbar-brand">
-            <span style="color: white; font-weight: bold;">NoteArthur</span>
-        </div>
-        <div class="filler">
-            <span style="color: white; font-weight: bold;"></span>
-        </div>
-        <div class="filler">
-            <span style="color: white; font-weight: bold;"></span>
-        </div>
-    </nav>
-
-    <!-- Side bar Navigation -->
-    <script src="/static/js/navBar.js"></script>
-    <div id="mySidenav" class="sidenav">
+    
+    <body>
+        <script src="/static/js/searchbar.js"></script>
+        <!-- Top bar Navigation -->
         <nav class="navbar navbar-default navbar-fixed-top" style="height: 7vh; background-color: #007bff;">
-            <div class="ml-auto hamburger-wrapper">
-                <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
+            <div class="hamburger-wrapper">
+                <div class="hamburger hamburger-opener" onclick="openNav()">☰</div>
+            </div>
+            <div class="navbar-brand">
+                <span style="color: white; font-weight: bold;">NoteArthur</span>
+            </div>
+            <div class="container-4">
+                    <input type="search" id="search" placeholder="Search..">
+                    <!--button type="submit" style="border-top-width: 6px; border-bottom-width: 6px;" onclick="Search"><i class="fa fa-search"></i></button-->
+                    <button class="icon" onclick="Search()"><i class="fas fa-search"></i></button>
             </div>
         </nav>
-        <!-- <a href="javascript:void(0)" class="closebtn" >☰</a> -->
-        <a href="#">Something1</a>
-        <a href="#">Something2</a>
-        <a href="#">Something3</a>
-        <a href="#">Something4</a>
-    </div>
-    <!-- Use any element to open the sidenav -->
-
-
-    <div id="main-content-container" class="main-content-container">
-        <!-- Input Bar -->
-        <div class="inputBar">
-            <div class="first">
-                <div class="form-group">
-                    <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
+    
+        <!-- Side bar Navigation -->
+        <script src="/static/js/navBar.js"></script>
+        <div id="mySidenav" class="sidenav">
+            <nav class="navbar navbar-default navbar-fixed-top" style="height: 7vh; background-color: #007bff;">
+                <div class="ml-auto hamburger-wrapper">
+                    <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
                 </div>
-                <div class="form-group1" id="EnterNote">
-                    <div class="note_container">
-                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown="if (event.keyCode == 13) { test() }"
-                        />
+            </nav>
+            <!-- <a href="javascript:void(0)" class="closebtn" >☰</a> -->
+            <a href="#">Something1</a>
+            <a href="#">Something2</a>
+            <a href="#">Something3</a>
+            <a href="#">Something4</a>
+        </div>
+        <!-- Use any element to open the sidenav -->
+    
+    
+        <div id="main-content-container" class="main-content-container">
+            <!-- Input Bar -->
+            <div class="inputBar">
+                <div class="first">
+                    <div class="form-group">
+                        <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
+                    </div>
+                    <div class="form-group1" id="EnterNote">
+                        <div class="note_container">
+                            <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown="if (event.keyCode == 13) { createNewNoteInput() }"
+                            />
+                        </div>
+                    </div>
+                    <div class="DoneButton">
+                        <button class="button button4" onclick="DoneFunction()">+</button>
                     </div>
                 </div>
-                <div class="DoneButton">
-                    <button class="button button4" onclick="DoneFunction()">+</button>
-                </div>
             </div>
+    
+            <!-- Main Content -->
+            <ul id="main-content" class="mdl-grid main-content">
+                <li id="section-1" class="section">
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-header">
+                                <span id="section-text-1" class="section-text">Software Eng</span>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush notes-list">
+                            <li id="note-1-0" class="list-group-item note-text-container" title="Click to Edit...">
+                                <a class="note-text">complete presentation review</a>
+                            </li>
+                            <li id="note-1-1" class="list-group-item note-text-container" title="Click to Edit...">
+                                <a class="note-text">schedule next team arthur meeting</a>
+                            </li>
+                            <li id="note-1-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
+                                <a class="note-text note-text-addl">+</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li id="section-0" class="section">
+                    <div class="card">
+    
+                        <div class="card-header">
+                            <div class="card-header">
+                                <span id="section-text-0" class="section-text">Python</span>
+                            </div>
+                        </div>
+                        <ul class="list-group list-group-flush notes-list">
+                            <li id="note-0-0" class="list-group-item note-text-container" title="Click to Edit...">
+                                <a class="note-text">do Python hw</a>
+                            </li>
+                            <li id="note-0-1" class="list-group-item note-text-container" title="Click to Edit...">
+                                <a class="note-text">install django</a>
+                            </li>
+                            <li id="note-0-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
+                                <a class="note-text note-text-addl">+</a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+    
+            </ul>
+    
         </div>
-        <!-- Main Content -->
-        <ul id="main-content" class="main-content">
-            <li id="section-0" class="section">
-                <div>
-                    <div>SectionHeader</div>
-                    <ul class="notes-list">
-                        <li>Prep for Python exam</li>
-                        <li>Install Django</li>
-                        <li>Turn in SW essay due on 02/27</li>
-                    </ul>
-                </div>
-            </li>
-
-            <li id="section-1" class="section">
-                <div>
-                    <div>SectionHeader</div>
-                    <ul class="notes-list">
-                        <li>Prep for Python exam</li>
-                        <li>Install Django</li>
-                        <li>Turn in SW essay due on 12/27</li>
-                    </ul>
-                </div>
-            </li>
-
-        </ul>
-
-    </div>
-
-
-    <script>
-        //Load logic
-        $(window).on("load", function () {
-
-            initPage();
-
-        });
-
-    </script>
-
-    <!--hello Rohan and Bo-->
-    <!--hello-->
-</body>
+    
+    
+        <script>
+            //Load logic
+            $(window).on("load", function () {
+    
+                initPage();
+    
+            });
+    
+        </script>
+    
+        <!--hello Rohan and Bo-->
+        <!--hello-->
+    </body>

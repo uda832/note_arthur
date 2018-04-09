@@ -37,12 +37,14 @@ var DataStore = [];         //global object used to pass data back/forth between
 function updateDOMFromDataStore() {
     var $mainContent = $("#main-content");
     var content = ""; 
-    for (var s = 0; s < DataStore.length; ++s) {
+    for (var s = DataStore.length - 1; s >= 0; --s) {
         //Render each section 
         var curSection = 
             `<li id="section-` + s +`" class="section">
                 <div class='card'>
-                    <div class='card-header'>` + DataStore[s].title + `</div>
+                    <div class='card-header'>
+                        <span id='section-text-` + s + `' class='section-text'>` + DataStore[s].title + `</span>
+                    </div>
                     <ul class="list-group list-group-flush notes-list">`;
 
         for (var i = 0; i < DataStore[s].notes.length; ++i) {
@@ -79,7 +81,35 @@ function initPage() {
 
 function createListeners() {
 
-    //Click to Edit listener
+    //Sections -- Click to Edit listener for
+    //Notes -- Click to Edit listener for
+    $('.section-text').editable(function(value, settings){
+        // console.log("DEBUG: editing")
+        // console.log(this);
+        // console.log(value);
+        // console.log(settings);
+
+        //Modify the DataStore
+        //-------------------------------------------------------
+        var idTail = this.id.substring("section-text-".length);
+        var sectionId = parseInt(idTail);
+
+    
+        console.log("Updating DataStore");
+        //Update the value in the DataStore
+        DataStore[sectionId].title = value;
+
+        return(value);
+    }, {
+        event       : 'click',
+        cssclass    : 'section-text-editing',
+        type        : 'text',
+        placeholder : "Edit...",
+        tooltip     : 'Click to Edit...',
+        width       : "100%",
+        
+    });
+    //Notes -- Click to Edit listener for
     $('.note-text-container').editable(function(value, settings){
         // console.log("DEBUG: editing")
         // console.log(this);
