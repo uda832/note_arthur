@@ -2,86 +2,89 @@ body{
     padding:0px;
     margin:0px;
 }
-
-/*Top Bar Navigation*/
-.topnav {
-    background-color: #555;
-    overflow: hidden;
+.main-top-nav{
+    height: 7vh; 
+    background-color: #007bff; 
+}
+#main-content {
+    list-style-type: none;
 }
 
-.topnav .title
-{
-    color: #f2f2f2;
-    display: block;
-    float: center;
-    font-size: 23px;
-    padding-top: 10px;
-    padding-right: 70px; /*Takes care of title offset from green box*/
-    text-align: center;
+.section {
+    min-width: 400px;
+    max-width: 90%;
+    margin: 25px;
+    cursor: move;
+}
+.section-text, .note-text-container {
+    cursor: pointer;
+}
+.note-text {
+    width: 90%;
 }
 
-/* Style the links inside the navigation bar */
-.topnav a {
-    float: left;
-    display: block;
-    color: #f2f2f2;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
 
-/* Change the color of links on hover */
-.topnav a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-/* Add an active class to highlight the current page */
-.active {
-    background-color: #4CAF50;
+.hamburger-wrapper {
     color: white;
+    cursor: pointer;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+.hamburger {
+    font-size: 25px;
+    width: 100%;
+    height: 100%;
+    margin: auto auto;
+    padding-top: 10px;
+}
+.hamburger-opener {
+    text-align: left;
+}
+.hamburger-closer {
+    text-align: right;
 }
 
-/* Hide the link that should open and close the topnav on small screens */
-.topnav .icon {
-    display: none;
+.side-nav-sections-container {
+    background-color: #f2f2f2; 
 }
-
-
-
-
-/* The side navigation menu */
-.sidenav {
-    height: 100%; /* 100% Full-height */
-    width: 0; /* 0 width - change this with JavaScript */
-    position: fixed; /* Stay in place */
-    z-index: 100000; /* Stay on top */
-    top: 0; /* Stay at the top */
+#side-nav-sections {
+    padding: 0;
+    margin-top: 2vh;
+    height: 93vh;
+    width: 100%;
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
+}
+#main-side-nav {
+    height: 100%; 
+    width: 0; 
+    position: fixed; 
+    z-index: 100000;
+    top: 0;
     left: 0;
-    background-color: #555; 
-    overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 60px; /* Place content 60px from the top */
-    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    overflow: hidden;
+    transition: 0.3s; /* 0.5 second transition effect to slide in the side-nav */
 }
 
-/* The navigation menu links */
-.sidenav a {
+
+.side-nav-sections a {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
-    font-size: 25px;
-    color: #b4afaf;
+    font-size: 16px;
     display: block;
     transition: 0.3s;
+    cursor: pointer;
+    width: 85%;
+    margin: 0 auto;
 }
-
 /* When you mouse over the navigation links, change their color */
-.sidenav a:hover {
-    color: #f1f1f1;
+.side-nav-sections a:hover {
+    color:#999999 !important;
 }
 
 /* Position and style the close button (top right corner) */
-.sidenav .closebtn {
+.closebtn {
     position: absolute;
     top: 0;
     right: 20px;
@@ -89,14 +92,21 @@ body{
     margin-left: 50px;
 }
 
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-#main {
-    transition: margin-left .5s;
-    padding: 20px;
+
+
+
+/* On smaller screens, where height is less than 450px, change the style of the side-nav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    #main-side-nav {padding-top: 30px;}
+    #main-side-nav a {font-size: 14px;}
 }
 
-/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 30px;}
-    .sidenav a {font-size: 14px;}
+#main-content-container{
+    transition: 0.3s; /* 0.5 second transition effect to slide in the side-nav */
+    margin-top: 7vh; /* Topbar is fixed, so need this margin to prevent overlapping*/
+}
+
+.DoneButton .button {
+
+    outline: none;
 }

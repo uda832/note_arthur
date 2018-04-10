@@ -1,0 +1,69 @@
+/*inputBar*/
+div {
+    margin:0px;border:0;padding:0;
+}
+.inputBar {
+    width: auto;
+    height: auto;
+    background-color: #DDDDDD;
+
+}
+
+.main-content-container .inputBar .first {
+        width: 450px;
+        margin: auto;
+        overflow:hidden;
+    }
+.form-group {
+        width: 400px;
+        height: 22px;
+        display: inline-block;
+    }
+.form-group1 {
+    width: 400px;
+    display: inline-block;
+    margin: auto
+}
+.DoneButton {
+        display: inline-block;
+        /* height: 50%;
+        width: 50%; */
+        vertical-align: middle;
+    }
+.button {
+    background-color: #DDDDDD; /* Green */
+    border: none;
+    width: 47.2px;
+    border-radius: 50%;
+    position: absolute;
+    top: 65px;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    font-weight: bold;
+}
+.button4 {
+    background-color: white;
+    color: black;
+    border: 2px solid #7c7575;
+}
+
+    .button4:hover {
+        background-color: #7c7575;
+    }
+
+ .add_note{
+     position:absolute;
+     width:30px;
+     height:30px;
+     top:95px;
+     left:100px;
+     z-index:99;
+ }

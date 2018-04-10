@@ -35,14 +35,26 @@ var DataStore = [];         //global object used to pass data back/forth between
 
 //Reads from the DataStore to update the DOM
 function updateDOMFromDataStore() {
+    //Render the side-nav
+    var $sectionsContainer = $("#side-nav-sections");
+    var contentSideNav = "";
+    for (var s = DataStore.length - 1; s >= 0; --s) {
+        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
+    }
+    $sectionsContainer.html(contentSideNav);
+
+
+    //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
-    for (var s = 0; s < DataStore.length; ++s) {
+    for (var s = DataStore.length - 1; s >= 0; --s) {
         //Render each section 
         var curSection = 
             `<li id="section-` + s +`" class="section">
                 <div class='card'>
-                    <div class='card-header'>` + DataStore[s].title + `</div>
+                    <div class='card-header'>
+                        <span id='section-text-` + s + `' class='section-text'>` + DataStore[s].title + `</span>
+                    </div>
                     <ul class="list-group list-group-flush notes-list">`;
 
         for (var i = 0; i < DataStore[s].notes.length; ++i) {
@@ -61,7 +73,7 @@ function updateDOMFromDataStore() {
 function initPage() {
     //Populate the DataStore
     //----------------------------------
-    dataStoreJSON ='[{  "id":0, "title":"Python", "notes":[  {"text": "do Python hw", "tags": ["hw", "school", "spring"]}, {"text": "install django", "tags": ["project", "school", "spring"]} ] }, {  "id":1, "title":"Software Eng", "notes":[  {"text": "complete presentation review", "tags": ["hw", "school", "spring"]}, {"text": "schedule next team arthur meeting", "tags": ["hw", "school", "spring"]} ] }]';
+    dataStoreJSON = '[{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]}]';
     DataStore = [];         //global object used to pass data back/forth between server
     try {
         DataStore = JSON.parse(dataStoreJSON);
@@ -74,12 +86,40 @@ function initPage() {
     //----------------------------------------
     updateDOMFromDataStore();
 
-    createListeners();
+    postProcessing();
 }
 
-function createListeners() {
+function postProcessing() {
 
-    //Click to Edit listener
+    //Sections -- Click to Edit listener for
+    //Notes -- Click to Edit listener for
+    $('.section-text').editable(function(value, settings){
+        // console.log("DEBUG: editing")
+        // console.log(this);
+        // console.log(value);
+        // console.log(settings);
+
+        //Modify the DataStore
+        //-------------------------------------------------------
+        var idTail = this.id.substring("section-text-".length);
+        var sectionId = parseInt(idTail);
+
+    
+        console.log("Updating DataStore");
+        //Update the value in the DataStore
+        DataStore[sectionId].title = value;
+
+        return(value);
+    }, {
+        event       : 'click',
+        cssclass    : 'section-text-editing',
+        type        : 'text',
+        placeholder : "Edit...",
+        tooltip     : 'Click to Edit...',
+        width       : "100%",
+        
+    });
+    //Notes -- Click to Edit listener for
     $('.note-text-container').editable(function(value, settings){
         // console.log("DEBUG: editing")
         // console.log(this);
@@ -115,5 +155,45 @@ function createListeners() {
         width       : "100%",
         
     });
-   
+    
+    //Custom Scrollbar for the Side Nav
+    $("#side-nav-sections").mCustomScrollbar({
+        theme: "minimal-dark",
+    });
+
+    //Side Nav click handler
+    $(".side-nav-link").click(function(){
+        $(".side-nav-link").removeClass("active");
+        $(this).addClass("active");
+
+    });
 }
+
+//This function sends an ajax request to the server to save the data
+function saveDataStore() {
+    console.log("DEBUG: invoking saveDataStore");
+
+	var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var tail = '/save';
+    var url = head + tail;
+    var dsJSON = encodeURIComponent(JSON.stringify(DataStore));
+    var res = "-1";
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        data: {
+            json: dsJSON,
+        },
+        success: function(r) {
+            if(r  == "success") {
+                console.log("save successful");
+            }
+            else {
+                console.log("save failed");
+            }
+        }
+    });
+}
+
