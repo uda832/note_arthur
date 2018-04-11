@@ -76,10 +76,15 @@ def register():
     '''if current_user.is_authenticated:
         return redirect(url_for('index'))'''
     form = RegistrationForm()
+    con = db.engine.connect()
     if form.validate_on_submit():
-        user = User(username=form.username.data, email=form.email.data)
-        user.set_password(form.password.data)
-        db.session.add(user)
+        '''user = User(username=form.username.data, email=form.email.data)'''
+        '''user.set_password(form.password.data)'''
+        username=form.username.data
+        email=form.email.data
+        password_hash=generate_password_hash(form.password.data)
+        '''db.session.add(user)'''
+        con.execute('INSERT INTO User (username,email,password_hash) VALUES ("{0}","{1}","{2}")'.format(username,email,password_hash))
         db.session.commit()
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
@@ -172,11 +177,12 @@ def build_json_string(userno):
     5 -- tags
     '''
 
-    sql_sections = '''
+    sql_sections = 'SELECT * FROM Section WHERE user_id = {0}'.format(userno)
+    '''
         SELECT * 
         FROM Section 
         WHERE user_id = {0}
-    ''' .format(userno)
+    .format(userno)'''
 
     con = db.engine.connect()
     table = con.execute(sql_sections)
@@ -191,7 +197,8 @@ def build_json_string(userno):
         cur_section.title = row[1]
         cur_section.notes = []
 
-        sql_notes = '''
+        sql_notes = 'SELECT * FROM Note WHERE section_id = "{0}"'.format(cur_section.id)
+        '''
             SELECT * 
             FROM Note 
             WHERE section_id = {0} 
