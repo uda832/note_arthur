@@ -101,7 +101,8 @@ def save_request():
     ds = json.loads(dsJSON)     # Build the DataStore object from the JSON
     
     try:
-        update_db_from_datastore(ds)
+        # update_db_from_datastore(ds)
+        pass
     except e:
         print("save_request failed: {}".format(e))
 
@@ -112,86 +113,127 @@ def update_db_from_datastore(ds):
         Take the DataStore object sent from the Client, and write to the DB
     '''
     userno = 1
-    
-    for section in ds:
-        # Check if the current section already exists
+    try:
+        for section in ds:
+            # Check if the current section already exists
 
-        con = db.engine.connect()
-        table = con.execute(my_sql)
-        section_rows = table.fetchall()
+            con = db.engine.connect()
+            table = con.execute(my_sql)
+            section_rows = table.fetchall()
 
 
-        if section['status'] == 0:
-            continue
-        elif section['status'] == 1: # Modified
-            sql_section '''
-                UPDATE Section
-                SET body = ''' + section['title'] + '''
-                WHERE id = ''' + section.id '''
-            '''
+            if section['status'] == 0:   # Untouched -- skip
+                continue
+            elif section['status'] == 1: # Modified
+                sql_section '''
+                    UPDATE Section
+                    SET body = ''' + section['title'] + '''
+                    WHERE id = ''' + section['id'] '''
+                '''
+
+                # Iterator over notes and perform the same op
+                for note in section['notes']:
+
+                    if note['status'] == 0: # Untouched -- do nothing
+                        continue
+                    elif note['status'] == 1: # Modified
+                        sql_note = """
+                            UPDATE Note
+                            SET body = """ + note["title"] + """
+                            WHERE id = """ + note["id"] + """
+                        """
+                    elif note['status'] == 2: # Newly Created
+                        sql_note = """
+                            DECLARE @BODY as nvarchar(max) = '""" + note["text"] + """'
+                            DECLARE @USERID as integer = """ + userno + """
+                            DECLARE @SECTIONID as integer = """ + section["id"] + """
+
+                            INSERT INTO Note 
+                            (body, user_id, section_id)
+                            VALUES
+                            (@BODY, @USERID, @SECTIONID)
+                            """
+                    elif note['status'] == -1:
+                        sql_note = """
+                            DELETE FROM Note
+                            WHERE id = """ + note["id"] + """
+                            """
+                    else:
+                        # Treat it as 0 -- do nothing
+                        continue
+                    con.execute(sql_note)
+                    db.session.commit()
+                #end-for-notes
+
+            elif section['status'] == 2:  # Created
+                # INSERT a new Section record
+                sql_section = """
+                    DECLARE @BODY as nvarchar(max) = '""" + note["text"] + """'
+                    DECLARE @USERID as integer = """ + userno + """
+
+                    INSERT INTO Note 
+                    (body, user_id, section_id)
+                    VALUES
+                    (@BODY, @USERID)
+                    """
+                # INSERT the Note records
+                for note in section['notes']:
+                    sql_note = """
+                        DECLARE @BODY as nvarchar(max) = '""" + note["text"] + """'
+                        DECLARE @USERID as integer = """ + userno + """
+                        DECLARE @SECTIONID as integer = """ + section["id"] + """
+
+                        INSERT INTO Note 
+                        (body, user_id, section_id)
+                        VALUES
+                        (@BODY, @USERID, @SECTIONID)
+                        """
+                    con.execute(sql_note)
+                    db.session.commit()
+                #end-for-notes
+            elif section['status'] == -1: # Deleted
+            else:
+                # Treat it as 0
+                continue
+            #end-if-else
+
             con.execute(sql_section)
             db.session.commit()
 
-            # Iterator over notes and perform the same op
-            for note in section['notes']:
 
-                if note['status'] == 0:
-                    continue
-                elif note['status'] == 1: # Modified
-                elif note['status'] == 2: # Created
-                elif note['status'] == -1:
-                else:
-                    # Treat it as 0
-                    continue
-                sql_note = '''
-                '''
+            # Section already exists. So iterate over notes and perform UPDATE statements
+            if section_exists:
+                for note in section['notes']:
+                    # Perform the same check for notes 
 
+                    # If it already exists, perform UPDATE statement
 
+                    # Else, if it it doesn't exist, create a new record
 
+            # Section does not exist. Run a INSERT INTO statement
+            else:
+                my_sql_1 = '''
+                    DECLARE @NEXTKEY as int = ''' + grab_next_key() + '''
+                    DECLARE @title as nvarchar(max) = ''' + section['title'] +'''
+                    DECLARE @uid as int = ''' + grab_user_pk() +'''
+                    DECLARE @tags as nvarchar(max) = ''' + ','.join(section['tags']) +'''
 
-                con.execute(sql_note)
-                db.session.commit()
+                    INSERT INTO dataSections
+                    (sID, Title, uID, Tags, GETDATE(), GETDATE())
+                    VALUES
+                    (@NEXTKEY, @title, @uid, @tags)
+                    '''
+                run_the_real_execute_function(my_sql_1)
 
-        elif section['status'] == 2:  # Created
-        elif section['status'] == -1: # Deleted
-        else:
-            # Treat it as 0
-            continue
-        #end-if-else
+                # Do the same check and insertion or update for the dataNoteTags
 
-
-
-
-
-        # Section already exists. So iterate over notes and perform UPDATE statements
-        if section_exists:
-            for note in section['notes']:
-                # Perform the same check for notes 
-
-                # If it already exists, perform UPDATE statement
-
-                # Else, if it it doesn't exist, create a new record
-
-        # Section does not exist. Run a INSERT INTO statement
-        else:
-            my_sql_1 = '''
-                DECLARE @NEXTKEY as int = ''' + grab_next_key() + '''
-                DECLARE @title as nvarchar(max) = ''' + section['title'] +'''
-                DECLARE @uid as int = ''' + grab_user_pk() +'''
-                DECLARE @tags as nvarchar(max) = ''' + ','.join(section['tags']) +'''
-
-                INSERT INTO dataSections
-                (sID, Title, uID, Tags, GETDATE(), GETDATE())
-                VALUES
-                (@NEXTKEY, @title, @uid, @tags)
-                '''
-            run_the_real_execute_function(my_sql_1)
-
-            # Do the same check and insertion or update for the dataNoteTags
-
-            # Then insert the notes into dataNotes
-            my_sql_2 = ''' the real sql to insert each notes'''
-            run_the_real_execute_function(my_sql_1)
+                # Then insert the notes into dataNotes
+                my_sql_2 = ''' the real sql to insert each notes'''
+                run_the_real_execute_function(my_sql_1)
+    except e:
+        print("Error: update_db_from_datastore failed")
+        print(e)
+#end-update_db_from_datastore failed
 
 
 # class UserInfo:
