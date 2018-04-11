@@ -1,7 +1,7 @@
 <head>
-
     <link rel="stylesheet" href="/static/css/navStyle.css">
     <link rel="stylesheet" href="/static/css/inputbarStyle.css">
+    <link rel="stylesheet" href="/static/css/searchBarStyle.css">    
 
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -14,7 +14,6 @@
     <link href="static/lib/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
@@ -25,24 +24,16 @@
     <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
-
     <script defer src="//code.getmdl.io/1.3.0/material.min.js"></script>
-
     <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="static/lib/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-
     <script type="text/javascript" src="static/js/arthur.js"></script>
     <script type="text/javascript" src="static/js/input.js"></script>
-
+    <script type="text/javascript" src="static/js/searchbar.js"></script>
     <style>
-     
-
-
     </style>
-
 </head>
-
 <body>
     <!-- Top bar Navigation -->
     <nav class="navbar navbar-default fixed-top main-top-nav">
@@ -52,35 +43,28 @@
         <div class="navbar-brand">
             <span style="color: white; font-weight: bold;">NoteArthur</span>
         </div>
-        <div class="filler">
-            <span style="color: white; font-weight: bold;"></span>
-        </div>
-        <div class="filler">
-            <span style="color: white; font-weight: bold;"></span>
+        <div class="container-4">
+            <input type="search" id="search" placeholder="Search..">
+            <!--button type="submit" style="border-top-width: 6px; border-bottom-width: 6px;" onclick="Search"><i class="fa fa-search"></i></button-->
+            <button class="icon" onclick="Search()" onkeydown="if (event.keyCode == 13) {Search()}"><i class="fa fa-search"></i></button>
         </div>
     </nav>
-
     <!-- Side bar Navigation -->
     <script src="/static/js/navBar.js"></script>
     <div id="main-side-nav" class="side-nav">
-
         <!-- Top Bar -->
         <nav class="navbar navbar-default" style="height: 7vh; background-color: #007bff;">
             <div class="ml-auto hamburger-wrapper">
                 <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
             </div>
         </nav>
-
         <!-- List of Sections -->
         <nav  class="nav nav-pills flex-column side-nav-sections-container">
             <ul id="side-nav-sections" class="side-nav-sections">
             </ul>
-            
-          </nav>
+        </nav>
     </div>
     <!-- Use any element to open the sidenav -->
-
-
     <div id="main-content-container" class="main-content-container">
         <!-- Input Bar -->
         <div class="inputBar">
@@ -91,7 +75,7 @@
                 <div class="form-group1" id="EnterNote">
                     <div class="note_container">
                         <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown="if (event.keyCode == 13) { createNewNoteInput() }"
-                        />
+                            />
                     </div>
                 </div>
                 <div class="DoneButton">
@@ -99,7 +83,6 @@
                 </div>
             </div>
         </div>
-
         <!-- Main Content -->
         <ul id="main-content" class="mdl-grid main-content">
             <li id="section-1" class="section">
@@ -124,7 +107,6 @@
             </li>
             <li id="section-0" class="section">
                 <div class="card">
-
                     <div class="card-header">
                         <div class="card-header">
                             <span id="section-text-0" class="section-text">Python</span>
@@ -143,22 +125,17 @@
                     </ul>
                 </div>
             </li>
-
         </ul>
-
     </div>
-
-
     <script>
         //Load logic
         $(window).on("load", function () {
             var dataStoreJSON = {{json}};
             initPage();
-
+        
         });
-
+        
     </script>
-
     <!--hello Rohan and Bo-->
     <!--hello-->
 </body>

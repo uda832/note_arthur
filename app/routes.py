@@ -66,7 +66,7 @@ def main_arthur():
         - should be only accessible after the user successfully authenticates (signs in)
     '''
     userno = 1
-    json = build_json_string(userno)
+    #json = build_json_string(userno)
     
 
     return render_template('arthur.html', json=json)

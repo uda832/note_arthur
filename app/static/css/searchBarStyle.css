@@ -1,0 +1,126 @@
+.container-4{
+  overflow: hidden;
+  width: 300px;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.container-4 input#search{
+  width: 300px;
+  height: 50px;
+  background: #f8f9fa;
+  border: none;
+  font-size: 10pt;
+  float: left;
+  color: rgb(5, 5, 5);
+  padding-left: 15px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  border-radius: 5px;
+}
+
+.container-4 input#search::-webkit-input-placeholder {
+  color: #6a657e;
+}
+
+.container-4 input#search:-moz-placeholder { /* Firefox 18- */
+  color: #6a657e;  
+}
+
+.container-4 input#search::-moz-placeholder {  /* Firefox 19+ */
+  color: #6a657e;  
+}
+
+.container-4 input#search:-ms-input-placeholder {  
+  color: #6a657e;  
+}
+
+.container-4 button.icon{
+  -webkit-border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+ 
+  border: none;
+  background: #fdfdfd;
+  height: 50px;
+  width: 50px;
+  color: #0c0c0c;
+  opacity: 0;
+  font-size: 10pt;
+ 
+  -webkit-transition: all .55s ease;
+  -moz-transition: all .55s ease;
+  -ms-transition: all .55s ease;
+  -o-transition: all .55s ease;
+  transition: all .55s ease;
+}
+
+.container-4:hover button.icon, .container-4:active button.icon, .container-4:focus button.icon{
+  outline: none;
+  opacity: 1;
+  margin-left: -50px;
+}
+
+.container-4:hover button.icon:hover{
+  background: #007bff;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*SearchBar
+.topnav .search-container {
+  float: right;
+}
+
+.topnav input[type=text] {
+  padding: 6px;
+  margin-top: 8px;
+  font-size: 17px;
+  border: none;
+
+            -webkit-transition: width .55s ease;
+            -moz-transition: width .55s ease;
+            -ms-transition: width .55s ease;
+            -o-transition: width .55s ease;
+            transition: width .55s ease;
+}
+
+.topnav .search-container .icon {
+  float: right;
+  padding: 6px 10px;
+  margin-top: 8px;
+  margin-right: 16px;
+  background: #ddd;
+  font-size: 17px;
+  border: none;
+  cursor: pointer;
+  border-top-width: 6px;
+  border-bottom-width: 6px;
+}
+
+.topnav .search-container .icon:hover {
+  background: #ccc;
+}
+
+*/
