@@ -66,7 +66,7 @@ def main_arthur():
         - should be only accessible after the user successfully authenticates (signs in)
     '''
     userno = 1
-    json = build_json_string(userno)
+    # json = build_json_string(userno)
     
 
     return render_template('arthur.html', json=json)
@@ -91,33 +91,77 @@ def save_request():
         Save request handler:
         - Takes the client's AJAX request and saves the content of the DataStore to the DB
     '''
+    if not current_user.is_authenticated:
+        # Save attempted from a non-logged in user!!
+        print("Error: Save attempted from a non-logged in user.")
+        return redirect(url_for('login'))
+
     dsJSON = request.form["json"]
     dsJSON = unquote(dsJSON)
     ds = json.loads(dsJSON)     # Build the DataStore object from the JSON
     
-
-    # Note to Bo, Rohan, etc. (everyone that's setting up the DB access logic)
-    #   At this point, you can access the exact DataStore object which contains the new notes 
-    #   I've written a demo function that iterates over the DataStore and accesses each information
-    #   Please reference this and write the function to run the INSERT sql statements
-    #update_db_from_datastore_demo(ds)
+    try:
+        update_db_from_datastore(ds)
+    except e:
+        print("save_request failed: {}".format(e))
 
     return "success"
-"""
-def update_db_from_datastore_demo(ds):
+
+def update_db_from_datastore(ds):
     '''
-        Example function to demonstrate how we will access the DataStore object
+        Take the DataStore object sent from the Client, and write to the DB
     '''
-    user_name = "Uda Yeruultsengel" # Note: this should probably be set somewhere globally for each request
+    userno = 1
     
     for section in ds:
         # Check if the current section already exists
-        my_sql = '''
-            SELECT TOP 1 FROM dataSections A INNER JOIN dataUsers as B ON A.uID = B.uID
-            WHERE A.uID = ''' + user_name + ''' AND A.Title = ''' + section['title'] + '''
+
+        con = db.engine.connect()
+        table = con.execute(my_sql)
+        section_rows = table.fetchall()
+
+
+        if section['status'] == 0:
+            continue
+        elif section['status'] == 1: # Modified
+            sql_section '''
+                UPDATE Section
+                SET body = ''' + section['title'] + '''
+                WHERE id = ''' + section.id '''
             '''
-        # Note: this is a pseudo function 
-        section_exists = check_if_sql_returns_a_record(my_sql)
+            con.execute(sql_section)
+            db.session.commit()
+
+            # Iterator over notes and perform the same op
+            for note in section['notes']:
+
+                if note['status'] == 0:
+                    continue
+                elif note['status'] == 1: # Modified
+                elif note['status'] == 2: # Created
+                elif note['status'] == -1:
+                else:
+                    # Treat it as 0
+                    continue
+                sql_note = '''
+                '''
+
+
+
+
+                con.execute(sql_note)
+                db.session.commit()
+
+        elif section['status'] == 2:  # Created
+        elif section['status'] == -1: # Deleted
+        else:
+            # Treat it as 0
+            continue
+        #end-if-else
+
+
+
+
 
         # Section already exists. So iterate over notes and perform UPDATE statements
         if section_exists:
@@ -148,7 +192,6 @@ def update_db_from_datastore_demo(ds):
             # Then insert the notes into dataNotes
             my_sql_2 = ''' the real sql to insert each notes'''
             run_the_real_execute_function(my_sql_1)
-"""
 
 
 # class UserInfo:
@@ -203,6 +246,7 @@ def build_json_string(userno):
 
         # Populate current section's notes array
         for row in notes_rows:
+            cur_note = {}
             cur_note.id = row[0]
             cur_note.text = row[1]
             cur_note.tags = []  # Default to empty right now
