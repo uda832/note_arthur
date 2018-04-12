@@ -10,6 +10,10 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+class SectionForm(FlaskForm):
+    body = StringField('Body', validators=[DataRequired()])
+    submit = SubmitField('Enter new section and note')
+
 
 class RegistrationForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])
