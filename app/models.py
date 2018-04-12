@@ -16,10 +16,10 @@ class User(UserMixin, db.Model):
     def __repr__(self):
         return '<User {}>'.format(self.username)
 
-    def set_password(self, password):
+    def set_password(self,password):
         self.password_hash = generate_password_hash(password)
 
-    def check_password(self, password):
+    def check_password(self,password):
         return check_password_hash(self.password_hash, password)
 
 
@@ -45,7 +45,7 @@ class Note(db.Model):
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    note_id = db.Column(db.Integer, db.ForeignKey('section.id'))
+    section_id = db.Column(db.Integer, db.ForeignKey('section.id'))
     tags = db.relationship('Tag', backref='note', lazy='dynamic')
 
     def __repr__(self):
