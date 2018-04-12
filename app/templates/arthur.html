@@ -1,9 +1,7 @@
-<head>
+    <head>
 
     <!-- This is the navBar Code: https://www.w3schools.com/howto/howto_js_sidenav.asp -->
     <link rel="stylesheet" href="/static/css/navStyle.css">
-    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
-
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -26,11 +24,8 @@
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
     <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-
-
     <script type="text/javascript" src="static/js/arthur.js"></script>
     <script type="text/javascript" src="static/js/input.js"></script>
-
     <style>
         #main-content {
             list-style-type: none;
@@ -52,84 +47,104 @@
             cursor: pointer;
         }
     </style>
-
+    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
 </head>
-<body>
-    <!-- Top bar Navigation -->
-    <div class="topnav" id="myTopnav">
-        <a href="#home" class="active"><span onclick="openNav()">open</span></a>
-        <href="javascript:void(0);" class="title">NoteArthur</a>
-        <!-- <a href="#contact">Contact</a>
-        <a href="#about">About</a> -->
-        <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
-      </div>
+    <body>
+        <!-- Top bar Navigation -->
+        <div class="topnav" id="myTopnav">
+            <a href="#home" class="active"><span onclick="openNav()">open</span></a>
+            <href ="javascript:void(0);" class="title">
+                NoteArthur</a>
+                <!-- <a href="#contact">Contact</a>
+            <a href="#about">About</a> -->
+                <a href="javascript:void(0);" class="icon" onclick="myFunction()">&#9776;</a>
+        </div>
 
 
-    <!-- Side bar Navigation -->
-    <script src="/static/js/navBar.js"></script>
-    <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-        <a href="#">Something1</a>
-        <a href="#">Something2</a>
-        <a href="#">Something3</a>
-        <a href="#">Something4</a>
-      </div>
-      <!-- Use any element to open the sidenav -->
-      
-      
-    <div id="main-content-container" class="main-content-container">
-        <div id="main-content-container" class="inputBar">
-            <div class="first">
-                <div class="form-group">
-                    <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
-                </div>
-                <div class="form-group1" id="EnterNote">
-                    <div class="note_container">
-                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..."
-                               onkeydown="if (event.keyCode == 13) { test() }"/>
+        <!-- Side bar Navigation -->
+        <script src="/static/js/navBar.js"></script>
+        <div id="mySidenav" class="sidenav">
+            <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+            <a href="#">Something1</a>
+            <a href="#">Something2</a>
+            <a href="#">Something3</a>
+            <a href="#">Something4</a>
+        </div>
+        <div id="main-content-container" class="main-content-container">
+            <ul id="main-content" class="main-content"></ul>
+        </div>
+        <style>
+            .modal {
+                display: none; /* Hidden by default */
+                position: fixed; /* Stay in place */
+                z-index: 1; /* Sit on top */
+                padding-top: 100px; /* Location of the box */
+                left: 0;
+                top: 0;
+                width: 100%; /* Full width */
+                height: 100%; /* Full height */
+                overflow: auto; /* Enable scroll if needed */
+                background-color: rgb(0,0,0); /* Fallback color */
+                background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+        </style>
+        <!-- Trigger/Open The Modal -->
+        <div id="myBtn-content" class="myBtn-content1">
+            <button id="myBtn">+</button>
+        </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="main-content-container" class="main-content-container">
+                    <div id="main-content-container" class="inputBar">
+                        <div class="first">
+                            <div class="form-group">
+                                <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
+                            </div>
+                            <div class="form-group1" id="EnterNote">
+                                <div class="note_container">
+                                    <div>
+                                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote-1" placeholder="Take a Note..."
+                                               onkeydown="if (event.keyCode == 13) { test() }" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="DoneButton">
+                                <button class="button button4" onclick="DoneFunction()">+</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="DoneButton">
-                    <button class="button button4" onclick="DoneFunction()">+</button>
                 </div>
             </div>
         </div>
-    </div>
-    <div id="main-content-container" class="main-content-container">
-        <ul id="main-content" class="main-content">
-            <li id="section-0" class="section">
-                <div>
-                    <div>SectionHeader</div>
-                    <ul class="notes-list">
-                        <li>Prep for Python exam</li>
-                        <li>Install Django</li>
-                        <li>Turn in SW essay due on 02/27</li>
-                    </ul>
-                </div>
-            </li>
-
-            <li id="section-1" class="section">
-                <div>
-                    <div>SectionHeader</div>
-                    <ul class="notes-list">
-                        <li>Prep for Python exam</li>
-                        <li>Install Django</li>
-                        <li>Turn in SW essay due on 12/27</li>
-                    </ul>
-                </div>
-            </li>
-
-        </ul>
-
-
-    </div>
-        </div>
-
 
         <script>
-
-
-
+            var modal = document.getElementById('myModal');
+            var btn = document.getElementById("myBtn");
+            var span = document.getElementsByClassName("close")[0];
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+            span.onclick = function () {
+                modal.style.display = "none";
+            }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('input').each(function () {
+                    alert($(this).attr('id'));
+                });
+            });
+        </script>
+        <script>
             //Load logic
             $(window).on("load", function () {
 
@@ -141,4 +156,4 @@
 
         <!--hello Rohan and Bo-->
         <!--hello-->
-</body>
+    </body>
