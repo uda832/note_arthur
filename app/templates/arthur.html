@@ -28,11 +28,9 @@
     <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="static/lib/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script type="text/javascript" src="static/js/arthur.js"></script>
-    <script type="text/javascript" src="static/js/input.js"></script>
-    <script type="text/javascript" src="static/js/searchbar.js"></script>
-    <style>
-    </style>
+    <script type="text/javascript" src="/static/js/arthur.js"></script>
+    <script type="text/javascript" src="/static/js/input.js"></script>
+    <script type="text/javascript" src="/static/js/searchbar.js"></script>
 </head>
 <body>
     <!-- Top bar Navigation -->
@@ -43,10 +41,10 @@
         <div class="navbar-brand">
             <span style="color: white; font-weight: bold;">NoteArthur</span>
         </div>
-        <div class="container-4">
-            <input type="search" id="search" placeholder="Search..">
+        <div class="search-bar">
+            <input type="search" id="search" placeholder="Search.." onkeydown="if (event.keyCode == 13) { Search() }">
             <!--button type="submit" style="border-top-width: 6px; border-bottom-width: 6px;" onclick="Search"><i class="fa fa-search"></i></button-->
-            <button class="icon" onclick="Search()" onkeydown="if (event.keyCode == 13) {Search()}"><i class="fa fa-search"></i></button>
+            <button class="icon" onclick="Search()"><i class="fa fa-search"></i></button>
         </div>
     </nav>
     <!-- Side bar Navigation -->
@@ -130,7 +128,7 @@
     <script>
         //Load logic
         $(window).on("load", function () {
-            var dataStoreJSON = {{json}};
+            //var dataStoreJSON = {{json}};
             initPage();
         
         });

@@ -32,12 +32,15 @@ var DataStore = [];         //global object used to pass data back/forth between
     
 
 //Reads from the DataStore to update the DOM
-function updateDOMFromDataStore() {
+function updateDOMFromDataStore(DS) {
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
+
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
-    for (var s = DataStore.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
+    for (var s = ds.length - 1; s >= 0; --s) {
+        contentSideNav += `<a id="side-nav-` + ds[s].id + `" class="nav-link side-nav-link">` + ds[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);
 
@@ -45,18 +48,18 @@ function updateDOMFromDataStore() {
     //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
-    for (var s = DataStore.length - 1; s >= 0; --s) {
+    for (var s = ds.length - 1; s >= 0; --s) {
         //Render each section 
         var curSection = 
             `<li id="section-` + s +`" class="section">
                 <div class='card'>
                     <div class='card-header'>
-                        <span id='section-text-` + s + `' class='section-text'>` + DataStore[s].title + `</span>
+                        <span id='section-text-` + s + `' class='section-text'>` + ds[s].title + `</span>
                     </div>
                     <ul class="list-group list-group-flush notes-list">`;
 
-        for (var i = 0; i < DataStore[s].notes.length; ++i) {
-            curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ DataStore[s].notes[i].text +`</a></li>`;
+        for (var i = 0; i < ds[s].notes.length; ++i) {
+            curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ ds[s].notes[i].text +`</a></li>`;
         }
         curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-container note-text-addl-container'><a class='note-text note-text-addl'>+</a></li>`;
         curSection += `           
@@ -71,6 +74,8 @@ function updateDOMFromDataStore() {
 function initPage() {
     //Populate the DataStore
     //----------------------------------
+
+    dataStoreJSON = '[{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]},{"id":0,"title":"Python","notes":[{"text":"do Python hw","tags":["hw","school","spring"]},{"text":"install django","tags":["project","school","spring"]}]},{"id":1,"title":"Software Eng","notes":[{"text":"complete presentation review","tags":["hw","school","spring"]},{"text":"schedule next team arthur meeting","tags":["hw","school","spring"]}]}]';
     DataStore = [];         //global object used to pass data back/forth between server
     try {
         DataStore = JSON.parse(dataStoreJSON); //Note: this gets populated by the server side during load

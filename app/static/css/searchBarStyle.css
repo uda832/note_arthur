@@ -1,11 +1,11 @@
-.container-4{
+.search-bar{
   overflow: hidden;
   width: 300px;
   vertical-align: middle;
   white-space: nowrap;
 }
 
-.container-4 input#search{
+.search-bar input#search{
   width: 300px;
   height: 50px;
   background: #f8f9fa;
@@ -19,23 +19,23 @@
   border-radius: 5px;
 }
 
-.container-4 input#search::-webkit-input-placeholder {
+.search-bar input#search::-webkit-input-placeholder {
   color: #6a657e;
 }
 
-.container-4 input#search:-moz-placeholder { /* Firefox 18- */
+.search-bar input#search:-moz-placeholder { /* Firefox 18- */
   color: #6a657e;  
 }
 
-.container-4 input#search::-moz-placeholder {  /* Firefox 19+ */
+.search-bar input#search::-moz-placeholder {  /* Firefox 19+ */
   color: #6a657e;  
 }
 
-.container-4 input#search:-ms-input-placeholder {  
+.search-bar input#search:-ms-input-placeholder {  
   color: #6a657e;  
 }
 
-.container-4 button.icon{
+.search-bar button.icon{
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
   -moz-border-radius-topright: 5px;
@@ -58,13 +58,13 @@
   transition: all .55s ease;
 }
 
-.container-4:hover button.icon, .container-4:active button.icon, .container-4:focus button.icon{
+.search-bar:hover button.icon, .container-4:active button.icon, .container-4:focus button.icon{
   outline: none;
   opacity: 1;
   margin-left: -50px;
 }
 
-.container-4:hover button.icon:hover{
+.search-bar:hover button.icon:hover{
   background: #007bff;
 }
 
