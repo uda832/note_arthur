@@ -66,7 +66,11 @@ def main_arthur():
         Main page:
         - should be only accessible after the user successfully authenticates (signs in)
     '''
-    #json = buildJSONstring()
+    json = build_json_string(current_user.get_id())
+    print(json)
+    con = db.engine.connect()
+    sections = con.execute('SELECT * FROM Note').fetchall()
+    print(sections)
     return render_template('arthur.html', json=json)
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -188,7 +192,7 @@ def build_json_string(userno):
     4 -- tags
     '''
 
-    sql_sections = 'SELECT * FROM Section WHERE user_id = "{0}"'.format(userno)
+    sql_sections = 'SELECT * FROM Section WHERE user_id = {0}'.format(userno)
 
     con = db.engine.connect()
     table = con.execute(sql_sections)
@@ -199,15 +203,15 @@ def build_json_string(userno):
     # Populate the DataStore with sections
     for row in sections_rows:
         cur_section = {}
-        cur_section.id = row[0]
-        cur_section.title = row[1]
-        cur_section.notes = []
+        cur_section['id'] = row[0]
+        cur_section['title'] = row[1]
+        cur_section['notes'] = []
 
         sql_notes = '''
             SELECT * 
             FROM Note 
             WHERE section_id = {0} 
-        ''' .format(cur_section.id)
+        ''' .format(cur_section['id'])
 
         con = db.engine.connect()
         table = con.execute(sql_notes)
@@ -216,11 +220,11 @@ def build_json_string(userno):
         # Populate current section's notes array
         for row in notes_rows:
             cur_note = {}
-            cur_note.id = row[0]
-            cur_note.text = row[1]
-            cur_note.tags = []  # Default to empty right now
+            cur_note['id'] = row[0]
+            cur_note['text'] = row[1]
+            cur_note['tags'] = []  # Default to empty right now
 
-            cur_section.notes.append(cur_note)
+            cur_section['notes'].append(cur_note)
         #end-for-notes
 
         # Add this to the
