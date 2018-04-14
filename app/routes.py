@@ -69,7 +69,7 @@ def main_arthur():
     json = build_json_string(current_user.get_id())
     print(json)
     con = db.engine.connect()
-    sections = con.execute('SELECT * FROM Note').fetchall()
+    sections = con.execute('SELECT * FROM Note WHERE user_id = 1').fetchall()
     print(sections)
     return render_template('arthur.html', json=json)
 
@@ -101,7 +101,8 @@ def insert():
     if form.validate_on_submit():
         id = current_user.get_id()
         body = form.body.data
-        con.execute('INSERT INTO Section(body, user_id) VALUES ("{0}", {1})'.format(body, id))
+        con.execute('INSERT INTO Section(body,user_id) VALUES ("aaaaaaaaaaaaa",{0})'.format(id))
+        con.execute('INSERT INTO Note(body, user_id) VALUES ("{0}", {1})'.format(body, id))
         db.session.commit()
         flash('Successfully created a new section!')
         return redirect(url_for('login'))
