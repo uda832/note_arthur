@@ -182,16 +182,7 @@ def update_db_from_datastore(ds):
                             WHERE id = """ + str(note["id"]) + """
                         """
                     elif note['status'] == 2: # Newly Created
-                        sql_note = """
-                            DECLARE @BODY as nvarchar(max) = '""" + note["text"] + """'
-                            DECLARE @USERID as integer = """ + str(userno) + """
-                            DECLARE @SECTIONID as integer = """ + str(section["id"]) + """
-
-                            INSERT INTO Note 
-                            (body, user_id, section_id)
-                            VALUES
-                            (@BODY, @USERID, @SECTIONID)
-                            """
+                        sql_note = "INSERT INTO Note (body, user_id, section_id) VALUES (" + note["text"] ", " + str(userno) + ", " + str(section["id"])")
                     elif note['status'] == -1:
                         sql_note = """
                             DELETE FROM Note
@@ -209,15 +200,7 @@ def update_db_from_datastore(ds):
             elif section['status'] == 2:  # Created
                 print("DEBUG4: ")
                 # INSERT a new Section record
-                sql_section = """
-                    DECLARE @BODY as nvarchar(max) = '""" + section["title"] + """'
-                    DECLARE @USERID as integer = """ + str(userno) + """
-
-                    INSERT INTO Section 
-                    (body, user_id)
-                    VALUES
-                    (@BODY, @USERID)
-                    """
+                sql_section = " INSERT INTO Section (body, user_id) VALUES (section["title"], str(userno))"
 
                 print("DEBUG5: ")
                 # INSERT the Note records
