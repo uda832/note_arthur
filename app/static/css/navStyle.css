@@ -110,3 +110,7 @@ body{
 
     outline: none;
 }
+#input-content-container {
+    transition: 0.3s; /* 0.5 second transition effect to slide in the side-nav */
+    margin-top: 7vh; /* Topbar is fixed, so need this margin to prevent overlapping*/
+}

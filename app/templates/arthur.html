@@ -1,12 +1,12 @@
 <head>
 
     <link rel="stylesheet" href="/static/css/navStyle.css">
-    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
+    
 
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
-    <link href="//cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
     <!--<link href="../../acc/libraries/bootstrap-side-navbar/source/assets/stylesheets/navbar-fixed-side.css" rel="stylesheet">-->
     <!--<link href="../../acc/libraries/bootstrap-material-design/css/style.css" rel="stylesheet">-->
     <!-- <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet"> -->
@@ -36,11 +36,9 @@
     <script type="text/javascript" src="static/js/input.js"></script>
 
     <style>
-     
-
 
     </style>
-
+    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
 </head>
 
 <body>
@@ -49,7 +47,7 @@
         <div class="hamburger-wrapper">
             <div class="hamburger hamburger-opener" onclick="openNav()">☰</div>
         </div>
-        <div class="navbar-brand">
+        <div class="navbar-brand" style="margin-left: 10%">
             <span style="color: white; font-weight: bold;">NoteArthur</span>
         </div>
         <div class="filler">
@@ -59,47 +57,7 @@
             <span style="color: white; font-weight: bold;"></span>
         </div>
     </nav>
-
-    <!-- Side bar Navigation -->
-    <script src="/static/js/navBar.js"></script>
-    <div id="main-side-nav" class="side-nav">
-
-        <!-- Top Bar -->
-        <nav class="navbar navbar-default" style="height: 7vh; background-color: #007bff;">
-            <div class="ml-auto hamburger-wrapper">
-                <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
-            </div>
-        </nav>
-
-        <!-- List of Sections -->
-        <nav  class="nav nav-pills flex-column side-nav-sections-container">
-            <ul id="side-nav-sections" class="side-nav-sections">
-            </ul>
-            
-          </nav>
-    </div>
-    <!-- Use any element to open the sidenav -->
-
-
     <div id="main-content-container" class="main-content-container">
-        <!-- Input Bar -->
-        <div class="inputBar">
-            <div class="first">
-                <div class="form-group">
-                    <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
-                </div>
-                <div class="form-group1" id="EnterNote">
-                    <div class="note_container">
-                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote" placeholder="Take a Note..." onkeydown="if (event.keyCode == 13) { createNewNoteInput() }"
-                        />
-                    </div>
-                </div>
-                <div class="DoneButton">
-                    <button class="button button4" onclick="DoneFunction()">+</button>
-                </div>
-            </div>
-        </div>
-
         <!-- Main Content -->
         <ul id="main-content" class="mdl-grid main-content">
             <li id="section-1" class="section">
@@ -143,11 +101,74 @@
                     </ul>
                 </div>
             </li>
-
         </ul>
-
     </div>
+    <!-- Side bar Navigation -->
+    <script src="/static/js/navBar.js"></script>
+    <!-- Trigger/Open The Modal -->
+    <div id="myBtn-content" class="myBtn-content1">
+        <button id="myBtn">+</button>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal-arthur">
 
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="input-modal-container">
+                <div id="input-modal" class="inputBar">
+                    <div class="first">
+                        <div class="form-group">
+                            <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
+                        </div>
+                        <div class="form-group1" id="EnterNote">
+                            <div class="note_container">
+                                <div>
+                                    <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote-1" placeholder="Take a Note..." />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="DoneButton">
+                            <button class="button button4" onclick="DoneFunction()">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var modal = document.getElementById('myModal');
+        var btn = document.getElementById("myBtn");
+        var span = document.getElementsByClassName("close")[0];
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        span.onclick = function () {
+            modal.style.display = "none";
+
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <div id="main-side-nav" class="side-nav">
+
+        <!-- Top Bar -->
+        <nav class="navbar navbar-default" style="height: 7vh; background-color: #007bff;">
+            <div class="ml-auto hamburger-wrapper">
+                <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
+            </div>
+        </nav>
+
+        <!-- List of Sections -->
+        <nav class="nav nav-pills flex-column side-nav-sections-container">
+            <ul id="side-nav-sections" class="side-nav-sections"></ul>
+
+        </nav>
+    </div>
+    <!-- Use any element to open the sidenav -->
 
     <script>
         var dataStoreJSON = "";
