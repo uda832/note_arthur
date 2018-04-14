@@ -18,17 +18,20 @@ var nub = 2;
 function add(e) {
     var add = " <div><input type='text' name='UserInput' class='form-control UserInputNote' id='UserInputNote-" + e +"' placeholder='Take a Note...'onkeydown='keyfunction()'/></div>";
     $(".note_container").append(add);
+    document.getElementById("UserInputNote-" + e).focus();
     e++;
     nub = e;
 }
 function test() {
-    //    $("#EnterNote").append('<div><input type="text" name="UserInput" class="form-control" id="UserInputNote" placeholder="Take a Note..." onkeydown= "if (event.keyCode == 13) {test()}"/></div>');
     add(nub)
+    var inputs = document.getElementsByTagName("input");
 }
 
-function Del(){
-    $("#UserInputNote-"+(nub-1)).parent('div').remove();
-    nub--;
+function Del() {
+    var x = document.activeElement.id;
+    var r = x.match(/\d+$/gi);
+    $("#UserInputNote-" + (r)).parent('div').remove();
+    --nub;
 }
 
 $(function () {
@@ -38,13 +41,32 @@ $(function () {
     $("ul, li").disableSelection();
 });
 
-function keyfunction() {
-    if (event.keyCode == 13) { test(); }
-    else if (event.keyCode == 8) {
-        temp = nub - 1;
-        var a = $("#UserInputNote-" + (temp)).val();
-        if (a.length == 0) {
-            Del();
-        }
+$(document).on("keydown", ".UserInputNote", function (event) {
+    if (event.keyCode == 13) {
+        test();
     }
+    else if (event.keyCode == 8) {
+        if (nub > 2) {
+            var x = document.activeElement.id;
+            var r = x.match(/\d+$/gi);
+            var a = $("#UserInputNote-" + (r)).val();
+            if (a.length == 0) {
+                Del();
+                document.getElementById("UserInputNote-" + (r - 1)).focus();
+                var hold = r;
+                while (hold <= (nub - 1)) {
+                    ++hold;
+                    var currentid = "UserInputNote-" + (hold);
+                    document.getElementById(currentid).id = "UserInputNote-" + (hold-1);
+                }
+                event.preventDefault();
+            }
+     
+        }
+    }  
+});
+
+function GetActiveID() {
+    var x = document.activeElement.id;
+    
 }
