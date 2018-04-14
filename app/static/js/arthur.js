@@ -30,9 +30,8 @@ function greet() {
 
 var DataStore = [];         //global object used to pass data back/forth between the client and server
     
-
-//Reads from the DataStore to update the DOM
-function updateDOMFromDataStore() {
+//Renders the Left Navigation Drawer from the DataStore
+function renderSideNavFromDataStore() {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
@@ -40,7 +39,10 @@ function updateDOMFromDataStore() {
         contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);
+}
 
+//Renders the Main Content area from the DataStore
+function renderMainContentFromDataStore() {
 
     //Render the main content
     var $mainContent = $("#main-content");
@@ -81,30 +83,27 @@ function initPage() {
 
     //Render the HTML
     //----------------------------------------
-    updateDOMFromDataStore();
-
-    postProcessing();
+    renderSideNavFromDataStore()
+    renderMainContentFromDataStore();
+    postRenderProcessing();
 }
 
-function postProcessing() {
+function postRenderProcessing() {
 
     //Sections -- Click to Edit listener for
     //Notes -- Click to Edit listener for
     $('.section-text').editable(function(value, settings){
-        // console.log("DEBUG: editing")
-        // console.log(this);
-        // console.log(value);
-        // console.log(settings);
 
         //Modify the DataStore
         //-------------------------------------------------------
         var idTail = this.id.substring("section-text-".length);
-        var sectionId = parseInt(idTail);
+        var sectionIndex = parseInt(idTail);
 
     
         console.log("Updating DataStore");
         //Update the value in the DataStore
-        DataStore[sectionId].title = value;
+        DataStore[sectionIndex].title = value;
+        DataStore[sectionIndex].status = 1;        //Set the status to modified
 
         return(value);
     }, {
@@ -125,21 +124,24 @@ function postProcessing() {
 
         //Modify the DataStore
         //-------------------------------------------------------
-        var noteId = this.id;
-        var idTail = noteId.substring("note-".length);
-        var sectionId = parseInt(idTail.split("-")[0]);
+        var noteIndex = this.id;
+        var idTail = noteIndex.substring("note-".length);
+        var sectionIndex = parseInt(idTail.split("-")[0]);
 
         //Special case: "Add new" button
         if( $(this).hasClass("note-text-addl")) {
-            //Create a new item in the DataStore[sectionId]
+            //Create a new item in the DataStore[sectionIndex]
             //IMPLEMENT_ME
             console.log("Missing Feature: note-text-addl clicked");
+            
         }
         else {
             console.log("Updating DataStore");
             //Update the value in the DataStore
-            var noteId = parseInt(idTail.split("-")[1]);
-            DataStore[sectionId].notes[noteId].text = value;
+            var noteIndex = parseInt(idTail.split("-")[1]);
+            DataStore[sectionIndex].notes[noteIndex].text = value;
+            DataStore[sectionIndex].notes[noteIndex].status = 1;  //Set the status to modified
+            DataStore[sectionIndex].status = 1;                //Set the section's status to modified
 
         }
         return(value);
@@ -150,7 +152,6 @@ function postProcessing() {
         placeholder : "Edit...",
         tooltip     : 'Click to Edit...',
         width       : "100%",
-        
     });
     
     //Custom Scrollbar for the Side Nav
@@ -186,6 +187,7 @@ function saveDataStore() {
         success: function(r) {
             if(r  == "success") {
                 console.log("save successful");
+                postSave();
             }
             else {
                 console.log("save failed");
@@ -194,10 +196,56 @@ function saveDataStore() {
     });
 }
 
+//This function updates the DataStore elements' status flags once the save request successfully returns 
+function postSave() {
+    //Iterate over the Sections
+    for(var s = 0; s < DataStore.length; ++s) {
+        switch(DataStore[s].status){
+            case 0: //Untouched
+                break;
 
-//This function sends an ajax request to the server to save the data
+            case -1:// Deleted
+                DataStore.splice(s, 1); //Remove the element 
+
+            case 1: // Modified
+                DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                //Iterate over the Notes in this Section and do the same thing
+                for(var n = 0; n < DataStore[s].notes.length; ++n) {
+                    var curNote = DataStore[s].notes[n];
+
+                    switch(curNote.status) {
+                        case 0: //Untouched
+                            break;
+        
+                        case -1:// Deleted
+                            DataStore[s].notes.splice(n, 1); //Remove the element 
+                            DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                            break;
+            
+                        case 1: // Modified
+                        case 2: // Created
+                            DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                            break;
+                    }
+                }
+                break;
+
+            case 2: // Created
+                DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                break;
+
+            default:
+                console.trace("Error: invalid status")
+        }
+    }//end-for
+    renderMainContentFromDataStore();
+    postRenderProcessing();
+}//end-postSave
+
+//DELETE Before prod
+//DEVTEST Tool -- This function sends an ajax request to the server to delete all notes and sections
 function queryAll() {
-    console.log("DEBUG: invoking saveDataStore");
+    console.log("DEBUG: invoking queryAll");
 
 	var docUrl = document.URL.replace('%20', ' ');
     var head = docUrl.substring(0, docUrl.indexOf('/'));
