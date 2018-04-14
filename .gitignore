@@ -8,4 +8,6 @@ app/__pycache__/**
 venv/*
 __pycache__/*
 .vscode/*
+migrations/*
 migrations/**
+*.db
