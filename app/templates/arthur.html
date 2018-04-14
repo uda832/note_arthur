@@ -198,9 +198,10 @@
 
 
     <script>
+        var dataStoreJSON = "";
         //Load logic
         $(window).on("load", function () {
-            var dataStoreJSON = {{json}};
+            dataStoreJSON = decodeURIComponent('{{json | safe}}');
             initPage();
 
         });

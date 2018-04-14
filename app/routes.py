@@ -66,8 +66,9 @@ def main_arthur():
         - should be only accessible after the user successfully authenticates (signs in)
     '''
     userno = 1
-    json = build_json_string(userno)
-    
+    # json = build_json_string(userno)
+
+    json = '[{"id":1,"title":"Python","notes":[{"id":1,"text":"do Python hw","tags":[], "status": 2}],"status":2}]' 
 
     return render_template('arthur.html', json=json)
 
@@ -91,64 +92,172 @@ def save_request():
         Save request handler:
         - Takes the client's AJAX request and saves the content of the DataStore to the DB
     '''
+    if not current_user.is_authenticated:
+        # Save attempted from a non-logged in user!!
+        print("Error: Save attempted from a non-logged in user.")
+        return redirect(url_for('login'))
+
     dsJSON = request.form["json"]
     dsJSON = unquote(dsJSON)
     ds = json.loads(dsJSON)     # Build the DataStore object from the JSON
     
+    try:
+        print("DEBUG1: Calling update_db_from_datastore")
+        update_db_from_datastore(ds)
 
-    # Note to Bo, Rohan, etc. (everyone that's setting up the DB access logic)
-    #   At this point, you can access the exact DataStore object which contains the new notes 
-    #   I've written a demo function that iterates over the DataStore and accesses each information
-    #   Please reference this and write the function to run the INSERT sql statements
-    #update_db_from_datastore_demo(ds)
+       
+        pass
+    except Exception as e:
+        print("save_request failed: {}".format(e))
+        raise e
 
     return "success"
-"""
-def update_db_from_datastore_demo(ds):
-    '''
-        Example function to demonstrate how we will access the DataStore object
-    '''
-    user_name = "Uda Yeruultsengel" # Note: this should probably be set somewhere globally for each request
+
+@app.route('/queryall', methods=['GET', 'POST'])
+def query_all_tables():
+    print("Print all called") 
+    # -----------------------------------------------------------
+    con = db.engine.connect()
+    sql_users = """
+        SELECT * FROM User ORDER BY id
+    """
+    sql_sections = """
+        SELECT * FROM Section ORDER BY id
+    """
+    sql_notes = """
+        SELECT * FROM Note ORDER BY id
+    """
+
+    con = db.engine.connect()
+    table_users = con.execute(sql_users)
+    table_sections = con.execute(sql_sections)
+    table_notes = con.execute(sql_notes)
+
+    user_rows = table_users.fetchall()
+    section_rows = table_sections.fetchall()
+    notes_rows = table_notes.fetchall()
     
-    for section in ds:
-        # Check if the current section already exists
-        my_sql = '''
-            SELECT TOP 1 FROM dataSections A INNER JOIN dataUsers as B ON A.uID = B.uID
-            WHERE A.uID = ''' + user_name + ''' AND A.Title = ''' + section['title'] + '''
-            '''
-        # Note: this is a pseudo function 
-        section_exists = check_if_sql_returns_a_record(my_sql)
+    str_users = "Selecting all user_rows: {}".format(user_rows)
+    str_sections = "Selecting all section_rows: {}".format(section_rows)
+    str_notes = "Selecting all notes_rows: {}".format(notes_rows)
 
-        # Section already exists. So iterate over notes and perform UPDATE statements
-        if section_exists:
-            for note in section['notes']:
-                # Perform the same check for notes 
+    return str_users + str_sections + str_notes
+#end-query_all_tables
 
-                # If it already exists, perform UPDATE statement
+def update_db_from_datastore(ds):
+    '''
+        Take the DataStore object sent from the Client, and write to the DB
+    '''
+    userno = 1
+    try:
 
-                # Else, if it it doesn't exist, create a new record
+        print("DEBUG2: inside update_db_from_datastore")
+        print("DataStore:".format(ds))
+        for section in ds:
+            # Check if the current section already exists
 
-        # Section does not exist. Run a INSERT INTO statement
-        else:
-            my_sql_1 = '''
-                DECLARE @NEXTKEY as int = ''' + grab_next_key() + '''
-                DECLARE @title as nvarchar(max) = ''' + section['title'] +'''
-                DECLARE @uid as int = ''' + grab_user_pk() +'''
-                DECLARE @tags as nvarchar(max) = ''' + ','.join(section['tags']) +'''
+            sql_section = None
+            con = db.engine.connect()
+           
+            print("DEBUG3: ")
 
-                INSERT INTO dataSections
-                (sID, Title, uID, Tags, GETDATE(), GETDATE())
-                VALUES
-                (@NEXTKEY, @title, @uid, @tags)
-                '''
-            run_the_real_execute_function(my_sql_1)
+            if section['status'] == 0:   # Untouched -- skip
+                continue
+            elif section['status'] == 1: # Modified
+                sql_section = """
+                    UPDATE Section
+                    SET body = """ + section["title"] + """
+                    WHERE id = """ + str(section["id"]) + """
+                """
 
-            # Do the same check and insertion or update for the dataNoteTags
+                # Iterator over notes and perform the same op
+                for note in section['notes']:
+                    sql_note = None
+                    if note['status'] == 0: # Untouched -- do nothing
+                        continue
+                    elif note['status'] == 1: # Modified
+                        sql_note = """
+                            UPDATE Note
+                            SET body = """ + note["title"] + """
+                            WHERE id = """ + str(note["id"]) + """
+                        """
+                    elif note['status'] == 2: # Newly Created
+                        sql_note = """
+                            DECLARE @BODY as nvarchar(max) = '""" + note["text"] + """'
+                            DECLARE @USERID as integer = """ + str(userno) + """
+                            DECLARE @SECTIONID as integer = """ + str(section["id"]) + """
 
-            # Then insert the notes into dataNotes
-            my_sql_2 = ''' the real sql to insert each notes'''
-            run_the_real_execute_function(my_sql_1)
-"""
+                            INSERT INTO Note 
+                            (body, user_id, section_id)
+                            VALUES
+                            (@BODY, @USERID, @SECTIONID)
+                            """
+                    elif note['status'] == -1:
+                        sql_note = """
+                            DELETE FROM Note
+                            WHERE id = """ + str(note["id"]) + """
+                            """
+                    else:
+                        # Treat it as 0 -- do nothing
+                        continue
+
+                    if sql_note:
+                        con.execute(sql_note)
+                        db.session.commit()
+                #end-for-notes
+
+            elif section['status'] == 2:  # Created
+                print("DEBUG4: ")
+                # INSERT a new Section record
+                sql_section = """
+                    DECLARE @BODY as nvarchar(max) = '""" + section["title"] + """'
+                    DECLARE @USERID as integer = """ + str(userno) + """
+
+                    INSERT INTO Section 
+                    (body, user_id)
+                    VALUES
+                    (@BODY, @USERID)
+                    """
+
+                print("DEBUG5: ")
+                # INSERT the Note records
+                for note in section['notes']:
+                    sql_note = """
+                        DECLARE @BODY as nvarchar(max) = '""" + note["text"] + """'
+                        DECLARE @USERID as integer = """ + str(userno) + """
+                        DECLARE @SECTIONID as integer = """ + str(section["id"]) + """
+
+                        INSERT INTO Note 
+                        (body, user_id, section_id)
+                        VALUES
+                        (@BODY, @USERID, @SECTIONID)
+                        """
+                    con.execute(sql_note)
+                    db.session.commit()
+                #end-for-notes
+            elif section['status'] == -1: # Deleted
+                sql_section = """
+                    DELETE FROM Section
+                    WHERE id = """ + str(section["id"]) + """;
+
+                    DELETE FROM Note
+                    WHERE section_id = """ + str(section['id']) + """
+                    """
+            else:
+                # Treat it as 0
+                continue
+            #end-if-else
+
+            if sql_section: 
+                con.execute(sql_section)
+                db.session.commit()
+
+        #end-for-section
+    except Exception as e:
+        print("Error: update_db_from_datastore failed")
+        print(e)
+        raise e
+#end-update_db_from_datastore failed
 
 
 # class UserInfo:
@@ -203,6 +312,7 @@ def build_json_string(userno):
 
         # Populate current section's notes array
         for row in notes_rows:
+            cur_note = {}
             cur_note.id = row[0]
             cur_note.text = row[1]
             cur_note.tags = []  # Default to empty right now

@@ -194,3 +194,28 @@ function saveDataStore() {
     });
 }
 
+
+//This function sends an ajax request to the server to save the data
+function queryAll() {
+    console.log("DEBUG: invoking saveDataStore");
+
+	var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var tail = '/queryall';
+    var url = head + tail;
+    var res = "-1";
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        success: function(r) {
+            if(r  != "") {
+                console.log("successful. results=" + r);
+            }
+            else {
+                console.log(" failed");
+            }
+        }
+    });
+}
+
