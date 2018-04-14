@@ -1,4 +1,4 @@
-<html lang="en">
+﻿<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -11,7 +11,7 @@
     {% endif %}
     <style type="text/css">
         body, td, th {
-            font-family: "Source Sans Pro", sans-serif;
+            font-family: "Helvetica","Arial",sans-serif;
         }
 
         body {
@@ -52,7 +52,7 @@
         </ul>
     </div>
 
-<script type="text/javascript" src="static/js/jquery-2.1.1.min.js"></script>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 $('#login-button').click(function(event){
 	event.preventDefault();
@@ -60,10 +60,10 @@ $('#login-button').click(function(event){
 	$('.wrapper').addClass('form-success');
 });
     $(document).ready(function () {
-        $(".thebox1 input").attr("placeholder", "Username");
-    });
-    $(document).ready(function () {
-        $(".thebox2 input").attr("placeholder", "Password");
+        $(".box.user_name input").attr("placeholder", "Username");
+        $(".box.password input").attr("placeholder", "Password");
+        $(".box.email_address input").attr("placeholder", "Email");
+        $(".box.password2 input").attr("placeholder", "Repeat Password");
     });
 </script>
 </body>
