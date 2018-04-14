@@ -1,12 +1,12 @@
 <head>
 
     <link rel="stylesheet" href="/static/css/navStyle.css">
-    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
+    
 
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
-    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" >
-    <link href="//cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/css/mdb.min.css" rel="stylesheet">
     <!--<link href="../../acc/libraries/bootstrap-side-navbar/source/assets/stylesheets/navbar-fixed-side.css" rel="stylesheet">-->
     <!--<link href="../../acc/libraries/bootstrap-material-design/css/style.css" rel="stylesheet">-->
     <!-- <link href="https://cdn.jsdelivr.net/npm/pretty-checkbox@3.0/dist/pretty-checkbox.min.css" rel="stylesheet"> -->
@@ -40,7 +40,7 @@
 
 
     </style>
-
+    <link rel="stylesheet" href="/static/css/inputbarStyle.css">
 </head>
 
 <body>
@@ -62,6 +62,54 @@
 
     <!-- Side bar Navigation -->
     <script src="/static/js/navBar.js"></script>
+<!-- Trigger/Open The Modal -->
+    <div id="myBtn-content" class="myBtn-content1">
+        <button id="myBtn">+</button>
+    </div>
+        <!-- The Modal -->
+        <div id="myModal" class="modal-arthur">
+
+            <!-- Modal content -->
+            <div class="modal-content" >
+                <span class="close">&times;</span>
+                <div id="main-content-container" class="main-content-container">
+                    <div id="main-content-container" class="inputBar">
+                        <div class="first">
+                            <div class="form-group">
+                                <input type="text" name="UserInput" class="form-control" id="UserInputTitle" placeholder="Title">
+                            </div>
+                            <div class="form-group1" id="EnterNote">
+                                <div class="note_container">
+                                    <div>
+                                        <input type="text" name="UserInput" class="form-control UserInputNote" id="UserInputNote-1" placeholder="Take a Note..."/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="DoneButton">
+                                <button class="button button4" onclick="DoneFunction()">+</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            var modal = document.getElementById('myModal');
+            var btn = document.getElementById("myBtn");
+            var span = document.getElementsByClassName("close")[0];
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+            span.onclick = function () {
+                modal.style.display = "none";
+  
+            }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+        </script>
     <div id="main-side-nav" class="side-nav">
 
         <!-- Top Bar -->
