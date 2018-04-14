@@ -5,15 +5,14 @@ div {
 .inputBar {
     width: auto;
     height: auto;
-    background-color: #DDDDDD;
-
+    background-color: rgba(221, 221, 221, 0);
 }
 
-.main-content-container .inputBar .first {
-        width: 450px;
-        margin: auto;
-        overflow:hidden;
-    }
+#input-modal-container .inputBar .first {
+    width: 450px;
+    margin: auto;
+    overflow: hidden;
+}
 .form-group {
         width: 400px;
         height: 22px;
@@ -26,8 +25,8 @@ div {
 }
 .DoneButton {
         display: inline-block;
-        /* height: 50%;
-        width: 50%; */
+        height: 50%£»
+        width: 50%£»
         vertical-align: middle;
     }
 .button {
@@ -67,3 +66,70 @@ div {
      left:100px;
      z-index:99;
  }
+
+/* The Modal (background) */
+.modal-arthur {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #e0e0e0;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+/* The Close Button */
+.close {
+    color: #212529;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#myBtn {
+    float: right;
+    border-radius: 10%;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    left:85%;
+    top:600px;
+    position:fixed;
+    overflow:hidden;
+}
+    #myBtn:hover {
+        background-color: white;
+        color: black;
+        border: 2px solid #4CAF50;
+    }
+.myBtn-content1{
+    width:93%;
+}
