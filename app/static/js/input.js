@@ -1,17 +1,30 @@
 function DoneFunction() {
     var title = $("#UserInputTitle").val();
-    var $notes = $(".UserInputNote");
-    var temp = {};
-    temp.notes = [];
-    temp.id = DataStore.length;
-    temp.title = title;
-    $notes.each(function () {
-        var noteText = this.value;
-        temp.notes.push({ text: noteText, tags: [] });
-
-    });
-    DataStore.push(temp);
-    updateDOMFromDataStore();
+    if (title == "") {
+        alert("DAM! Please enter Title !!!");
+    }
+    else {
+        var $notes = $(".UserInputNote");
+        var temp = {};
+        temp.notes = [];
+        temp.id = DataStore.length;
+        temp.title = title;
+        $notes.each(function () {
+            var noteText = this.value;
+            temp.notes.push({ text: noteText, tags: [] });
+        });
+        DataStore.push(temp);
+        updateDOMFromDataStore();
+        $(".UserInputNote").each(function () {
+            $("#UserInputTitle").val("");
+            $(this).val("");
+            $(this).parent('div').remove();
+        })
+        add(1);
+        nub = 2;
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
+    }
 }
 //increase id
 var nub = 2;
@@ -71,4 +84,7 @@ $(document).on("keydown", ".UserInputNote", function (event) {
 function GetActiveID() {
     var x = document.activeElement.id;
     
+}
+function clearinput() {
+
 }
