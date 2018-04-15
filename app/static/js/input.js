@@ -1,19 +1,34 @@
 function DoneFunction() {
-    var title = $("#UserInputTitle").val();
-    var $notes = $(".UserInputNote");
-    var temp = {};
-    temp.notes = [];
-    temp.title = title;
-    temp.status = 2;
-    $notes.each(function () {
-        var noteText = this.value;
-        temp.notes.push({ text: noteText, tags: [], status: 2 });
-
-    });
-    DataStore.push(temp);
-    renderMainContentFromDataStore();
-    renderSideNavFromDataStore();
-    postRenderProcessing();
+    if (title == "") {
+        alert("Please provide a Title for this Section."); 
+    }
+    else {
+        var title = $("#UserInputTitle").val();
+        var $notes = $(".UserInputNote");
+        var temp = {};
+        temp.notes = [];
+        temp.title = title;
+        temp.status = 2;    //Set the status to indicate it's a new section
+        temp.id = DataStore.length;
+        temp.title = title;
+        $notes.each(function () {
+            var noteText = this.value;
+            temp.notes.push({ text: noteText, tags: [], status: 2 });
+        });
+        DataStore.push(temp);
+        renderMainContentFromDataStore();
+        renderSideNavFromDataStore();
+        postRenderProcessing();
+        $(".UserInputNote").each(function () {
+            $("#UserInputTitle").val("");
+            $(this).val("");
+            $(this).parent('div').remove();
+        })
+        add(1);
+        nub = 2;
+        var modal = document.getElementById('myModal');
+        modal.style.display = "none";
+    }
 }
 //increase id
 var nub = 2;
@@ -73,4 +88,7 @@ $(document).on("keydown", ".UserInputNote", function (event) {
 function GetActiveID() {
     var x = document.activeElement.id;
     
+}
+function clearinput() {
+
 }

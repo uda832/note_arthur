@@ -110,7 +110,7 @@ function postRenderProcessing() {
         event       : 'click',
         cssclass    : 'section-text-editing',
         type        : 'text',
-        placeholder : 'Edit...',
+        placeholder : ' ',
         tooltip     : 'Click to Edit...',
         width       : "100%",
         
