@@ -39,7 +39,7 @@ function Del() {
 $(function () {
     $("#main-content").sortable({
         revert: true,
-        cancel: '.note-text-container',
+        cancel: '.note-text-container section-text',
         delay: 300                          //On mobile, long press to start dragging
     });
     $("ul, li").disableSelection();

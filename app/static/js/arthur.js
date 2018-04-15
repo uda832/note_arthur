@@ -60,7 +60,7 @@ function renderMainContentFromDataStore() {
         for (var i = 0; i < DataStore[s].notes.length; ++i) {
             curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ DataStore[s].notes[i].text +`</a></li>`;
         }
-        curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-container note-text-addl-container'><a class='note-text note-text-addl'>+</a></li>`;
+        curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-addl-container'></li>`;
         curSection += `           
                     </ul>
                 </div>
@@ -110,20 +110,31 @@ function postRenderProcessing() {
         event       : 'click',
         cssclass    : 'section-text-editing',
         type        : 'text',
-        placeholder : "Edit...",
+        placeholder : 'Edit...',
         tooltip     : 'Click to Edit...',
         width       : "100%",
         
     });
-    //Notes -- Click to Edit listener for
+    //Notes -- Click to Edit listener 
     $('.note-text-container').editable(noteEditableHandler, {
         event       : 'click',
         cssclass    : 'note-text-editing',
         type        : 'text',
-        placeholder : "Edit...",
+        placeholder : ' ',
         tooltip     : 'Click to Edit...',
         width       : "100%",
     });
+  
+    //Notes -- Click to Edit listener 
+    $('.note-text-addl-container').editable(noteEditableHandler, {
+        event       : 'click',
+        cssclass    : 'note-text-editing',
+        type        : 'text',
+        placeholder : '+',
+        tooltip     : 'Click to Edit...',
+        width       : "100%",
+    });
+       
     
     //Custom Scrollbar for the Side Nav
     $("#side-nav-sections").mCustomScrollbar({
@@ -150,12 +161,8 @@ function noteEditableHandler(value, settings){
     var idTail = noteIndex.substring("note-".length);
     var sectionIndex = parseInt(idTail.split("-")[0]);
 
-    //Special case: "Add new" button
+    //Special case: "Add new note" button
     if( $(this).hasClass("note-text-addl-container")) {
-        //Create a new item in the DataStore[sectionIndex]
-        //IMPLEMENT_ME
-        console.log("Missing Feature: note-text-addl clicked");
-        $(this).html("");
 
         var newNote = {};
         newNote.id = -1;
@@ -168,18 +175,18 @@ function noteEditableHandler(value, settings){
         var newNoteIndex = DataStore[sectionIndex].notes.length - 1;
         this.id = "note-" + sectionIndex + "-" + newNoteIndex;
         this.className = "list-group-item note-text-container"
-        `<li id="note-1-0" class="list-group-item note-text-container" title="Click to Edit..."><a class="note-text">456</a></li>`
 
         //Append a new "addl" below this
-        $(this).parent().append(` <li id="note-`+ sectionIndex + `-add" class='list-group-item note-text-container note-text-addl-container'><a class='note-text note-text-addl'>+</a></li>`);
+        $(this).parent().append(` <li id="note-`+ sectionIndex + `-add" class='list-group-item note-text-container note-text-addl-container'></li>`);
         $("#note-"+ sectionIndex + "-add").editable(noteEditableHandler, {
             event       : 'click',
             cssclass    : 'note-text-editing',
             type        : 'text',
-            placeholder : "Edit...",
+            placeholder : '+',
             tooltip     : 'Click to Edit...',
             width       : "100%",
         });
+     
     }
     else {
         console.log("Updating DataStore");

@@ -192,7 +192,7 @@ def update_db_from_datastore(ds):
                     elif note['status'] == 1: # Modified
                         sql_note = """
                             UPDATE Note
-                            SET body = '""" + note["title"] + """'
+                            SET body = '""" + note["text"] + """'
                             WHERE id = """ + str(note["id"]) + """
                         """
                     elif note['status'] == 2: # Newly Created
