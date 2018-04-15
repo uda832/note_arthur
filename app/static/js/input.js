@@ -1,9 +1,9 @@
 function DoneFunction() {
+    var title = $("#UserInputTitle").val();
     if (title == "") {
         alert("Please provide a Title for this Section."); 
     }
     else {
-        var title = $("#UserInputTitle").val();
         var $notes = $(".UserInputNote");
         var temp = {};
         temp.notes = [];
