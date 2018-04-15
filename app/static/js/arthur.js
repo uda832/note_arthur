@@ -116,36 +116,7 @@ function postRenderProcessing() {
         
     });
     //Notes -- Click to Edit listener for
-    $('.note-text-container').editable(function(value, settings){
-        // console.log("DEBUG: editing")
-        // console.log(this);
-        // console.log(value);
-        // console.log(settings);
-
-        //Modify the DataStore
-        //-------------------------------------------------------
-        var noteIndex = this.id;
-        var idTail = noteIndex.substring("note-".length);
-        var sectionIndex = parseInt(idTail.split("-")[0]);
-
-        //Special case: "Add new" button
-        if( $(this).hasClass("note-text-addl")) {
-            //Create a new item in the DataStore[sectionIndex]
-            //IMPLEMENT_ME
-            console.log("Missing Feature: note-text-addl clicked");
-            
-        }
-        else {
-            console.log("Updating DataStore");
-            //Update the value in the DataStore
-            var noteIndex = parseInt(idTail.split("-")[1]);
-            DataStore[sectionIndex].notes[noteIndex].text = value;
-            DataStore[sectionIndex].notes[noteIndex].status = 1;  //Set the status to modified
-            DataStore[sectionIndex].status = 1;                //Set the section's status to modified
-
-        }
-        return(value);
-    }, {
+    $('.note-text-container').editable(noteEditableHandler, {
         event       : 'click',
         cssclass    : 'note-text-editing',
         type        : 'text',
@@ -165,6 +136,60 @@ function postRenderProcessing() {
         $(this).addClass("active");
 
     });
+}
+
+function noteEditableHandler(value, settings){
+    // console.log("DEBUG: editing")
+    // console.log(this);
+    // console.log(value);
+    // console.log(settings);
+
+    //Modify the DataStore
+    //-------------------------------------------------------
+    var noteIndex = this.id;
+    var idTail = noteIndex.substring("note-".length);
+    var sectionIndex = parseInt(idTail.split("-")[0]);
+
+    //Special case: "Add new" button
+    if( $(this).hasClass("note-text-addl-container")) {
+        //Create a new item in the DataStore[sectionIndex]
+        //IMPLEMENT_ME
+        console.log("Missing Feature: note-text-addl clicked");
+        $(this).html("");
+
+        var newNote = {};
+        newNote.id = -1;
+        newNote.text = value;
+        newNote.status = 2;     //Set status to Newly Created
+        DataStore[sectionIndex].notes.push(newNote);
+        DataStore[sectionIndex].status = 1;                //Set the section's status to modified
+
+        //Morph the element to a regular note
+        var newNoteIndex = DataStore[sectionIndex].notes.length - 1;
+        this.id = "note-" + sectionIndex + "-" + newNoteIndex;
+        this.className = "list-group-item note-text-container"
+        `<li id="note-1-0" class="list-group-item note-text-container" title="Click to Edit..."><a class="note-text">456</a></li>`
+
+        //Append a new "addl" below this
+        $(this).parent().append(` <li id="note-`+ sectionIndex + `-add" class='list-group-item note-text-container note-text-addl-container'><a class='note-text note-text-addl'>+</a></li>`);
+        $("#note-"+ sectionIndex + "-add").editable(noteEditableHandler, {
+            event       : 'click',
+            cssclass    : 'note-text-editing',
+            type        : 'text',
+            placeholder : "Edit...",
+            tooltip     : 'Click to Edit...',
+            width       : "100%",
+        });
+    }
+    else {
+        console.log("Updating DataStore");
+        //Update the value in the DataStore
+        var noteIndex = parseInt(idTail.split("-")[1]);
+        DataStore[sectionIndex].notes[noteIndex].text = value;
+        DataStore[sectionIndex].notes[noteIndex].status = 1;  //Set the status to modified
+        DataStore[sectionIndex].status = 1;                //Set the section's status to modified
+    }
+    return('<a class="note-text">' + value + '</a>');
 }
 
 //This function sends an ajax request to the server to save the data

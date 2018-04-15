@@ -3,11 +3,11 @@ function DoneFunction() {
     var $notes = $(".UserInputNote");
     var temp = {};
     temp.notes = [];
-    temp.id = DataStore.length;
     temp.title = title;
+    temp.status = 2;
     $notes.each(function () {
         var noteText = this.value;
-        temp.notes.push({ text: noteText, tags: [] });
+        temp.notes.push({ text: noteText, tags: [], status: 2 });
 
     });
     DataStore.push(temp);

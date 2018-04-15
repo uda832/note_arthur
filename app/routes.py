@@ -215,8 +215,16 @@ def update_db_from_datastore(ds):
                 print("DEBUG4: ")
                 # INSERT a new Section record
                 sql_section = " INSERT INTO Section (body, user_id) VALUES ('" + section["title"] + "'," + str(userno) + ")"
+                con.execute(sql_section)
+                db.session.commit()
 
+                # Grab the id of the new Section
+                sql_section_get_id = "SELECT id FROM Section ORDER BY id DESC LIMIT 1"
+                new_section_id = con.execute(sql_section_get_id).fetchone()[0]
+                section['id'] = new_section_id
+                sql_section = None
                 print("DEBUG5: ")
+
                 # INSERT the Note records
                 for note in section['notes']:
                     sql_note = "INSERT INTO Note (body, user_id, section_id) VALUES ('" + note['text'] + "', " + str(userno) + ", " + str(section['id']) + ") "
@@ -293,6 +301,7 @@ def build_json_string(userno):
             SELECT * 
             FROM Note 
             WHERE section_id = {0} 
+            ORDER BY id
         ''' .format(cur_section["id"])
 
         con = db.engine.connect()
