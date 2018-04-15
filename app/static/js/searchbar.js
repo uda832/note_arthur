@@ -21,5 +21,5 @@ function Search() {
         }       
     }
 
-    updateDOMFromDataStore(newDS);
+    renderMainContentFromDataStore(newDS);
 }
