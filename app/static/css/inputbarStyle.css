@@ -5,54 +5,35 @@ div {
 .inputBar {
     width: auto;
     height: auto;
-    background-color: #DDDDDD;
-
+    background-color: rgba(221, 221, 221, 0);
 }
 
-.main-content-container .inputBar .first {
-        width: 450px;
-        margin: auto;
-        overflow:hidden;
-    }
+#input-modal-container .inputBar .first {
+
+}
 .form-group {
-        width: 400px;
-        height: 22px;
-        display: inline-block;
-    }
-.form-group1 {
-    width: 400px;
-    display: inline-block;
-    margin: auto
+    margin-bottom: 0rem;
 }
-.DoneButton {
-        display: inline-block;
-        /* height: 50%;
-        width: 50%; */
-        vertical-align: middle;
-    }
-.button {
-    background-color: #DDDDDD; /* Green */
-    border: none;
-    width: 47.2px;
-    border-radius: 50%;
-    position: absolute;
-    top: 65px;
-    color: white;
-    padding: 10px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    -webkit-transition-duration: 0.4s; /* Safari */
-    transition-duration: 0.4s;
-    cursor: pointer;
-    font-weight: bold;
+.form-group1 {
+    max-height: 60vh;
+    overflow: auto;
 }
 .button4 {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    outline: 0;
     background-color: white;
-    color: black;
-    border: 2px solid #7c7575;
+    border: 0;
+    padding: 10px 15px;
+    color: #bdabea;
+    border-radius: 3px;
+    width: 250px;
+    cursor: pointer;
+    font-size: 18px;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    margin: 0 auto;
 }
 
     .button4:hover {
@@ -67,3 +48,126 @@ div {
      left:100px;
      z-index:99;
  }
+
+/* The Modal (background) */
+.modal-arthur {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #e0e0e0;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    background: linear-gradient(to bottom right, #03A9F4 0%, #80DEEA 100%);
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    /* width: 80%; */
+    max-width: 60vh;
+}
+
+/* The Close Button */
+.close {
+    color: #212529;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    width: 3vh;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+#myBtn {
+    float: right;
+    border-radius: 10%;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    /* padding: 16px 32px; */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width: 9vh;
+    height: 9vh;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    right: 5vh;
+    bottom: 5vh;
+    position: fixed;
+    overflow: hidden;
+    font-size: 4vh;
+    outline: none;
+}
+    #myBtn:hover {
+        background-color: white;
+        color: black;
+        border: 2px solid #4CAF50;
+    }
+.myBtn-content1{
+    width:93%;
+}
+.form-control1{
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 250px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 0 auto 10px auto;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 300;
+    height: 5vh;
+}
+
+.UserInputNote{
+    outline: 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(255, 255, 255, 0.2);
+    width: 250px;
+    border-radius: 3px;
+    padding: 10px 15px;
+    margin: 0 auto 10px auto;
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    color: white;
+    -webkit-transition-duration: 0.25s;
+    transition-duration: 0.25s;
+    font-weight: 300;
+    height: 5vh;
+}
+
+.form-control1:focus {
+    background-color: white;
+    width: 350px;
+    color: #53e3a6;
+}
+
+.UserInputNote:focus {
+    background-color: white;
+    width: 350px;
+    color: #53e3a6;
+}

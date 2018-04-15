@@ -30,21 +30,22 @@ function greet() {
 
 var DataStore = [];         //global object used to pass data back/forth between the client and server
     
-
-//Reads from the DataStore to update the DOM
-function updateDOMFromDataStore(DS) {
-    var ds;
-    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
-
+//Renders the Left Navigation Drawer from the DataStore
+function renderSideNavFromDataStore() {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
-    for (var s = ds.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + ds[s].id + `" class="nav-link side-nav-link">` + ds[s].title +`</a>`;
+    for (var s = DataStore.length - 1; s >= 0; --s) {
+        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);
+}
 
+//Renders the Main Content area from the DataStore
+function renderMainContentFromDataStore(DS) {
 
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
     //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
@@ -61,7 +62,7 @@ function updateDOMFromDataStore(DS) {
         for (var i = 0; i < ds[s].notes.length; ++i) {
             curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ ds[s].notes[i].text +`</a></li>`;
         }
-        curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-container note-text-addl-container'><a class='note-text note-text-addl'>+</a></li>`;
+        curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-addl-container'></li>`;
         curSection += `           
                     </ul>
                 </div>
@@ -86,77 +87,58 @@ function initPage() {
 
     //Render the HTML
     //----------------------------------------
-    updateDOMFromDataStore();
-
-    postProcessing();
+    renderSideNavFromDataStore()
+    renderMainContentFromDataStore();
+    postRenderProcessing();
 }
 
-function postProcessing() {
+function postRenderProcessing() {
 
     //Sections -- Click to Edit listener for
     //Notes -- Click to Edit listener for
     $('.section-text').editable(function(value, settings){
-        // console.log("DEBUG: editing")
-        // console.log(this);
-        // console.log(value);
-        // console.log(settings);
 
         //Modify the DataStore
         //-------------------------------------------------------
         var idTail = this.id.substring("section-text-".length);
-        var sectionId = parseInt(idTail);
+        var sectionIndex = parseInt(idTail);
 
     
         console.log("Updating DataStore");
         //Update the value in the DataStore
-        DataStore[sectionId].title = value;
+        DataStore[sectionIndex].title = value;
+        DataStore[sectionIndex].status = 1;        //Set the status to modified
 
         return(value);
     }, {
         event       : 'click',
         cssclass    : 'section-text-editing',
         type        : 'text',
-        placeholder : "Edit...",
+        placeholder : ' ',
         tooltip     : 'Click to Edit...',
         width       : "100%",
         
     });
-    //Notes -- Click to Edit listener for
-    $('.note-text-container').editable(function(value, settings){
-        // console.log("DEBUG: editing")
-        // console.log(this);
-        // console.log(value);
-        // console.log(settings);
-
-        //Modify the DataStore
-        //-------------------------------------------------------
-        var noteId = this.id;
-        var idTail = noteId.substring("note-".length);
-        var sectionId = parseInt(idTail.split("-")[0]);
-
-        //Special case: "Add new" button
-        if( $(this).hasClass("note-text-addl")) {
-            //Create a new item in the DataStore[sectionId]
-            //IMPLEMENT_ME
-            console.log("Missing Feature: note-text-addl clicked");
-        }
-        else {
-            console.log("Updating DataStore");
-            //Update the value in the DataStore
-            var noteId = parseInt(idTail.split("-")[1]);
-            DataStore[sectionId].notes[noteId].text = value;
-
-        }
-        return(value);
-    }, {
+    //Notes -- Click to Edit listener 
+    $('.note-text-container').editable(noteEditableHandler, {
         event       : 'click',
         cssclass    : 'note-text-editing',
         type        : 'text',
-        placeholder : "Edit...",
+        placeholder : ' ',
         tooltip     : 'Click to Edit...',
         width       : "100%",
-        
     });
+  
+    //Notes -- Click to Edit listener 
+    $('.note-text-addl-container').editable(noteEditableHandler, {
+        event       : 'click',
+        cssclass    : 'note-text-editing',
+        type        : 'text',
+        placeholder : '+',
+        tooltip     : 'Click to Edit...',
+        width       : "100%",
+    });
+       
     
     //Custom Scrollbar for the Side Nav
     $("#side-nav-sections").mCustomScrollbar({
@@ -169,6 +151,56 @@ function postProcessing() {
         $(this).addClass("active");
 
     });
+}
+
+function noteEditableHandler(value, settings){
+    // console.log("DEBUG: editing")
+    // console.log(this);
+    // console.log(value);
+    // console.log(settings);
+
+    //Modify the DataStore
+    //-------------------------------------------------------
+    var noteIndex = this.id;
+    var idTail = noteIndex.substring("note-".length);
+    var sectionIndex = parseInt(idTail.split("-")[0]);
+
+    //Special case: "Add new note" button
+    if( $(this).hasClass("note-text-addl-container")) {
+
+        var newNote = {};
+        newNote.id = -1;
+        newNote.text = value;
+        newNote.status = 2;     //Set status to Newly Created
+        DataStore[sectionIndex].notes.push(newNote);
+        DataStore[sectionIndex].status = 1;                //Set the section's status to modified
+
+        //Morph the element to a regular note
+        var newNoteIndex = DataStore[sectionIndex].notes.length - 1;
+        this.id = "note-" + sectionIndex + "-" + newNoteIndex;
+        this.className = "list-group-item note-text-container"
+
+        //Append a new "addl" below this
+        $(this).parent().append(` <li id="note-`+ sectionIndex + `-add" class='list-group-item note-text-container note-text-addl-container'></li>`);
+        $("#note-"+ sectionIndex + "-add").editable(noteEditableHandler, {
+            event       : 'click',
+            cssclass    : 'note-text-editing',
+            type        : 'text',
+            placeholder : '+',
+            tooltip     : 'Click to Edit...',
+            width       : "100%",
+        });
+     
+    }
+    else {
+        console.log("Updating DataStore");
+        //Update the value in the DataStore
+        var noteIndex = parseInt(idTail.split("-")[1]);
+        DataStore[sectionIndex].notes[noteIndex].text = value;
+        DataStore[sectionIndex].notes[noteIndex].status = 1;  //Set the status to modified
+        DataStore[sectionIndex].status = 1;                //Set the section's status to modified
+    }
+    return('<a class="note-text">' + value + '</a>');
 }
 
 //This function sends an ajax request to the server to save the data
@@ -191,9 +223,81 @@ function saveDataStore() {
         success: function(r) {
             if(r  == "success") {
                 console.log("save successful");
+                postSave();
             }
             else {
                 console.log("save failed");
+            }
+        }
+    });
+}
+
+//This function updates the DataStore elements' status flags once the save request successfully returns 
+function postSave() {
+    //Iterate over the Sections
+    for(var s = 0; s < DataStore.length; ++s) {
+        switch(DataStore[s].status){
+            case 0: //Untouched
+                break;
+
+            case -1:// Deleted
+                DataStore.splice(s, 1); //Remove the element 
+
+            case 1: // Modified
+                DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                //Iterate over the Notes in this Section and do the same thing
+                for(var n = 0; n < DataStore[s].notes.length; ++n) {
+                    var curNote = DataStore[s].notes[n];
+
+                    switch(curNote.status) {
+                        case 0: //Untouched
+                            break;
+        
+                        case -1:// Deleted
+                            DataStore[s].notes.splice(n, 1); //Remove the element 
+                            DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                            break;
+            
+                        case 1: // Modified
+                        case 2: // Created
+                            DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                            break;
+                    }
+                }
+                break;
+
+            case 2: // Created
+                DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
+                break;
+
+            default:
+                console.trace("Error: invalid status")
+        }
+    }//end-for
+    renderMainContentFromDataStore();
+    postRenderProcessing();
+}//end-postSave
+
+//DELETE Before prod
+//DEVTEST Tool -- This function sends an ajax request to the server to delete all notes and sections
+function queryAll() {
+    console.log("DEBUG: invoking queryAll");
+
+	var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var tail = '/queryall';
+    var url = head + tail;
+    var res = "-1";
+
+    $.ajax({
+        url: url,
+        type: 'post',
+        success: function(r) {
+            if(r  != "") {
+                console.log("successful. results=" + r);
+            }
+            else {
+                console.log(" failed");
             }
         }
     });
