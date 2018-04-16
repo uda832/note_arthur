@@ -60,12 +60,13 @@ def logout():
     return redirect(url_for('index'))
 
 @app.route('/arthur', methods=['GET', 'POST'])
+@login_required
 def main_arthur():
     '''
         Main page:
         - should be only accessible after the user successfully authenticates (signs in)
     '''
-    userno = 1
+    userno = int(current_user.get_id())
     json = build_json_string(userno)
 
     # json = '[{"id":1,"title":"Python","notes":[{"id":1,"text":"do Python hw","tags":[], "status": 2}],"status":2}]' 
@@ -87,6 +88,7 @@ def register():
     return render_template('register.html', title='Register', form=form)
 	
 @app.route('/save', methods=['POST'])
+@login_required
 def save_request():
     '''
         Save request handler:
@@ -103,15 +105,14 @@ def save_request():
     
     try:
         print("DEBUG1: Calling update_db_from_datastore")
-        update_db_from_datastore(ds)
+        result_ds = update_db_from_datastore(ds)
 
-       
-        pass
+        return json.dumps(result_ds)
     except Exception as e:
         print("save_request failed: {}".format(e))
         raise
 
-    return "success"
+    return "failure"
 
 @app.route('/queryall', methods=['GET', 'POST'])
 def query_all_tables():
@@ -162,7 +163,7 @@ def update_db_from_datastore(ds):
     '''
         Take the DataStore object sent from the Client, and write to the DB
     '''
-    userno = 1
+    userno = int(current_user.get_id())
     try:
 
         print("DEBUG2: inside update_db_from_datastore")
@@ -183,6 +184,7 @@ def update_db_from_datastore(ds):
                     SET body = '""" + section["title"] + """'
                     WHERE id = """ + str(section["id"]) + """
                 """
+                section["status"] = 0
 
                 # Iterate over notes and perform the same op
                 for note in section['notes']:
@@ -195,8 +197,19 @@ def update_db_from_datastore(ds):
                             SET body = '""" + note["text"] + """'
                             WHERE id = """ + str(note["id"]) + """
                         """
+                        note["status"] = 0
                     elif note['status'] == 2: # Newly Created
-                        sql_note = "INSERT INTO Note (body, user_id, section_id) VALUES ('" + note["text"] + "', " + str(userno) + ", " + str(section["id"]) + ")"
+                        # INSERT the Note records
+                        sql_note = "INSERT INTO Note (body, user_id, section_id) VALUES ('" + note['text'] + "', " + str(userno) + ", " + str(section['id']) + ") "
+                        con.execute(sql_note)
+                        db.session.commit()
+
+                        # Grab the id of the new Section
+                        sql_note_id = "SELECT id FROM Note WHERE section_id = " + str(section["id"]) + " ORDER BY id DESC LIMIT 1"
+                        new_note_id = con.execute(sql_note_id).fetchone()[0]
+                        note['id'] = new_note_id
+                        note['status'] = 0
+
                     elif note['status'] == -1:
                         sql_note = """
                             DELETE FROM Note
@@ -213,15 +226,19 @@ def update_db_from_datastore(ds):
 
             elif section['status'] == 2:  # Created
                 print("DEBUG4: ")
+                # Note: because this is a new record, the id will be a junk value
+                #   This junk id is IGNORED and gets updated with the correct id below
+
                 # INSERT a new Section record
                 sql_section = " INSERT INTO Section (body, user_id) VALUES ('" + section["title"] + "'," + str(userno) + ")"
                 con.execute(sql_section)
                 db.session.commit()
 
                 # Grab the id of the new Section
-                sql_section_get_id = "SELECT id FROM Section ORDER BY id DESC LIMIT 1"
+                sql_section_get_id = "SELECT id FROM Section WHERE user_id = " + str(userno) + " ORDER BY id DESC LIMIT 1"
                 new_section_id = con.execute(sql_section_get_id).fetchone()[0]
-                section['id'] = new_section_id
+                section["id"] = new_section_id
+                section["status"] = 0
                 sql_section = None
                 print("DEBUG5: ")
 
@@ -230,6 +247,13 @@ def update_db_from_datastore(ds):
                     sql_note = "INSERT INTO Note (body, user_id, section_id) VALUES ('" + note['text'] + "', " + str(userno) + ", " + str(section['id']) + ") "
                     con.execute(sql_note)
                     db.session.commit()
+
+                     # Grab the id of the new Section
+                    sql_note_id = "SELECT id FROM Note WHERE section_id = " + str(section["id"]) + "ORDER BY id DESC LIMIT 1"
+                    new_note_id = con.execute(sql_section_get_id).fetchone()[0]
+                    note['id'] = new_note_id
+                    note['status'] = 0
+
                 #end-for-notes
             elif section['status'] == -1: # Deleted
                 sql_section = """
@@ -249,6 +273,9 @@ def update_db_from_datastore(ds):
                 db.session.commit()
 
         #end-for-section
+        datastore = [section for section in ds if section["status"] != -1]
+        return datastore
+
     except Exception as e:
         print("Error: update_db_from_datastore failed")
         print(e)
@@ -316,7 +343,6 @@ def build_json_string(userno):
             cur_note["tags"] = []  # Default to empty right now
             cur_note["status"] = 0
 
-
             cur_section["notes"].append(cur_note)
         #end-for-notes
 
@@ -326,3 +352,5 @@ def build_json_string(userno):
 
 
     return json.dumps(data_store)
+
+#end-build_json_string
