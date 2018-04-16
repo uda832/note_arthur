@@ -152,8 +152,24 @@ function postRenderProcessing() {
         $(this).addClass("active");
 
     });
+
+    $.contextMenu({
+        
+        selector: "#user-info",
+        items: {
+            logout: {name: "Logout", callback: function(key, opt){ logout(); }},
+
+        }
+        // there's more, have a look at the demos and docs...
+    });
 }
 
+function logout() {
+    var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var url = head + "/logout";
+    window.location.replace(url);
+}
 function noteEditableHandler(value, settings){
     // console.log("DEBUG: editing")
     // console.log(this);

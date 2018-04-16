@@ -31,13 +31,17 @@
     <script type="text/javascript" src="static/js/arthur.js"></script>
     <script type="text/javascript" src="static/js/input.js"></script>
     <script type="text/javascript" src="static/js/searchbar.js"></script>
+    <script type="text/javascript" src="static/lib/jQuery-contextMenu/dist/jquery.contextMenu.min.js"></script>
+
     <style>
 
     </style>
     <link rel="stylesheet" href="/static/css/inputbarStyle.css">
     <link rel="stylesheet" href="/static/css/searchBarStyle.css">
     <link rel="stylesheet" href="/static/css/personalInformationStyle.css">
-
+    <link rel="stylesheet" href="static/lib/jQuery-contextMenu/dist/jquery.contextMenu.min.css">
+    
+   
 
 </head>
 <body>
@@ -54,7 +58,7 @@
             <button class="icon" onclick="Search()"><i class="fa fa-search"></i></button>
         </div>
         <div class="personal-information">
-            <button id = "circle"> </button>
+            <button id = "user-info"> </button>
             <!--a href="{{ url_for('logout')}}" class="btn btn-info btn-lg abc" style = "color: #4CAF50">  Log out </a-->
         </div>
     </nav>
@@ -154,13 +158,7 @@
         </div>
     </div>
 
-    <!-- personal information -->
-    <div id = "pInformation" class = "pi">
-            <div class = "pContent">
-                    <p>name</p>
-                    <p>email</p>
-            </div>
-    </div>
+
 
 
 
@@ -179,19 +177,10 @@
             if (event.target == modal) {
                 modal.style.display = "none";
             }            
-            else if (event.target == personal) {
-                personal.style.display = "none";
-            }
+
         }
 
 
-        //personal information
-        var personal = document.getElementById('pInformation');
-        var pButton = document.getElementById('circle');
-
-        pButton.onclick =function() {
-            personal.style.display = "block";
-        }
 
 
     </script>

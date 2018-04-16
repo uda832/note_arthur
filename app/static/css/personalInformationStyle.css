@@ -27,11 +27,12 @@
     max-width: 60vh;
 }
 
-#circle {
+#user-info {
     float: right;
     border-radius: 50%;
     background-color: #fbce44;
     width: 3vh;
     height: 3vh;
+    outline: none;
 
 }
