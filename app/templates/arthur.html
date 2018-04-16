@@ -31,11 +31,15 @@
 
     <script type="text/javascript" src="static/js/arthur.js"></script>
     <script type="text/javascript" src="static/js/input.js"></script>
-    <script type="text/javascript" src="/static/js/searchbar.js"></script>
+    <script type="text/javascript" src="static/js/searchbar.js"></script>
     <style>
 
     </style>
     <link rel="stylesheet" href="/static/css/inputbarStyle.css">
+    <link rel="stylesheet" href="/static/css/searchBarStyle.css">
+    <link rel="stylesheet" href="/static/css/personalInformationStyle.css">
+
+
 </head>
 <body>
     <!-- Top bar Navigation -->
@@ -48,13 +52,11 @@
         </div>
         <div class="search-bar">
             <input type="search" id="search" placeholder="Search.." onkeydown="if (event.keyCode == 13) { Search() }">
-            <!--button type="submit" style="border-top-width: 6px; border-bottom-width: 6px;" onclick="Search"><i class="fa fa-search"></i></button-->
             <button class="icon" onclick="Search()"><i class="fa fa-search"></i></button>
         </div>
-        <div class="logout-button">
-            <button type = "button" class = "btn btn-default btn-sm">
-                <span class = "glyphicon glyphicon-log-out"></span> log out
-            </button>
+        <div class="personal-information">
+            <button id = "circle"> </button>
+            <!--a href="{{ url_for('logout')}}" class="btn btn-info btn-lg abc" style = "color: #4CAF50">  Log out </a-->
         </div>
     </nav>
     <!-- Side bar Navigation -->
@@ -152,6 +154,17 @@
             </div>
         </div>
     </div>
+
+    <!-- personal information -->
+    <div id = "pInformation" class = "pi">
+            <div class = "pContent">
+                    <p>name</p>
+                    <p>email</p>
+            </div>
+    </div>
+
+
+
     <script>
         var modal = document.getElementById('myModal');
         var btn = document.getElementById("myBtn");
@@ -166,8 +179,22 @@
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
+            }            
+            else if (event.target == personal) {
+                personal.style.display = "none";
             }
         }
+
+
+        //personal information
+        var personal = document.getElementById('pInformation');
+        var pButton = document.getElementById('circle');
+
+        pButton.onclick =function() {
+            personal.style.display = "block";
+        }
+
+
     </script>
     <div id="main-side-nav" class="side-nav">
 
