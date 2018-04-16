@@ -38,11 +38,13 @@ function renderSideNavFromDataStore() {
     for (var s = DataStore.length - 1; s >= 0; --s) {
         contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
-    $sectionsContainer.html(contentSideNav);
+    $sectionsContainer.html(contentSideNav);    
 }
 
 //Renders the Main Content area from the DataStore
 function renderMainContentFromDataStore(DS) {
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
 
     var ds;
     ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
@@ -220,61 +222,28 @@ function saveDataStore() {
             json: dsJSON,
         },
         success: function(r) {
-            if(r  == "success") {
-                console.log("save successful");
-                postSave();
+            if(r  == "failure") {
+                console.log("save failed");
             }
             else {
-                console.log("save failed");
+                console.log("save successful");
+                postSave(r);
             }
         }
     });
 }
 
 //This function updates the DataStore elements' status flags once the save request successfully returns 
-function postSave() {
-    //Iterate over the Sections
-    for(var s = 0; s < DataStore.length; ++s) {
-        switch(DataStore[s].status){
-            case 0: //Untouched
-                break;
-
-            case -1:// Deleted
-                DataStore.splice(s, 1); //Remove the element 
-
-            case 1: // Modified
-                DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
-                //Iterate over the Notes in this Section and do the same thing
-                for(var n = 0; n < DataStore[s].notes.length; ++n) {
-                    var curNote = DataStore[s].notes[n];
-
-                    switch(curNote.status) {
-                        case 0: //Untouched
-                            break;
-        
-                        case -1:// Deleted
-                            DataStore[s].notes.splice(n, 1); //Remove the element 
-                            DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
-                            break;
-            
-                        case 1: // Modified
-                        case 2: // Created
-                            DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
-                            break;
-                    }
-                }
-                break;
-
-            case 2: // Created
-                DataStore[s].status = 0;    //Simply reset the flag to untouched (Note the fallthrough)
-                break;
-
-            default:
-                console.trace("Error: invalid status")
-        }
-    }//end-for
-    renderMainContentFromDataStore();
-    postRenderProcessing();
+function postSave(resultDS) {
+    try {
+        DataStore = JSON.parse(resultDS);
+        renderSideNavFromDataStore();
+        renderMainContentFromDataStore();
+        postRenderProcessing();
+    }
+    catch(e){
+        console.error("postSave: failed to load DataStore");
+    }
 }//end-postSave
 
 //DELETE Before prod

@@ -16,7 +16,7 @@ body{
     margin: 25px;
     cursor: move;
 }
-.section-text, .note-text-container {
+.section-text, .note-text-container, .note-text-addl-container {
     cursor: pointer;
 }
 .note-text {
