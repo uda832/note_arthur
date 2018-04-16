@@ -1,20 +1,24 @@
 function DoneFunction() {
     var title = $("#UserInputTitle").val();
     if (title == "") {
-        alert("DAM! Please enter Title !!!");
+        alert("Please provide a Title for this Section."); 
     }
     else {
         var $notes = $(".UserInputNote");
         var temp = {};
         temp.notes = [];
+        temp.title = title;
+        temp.status = 2;    //Set the status to indicate it's a new section
         temp.id = DataStore.length;
         temp.title = title;
         $notes.each(function () {
             var noteText = this.value;
-            temp.notes.push({ text: noteText, tags: [] });
+            temp.notes.push({ text: noteText, tags: [], status: 2 });
         });
         DataStore.push(temp);
-        updateDOMFromDataStore();
+        renderMainContentFromDataStore();
+        renderSideNavFromDataStore();
+        postRenderProcessing();
         $(".UserInputNote").each(function () {
             $("#UserInputTitle").val("");
             $(this).val("");
@@ -29,7 +33,7 @@ function DoneFunction() {
 //increase id
 var nub = 2;
 function add(e) {
-    var add = " <div><input type='text' name='UserInput' class='form-control UserInputNote' id='UserInputNote-" + e +"' placeholder='Take a Note...'onkeydown='keyfunction()'/></div>";
+    var add = " <div><input type='text' name='UserInput' class='form-control UserInputNote' id='UserInputNote-" + e +"' placeholder='Take a Note...'/></div>";
     $(".note_container").append(add);
     document.getElementById("UserInputNote-" + e).focus();
     e++;
@@ -50,7 +54,7 @@ function Del() {
 $(function () {
     $("#main-content").sortable({
         revert: true,
-        cancel: '.note-text-container',
+        cancel: '.note-text-container .note-text-addl-container section-text',
         delay: 300                          //On mobile, long press to start dragging
     });
     $("ul, li").disableSelection();
