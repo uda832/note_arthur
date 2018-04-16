@@ -19,14 +19,14 @@ li a{
     text-decoration: none;
 }
 
-li a:hover:not(.active) {
-    background-color: #ddd;
-}
+    li a:hover:not(.active) {
+        background: linear-gradient(to bottom right, #03A9F4 0%, #80DEEA 100%);
+    }
 
-li a.active {
-    color: white;
-    background-color: #4CAF50;
-}
+    li a.active {
+        color: white;
+        background: linear-gradient(to bottom right, #03A9F4 0%, #80DEEA 100%);
+    }
 /*2*/
 .wrapper {
     background: #50a3a2;
@@ -261,4 +261,12 @@ form {
     -webkit-transform: translateY(-700px) rotate(600deg);
             transform: translateY(-700px) rotate(600deg);
   }
+}
+
+.notice {
+    background-color: rgba(243, 243, 243, 0);
+    color: red;
+    position: absolute;
+    top: 66%;
+    left: 30%;
 }

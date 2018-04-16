@@ -6,13 +6,13 @@
         <div class="box user_name">
             {{ form.username(size=32) }}<br>
             {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+                <span style="color: red;top: 28%;left: 37%;position: absolute;">[{{ error }}]</span>
             {% endfor %}
         </div>
         <div class="box password">
             {{ form.password(size=32) }}<br>
             {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: red;position: absolute;top: 58%;left: 37%;">[{{ error }}]</span>
             {% endfor %}
         </div>
         <div>{{ form.remember_me() }} {{ form.remember_me.label }}</div>

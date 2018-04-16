@@ -7,25 +7,25 @@
         <div class="box user_name">
             {{ form.username(size=32) }}<br>
             {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: red;position: absolute;top: 18%;left: 37%;">[{{ error }}]</span>
             {% endfor %}
         </div>
 		<div class="box email_address">
             {{ form.email(size=32) }}<br>
             {% for error in form.email.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: red;position: absolute;top: 38%;left: 37%;">[{{ error }}]</span>
             {% endfor %}
 		</div>
         <div class="box password">
             {{ form.password(size=32) }}<br>
             {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+            <span style="color: red;position: absolute;top: 57%;left: 37%;">[{{ error }}]</span>
             {% endfor %}
         </div>
 		<div class="box password2">
             {{ form.password2(size=32) }}<br>
             {% for error in form.password.errors %}
-            <span style="color: red;">[{{ error }}]</span>
+                                         <span style="color: red;position: absolute;top: 76%;left: 37%;">[{{ error }}]</span>
             {% endfor %}
 		</div>
         <div class="submitbutton">{{ form.submit() }}</div>

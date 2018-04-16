@@ -29,7 +29,7 @@
         <div class="container">
             {% with messages = get_flashed_messages() %}
             {% if messages %}
-            <ul>
+            <ul class="notice">
                 {% for message in messages %}
                 <li>{{ message }}</li>
                 {% endfor %}

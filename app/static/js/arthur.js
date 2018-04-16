@@ -54,13 +54,18 @@ function renderMainContentFromDataStore(DS) {
     for (var s = ds.length - 1; s >= 0; --s) {
         //Render each section 
         var curSection = 
-            `<li id="section-` + s +`" class="section">
-                <div class='card'>
-                    <div class='card-header'>
-                        <span id='section-text-` + s + `' class='section-text'>` + ds[s].title + `</span>
-                    </div>
-                    <ul class="list-group list-group-flush notes-list">`;
-
+            `<li id="section-` + s + `" class="section"> <div class='card'> 
+                <div id="target" class="section-more-button" style="position: absolute;right: 2%;top:13px;">
+                    <button id='section-` + s + `' style="border-radius: 50%;border: 0; background: rgba(0, 0, 0, 0);" onclick="showoption(id)"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M9 5.5c.83 0 1.5-.67 1.5-1.5S9.83 2.5 9 2.5 7.5 3.17 7.5 4 8.17 5.5 9 5.5zm0 2c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5S9.83 7.5 9 7.5zm0 5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path></svg></button>
+                    <button id="` + s + `" class="deletenote" style="display: none; left: 3px; position: relative; top: 1px; z-index: 2; border: 0px;">
+                        <i id="` + s + `" class="fa fa-trash" onclick="delete_note(id)"></i></button>
+                </div>
+</div>
+                <div class='card-header'>
+                    <span id='section-text-` + s + `' class='section-text'>` + ds[s].title + `</span> 
+                </div>
+            <ul class="list-group list-group-flush notes-list">`;
         for (var i = 0; i < ds[s].notes.length; ++i) {
             curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ ds[s].notes[i].text +`</a></li>`;
         }
@@ -103,8 +108,6 @@ function postRenderProcessing() {
         //-------------------------------------------------------
         var idTail = this.id.substring("section-text-".length);
         var sectionIndex = parseInt(idTail);
-
-    
         console.log("Updating DataStore");
         //Update the value in the DataStore
         DataStore[sectionIndex].title = value;
@@ -158,10 +161,15 @@ function postRenderProcessing() {
         selector: "#user-info",
         items: {
             logout: {name: "Logout", callback: function(key, opt){ logout(); }},
-
         }
         // there's more, have a look at the demos and docs...
     });
+
+}
+function delete_note(a) {
+    $("#section-" + a).remove();
+    DataStore[a].status = -1;
+    saveDataStore();
 }
 
 function logout() {
@@ -287,3 +295,13 @@ function queryAll() {
     });
 }
 
+function showoption(e) {
+    var s = e;
+    var num = s.replace(/[^0-9]/ig, "");
+    var x = document.getElementById(num);
+    if (x.style.display == "block") {
+        x.style.display = "none";
+    } else {
+        x.style.display = "block";
+    }
+}
