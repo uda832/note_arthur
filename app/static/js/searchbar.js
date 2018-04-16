@@ -22,4 +22,5 @@ function Search() {
     }
 
     renderMainContentFromDataStore(newDS);
+    postRenderProcessing();
 }
