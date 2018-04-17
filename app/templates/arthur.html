@@ -1,8 +1,5 @@
 <head>
 
-    <link rel="stylesheet" href="/static/css/navStyle.css">
-    
-
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
@@ -14,33 +11,41 @@
     <link href="static/lib/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="/static/css/navStyle.css">
+
 
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
+    <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+    <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <!--<script type="text/javascript" src="../../acc/libraries/stickybits/dist/stickybits.min.js"></script>-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
     <script type="text/javascript" src="static/lib/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
     <!--<script src="../..//acc/libraries/select2-4.0.5/dist/js/select2.full.js"></script>-->
     <!--<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.min.js"></script>-->
     <script type="text/javascript" src="{{ url_for('static', filename='lib/jquery_jeditable/dist/jquery.jeditable.min.js') }}"></script>
-
     <script defer src="//code.getmdl.io/1.3.0/material.min.js"></script>
-
     <!-- <script src="//apps.bdimg.com/libs/jquery/1.10.2/jquery.min.js"></script> -->
     <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
     <script src="static/lib/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
+
     <script type="text/javascript" src="static/js/arthur.js"></script>
     <script type="text/javascript" src="static/js/input.js"></script>
+    <script type="text/javascript" src="static/js/searchbar.js"></script>
+    <script type="text/javascript" src="static/lib/jQuery-contextMenu/dist/jquery.contextMenu.min.js"></script>
 
     <style>
 
     </style>
     <link rel="stylesheet" href="/static/css/inputbarStyle.css">
-</head>
+    <link rel="stylesheet" href="/static/css/searchBarStyle.css">
+    <link rel="stylesheet" href="/static/css/personalInformationStyle.css">
+    <link rel="stylesheet" href="static/lib/jQuery-contextMenu/dist/jquery.contextMenu.min.css">
+    
+   
 
+</head>
 <body>
     <!-- Top bar Navigation -->
     <nav class="navbar navbar-default fixed-top main-top-nav">
@@ -50,78 +55,35 @@
         <div class="navbar-brand" style="margin-left: 10%">
             <span style="color: white; font-weight: bold;">NoteArthur</span>
         </div>
-        <div class="filler">
-            <span style="color: white; font-weight: bold;"></span>
+        <div class="search-bar">
+            <input type="search" id="search" placeholder="Search.." onkeydown="if (event.keyCode == 13) { Search() }">
+            <button class="icon" onclick="Search()"><i class="fa fa-search"></i></button>
         </div>
-        <div class="filler">
-            <span style="color: white; font-weight: bold;"></span>
+        <div class="personal-information">
+            <button id = "user-info"> </button>
+            <!--a href="{{ url_for('logout')}}" class="btn btn-info btn-lg abc" style = "color: #4CAF50">  Log out </a-->
         </div>
     </nav>
-
     <!-- Side bar Navigation -->
     <script src="/static/js/navBar.js"></script>
     <div id="main-side-nav" class="side-nav">
-
         <!-- Top Bar -->
         <nav class="navbar navbar-default" style="height: 7vh; background-color: #03A9F4;">
             <div class="ml-auto hamburger-wrapper">
                 <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
             </div>
         </nav>
-
         <!-- List of Sections -->
         <nav  class="nav nav-pills flex-column side-nav-sections-container">
             <ul id="side-nav-sections" class="side-nav-sections">
             </ul>
-            
-          </nav>
+        </nav>
     </div>
     <!-- Use any element to open the sidenav -->
 
     <div id="main-content-container" class="main-content-container">
         <!-- Main Content -->
         <ul id="main-content" class="mdl-grid main-content">
-            <li id="section-1" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header">
-                            <span id="section-text-1" class="section-text">Software Eng</span>
-                        </div>
-                    </div>
-                    <ul class="list-group list-group-flush notes-list">
-                        <li id="note-1-0" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">complete presentation review</a>
-                        </li>
-                        <li id="note-1-1" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">schedule next team arthur meeting</a>
-                        </li>
-                        <li id="note-1-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
-                            <a class="note-text note-text-addl">+</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li id="section-0" class="section">
-                <div class="card">
-
-                    <div class="card-header">
-                        <div class="card-header">
-                            <span id="section-text-0" class="section-text">Python</span>
-                        </div>
-                    </div>
-                    <ul class="list-group list-group-flush notes-list">
-                        <li id="note-0-0" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">do Python hw</a>
-                        </li>
-                        <li id="note-0-1" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">install django</a>
-                        </li>
-                        <li id="note-0-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
-                            <a class="note-text note-text-addl">+</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
         </ul>
     </div>
     <!-- Side bar Navigation -->
@@ -157,6 +119,11 @@
             </div>
         </div>
     </div>
+
+
+
+
+
     <script>
         var modal = document.getElementById('myModal');
         var btn = document.getElementById("myBtn");
@@ -171,25 +138,15 @@
         window.onclick = function (event) {
             if (event.target == modal) {
                 modal.style.display = "none";
-            }
+            }            
+
         }
+
+
+
+
     </script>
-    <div id="main-side-nav" class="side-nav">
-
-        <!-- Top Bar -->
-        <nav class="navbar navbar-default" style="height: 7vh; background-color: #007bff;">
-            <div class="ml-auto hamburger-wrapper">
-                <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
-            </div>
-        </nav>
-
-        <!-- List of Sections -->
-        <nav class="nav nav-pills flex-column side-nav-sections-container">
-            <ul id="side-nav-sections" class="side-nav-sections"></ul>
-
-        </nav>
-    </div>
-    <!-- Use any element to open the sidenav -->
+   
 
     <script>
         var dataStoreJSON = "";
@@ -197,14 +154,13 @@
         $(window).on("load", function () {
             dataStoreJSON = decodeURIComponent('{{json | safe}}');
             initPage();
-
+        
         });
         window.setInterval(function(){
             saveDataStore();
         },30000);
 
     </script>
-
     <!--hello Rohan and Bo-->
     <!--hello-->
 </body>

@@ -35,30 +35,41 @@ function renderSideNavFromDataStore() {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
+
+    //All Notes item
+    contentSideNav += `<a id="side-nav-all" class="nav-link side-nav-link">All Notes</a>`;
+    
     for (var s = DataStore.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
+        contentSideNav += `<a id="side-nav-` + s  + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
-    $sectionsContainer.html(contentSideNav);
+    $sectionsContainer.html(contentSideNav);    
+
+
+    postRenderSideNav();
 }
 
 //Renders the Main Content area from the DataStore
-function renderMainContentFromDataStore() {
+function renderMainContentFromDataStore(DS) {
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
 
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
     //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
-    for (var s = DataStore.length - 1; s >= 0; --s) {
+    for (var s = ds.length - 1; s >= 0; --s) {
         //Render each section 
         var curSection = 
             `<li id="section-` + s +`" class="section">
                 <div class='card'>
                     <div class='card-header'>
-                        <span id='section-text-` + s + `' class='section-text'>` + DataStore[s].title + `</span>
+                        <span id='section-text-` + s + `' class='section-text'>` + ds[s].title + `</span>
                     </div>
                     <ul class="list-group list-group-flush notes-list">`;
 
-        for (var i = 0; i < DataStore[s].notes.length; ++i) {
-            curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ DataStore[s].notes[i].text +`</a></li>`;
+        for (var i = 0; i < ds[s].notes.length; ++i) {
+            curSection += ` <li id="note-`+ s + `-` + i + `" class='list-group-item note-text-container'><a class='note-text'>`+ ds[s].notes[i].text +`</a></li>`;
         }
         curSection += ` <li id="note-`+ s + `-add" class='list-group-item note-text-addl-container'></li>`;
         curSection += `           
@@ -68,11 +79,15 @@ function renderMainContentFromDataStore() {
         content += curSection;
     }
     $mainContent.html(content);
+
+    //Apply post rendering logic
+    postRenderMainContent();
 }
 
 function initPage() {
     //Populate the DataStore
     //----------------------------------
+
     DataStore = [];         //global object used to pass data back/forth between server
     try {
         DataStore = JSON.parse(dataStoreJSON); //Note: this gets populated by the server side during load
@@ -85,10 +100,9 @@ function initPage() {
     //----------------------------------------
     renderSideNavFromDataStore()
     renderMainContentFromDataStore();
-    postRenderProcessing();
 }
 
-function postRenderProcessing() {
+function postRenderMainContent() {
 
     //Sections -- Click to Edit listener for
     //Notes -- Click to Edit listener for
@@ -135,20 +149,53 @@ function postRenderProcessing() {
         width       : "100%",
     });
        
+
+    $.contextMenu({
+        
+        selector: "#user-info",
+        items: {
+            logout: {name: "Logout", callback: function(key, opt){ logout(); }},
+
+        }
+        // there's more, have a look at the demos and docs...
+    });
+}
+function postRenderSideNav() {
     
     //Custom Scrollbar for the Side Nav
     $("#side-nav-sections").mCustomScrollbar({
         theme: "minimal-dark",
     });
-
+    $("#side-nav-all").addClass("active");
     //Side Nav click handler
     $(".side-nav-link").click(function(){
         $(".side-nav-link").removeClass("active");
         $(this).addClass("active");
 
+        //Display all
+        if (this.id == "side-nav-all") {
+            renderMainContentFromDataStore(newDS);
+
+        }
+        //Display the selected Section 
+        else {
+            var sectionIndex = parseInt(this.id.substring("side-nav-".length));
+            var sectionToDisplay = DataStore[sectionIndex];
+            var newDS = [];
+            newDS.push(sectionToDisplay);
+            renderMainContentFromDataStore(newDS);
+        }
     });
+
+   
 }
 
+function logout() {
+    var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var url = head + "/logout";
+    window.location.replace(url);
+}
 function noteEditableHandler(value, settings){
     // console.log("DEBUG: editing")
     // console.log(this);
@@ -234,7 +281,6 @@ function postSave(resultDS) {
         DataStore = JSON.parse(resultDS);
         renderSideNavFromDataStore();
         renderMainContentFromDataStore();
-        postRenderProcessing();
     }
     catch(e){
         console.error("postSave: failed to load DataStore");

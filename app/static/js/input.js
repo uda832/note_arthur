@@ -54,7 +54,7 @@ function Del() {
 $(function () {
     $("#main-content").sortable({
         revert: true,
-        cancel: '.note-text-container section-text',
+        cancel: '.note-text-container .note-text-addl-container section-text',
         delay: 300                          //On mobile, long press to start dragging
     });
     $("ul, li").disableSelection();
