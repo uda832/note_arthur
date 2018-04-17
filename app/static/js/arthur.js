@@ -35,17 +35,10 @@ function renderSideNavFromDataStore() {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
-
-    //All Notes item
-    contentSideNav += `<a id="side-nav-all" class="nav-link side-nav-link">All Notes</a>`;
-    
     for (var s = DataStore.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + s  + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
+        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);    
-
-
-    postRenderSideNav();
 }
 
 //Renders the Main Content area from the DataStore
@@ -79,9 +72,6 @@ function renderMainContentFromDataStore(DS) {
         content += curSection;
     }
     $mainContent.html(content);
-
-    //Apply post rendering logic
-    postRenderMainContent();
 }
 
 function initPage() {
@@ -100,9 +90,10 @@ function initPage() {
     //----------------------------------------
     renderSideNavFromDataStore()
     renderMainContentFromDataStore();
+    postRenderProcessing();
 }
 
-function postRenderMainContent() {
+function postRenderProcessing() {
 
     //Sections -- Click to Edit listener for
     //Notes -- Click to Edit listener for
@@ -149,46 +140,36 @@ function postRenderMainContent() {
         width       : "100%",
     });
        
+    
+    //Custom Scrollbar for the Side Nav
+    $("#side-nav-sections").mCustomScrollbar({
+        theme: "minimal-dark",
+    });
+
+    //Side Nav click handler
+    $(".side-nav-link").click(function(){
+        $(".side-nav-link").removeClass("active");
+        $(this).addClass("active");
+
+    });
 
     $.contextMenu({
         
         selector: "#user-info",
         items: {
             logout: {name: "Logout", callback: function(key, opt){ logout(); }},
-
+            index: {name : "About Me", callback: function(key, opt) { index(); }}
         }
         // there's more, have a look at the demos and docs...
     });
 }
-function postRenderSideNav() {
-    
-    //Custom Scrollbar for the Side Nav
-    $("#side-nav-sections").mCustomScrollbar({
-        theme: "minimal-dark",
-    });
-    $("#side-nav-all").addClass("active");
-    //Side Nav click handler
-    $(".side-nav-link").click(function(){
-        $(".side-nav-link").removeClass("active");
-        $(this).addClass("active");
-
-        //Display all
-        if (this.id == "side-nav-all") {
-            renderMainContentFromDataStore(newDS);
-
-        }
-        //Display the selected Section 
-        else {
-            var sectionIndex = parseInt(this.id.substring("side-nav-".length));
-            var sectionToDisplay = DataStore[sectionIndex];
-            var newDS = [];
-            newDS.push(sectionToDisplay);
-            renderMainContentFromDataStore(newDS);
-        }
-    });
-
-   
+function index() {
+    var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var url = head + "/index";
+    window.location.replace(url);
 }
+
 
 function logout() {
     var docUrl = document.URL.replace('%20', ' ');
@@ -281,6 +262,7 @@ function postSave(resultDS) {
         DataStore = JSON.parse(resultDS);
         renderSideNavFromDataStore();
         renderMainContentFromDataStore();
+        postRenderProcessing();
     }
     catch(e){
         console.error("postSave: failed to load DataStore");
