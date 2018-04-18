@@ -20,12 +20,11 @@
     </style>
 </head>
 <body>
-    <ul>
-        <li><a class="active" href="#home">Microblog:</a></li>
+    <ul style="position: fixed;z-index: 2; width: 100%;background-color: rgba(243, 243, 243, 0.52);">
+        <li><a class="active" href="#home">Arthur:</a></li>
         <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="{{ url_for('login') }}">Login</a></li>
         <li><a href="{{ url_for('register') }}">Register</a></li>
-        <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
     <div class="wrapper">
         <div class="container">
