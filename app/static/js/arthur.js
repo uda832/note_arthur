@@ -31,14 +31,19 @@ function greet() {
 var DataStore = [];         //global object used to pass data back/forth between the client and server
     
 //Renders the Left Navigation Drawer from the DataStore
-function renderSideNavFromDataStore() {
+function renderSideNavFromDataStore(DS) {
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
+
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
-    for (var s = DataStore.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
+    for (var s = ds.length - 1; s >= 0; --s) {
+        contentSideNav += `<a id="side-nav-` + ds[s].id + `" class="nav-link side-nav-link">` + ds[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);    
+
+    postRenderSideNav(ds);
 }
 
 //Renders the Main Content area from the DataStore
@@ -46,8 +51,7 @@ function renderMainContentFromDataStore(DS) {
     var ds;
     ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
 
-    var ds;
-    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
+
     //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
@@ -72,6 +76,8 @@ function renderMainContentFromDataStore(DS) {
         content += curSection;
     }
     $mainContent.html(content);
+
+    postRenderMainContent(ds);
 }
 
 function initPage() {
@@ -90,25 +96,52 @@ function initPage() {
     //----------------------------------------
     renderSideNavFromDataStore()
     renderMainContentFromDataStore();
-    postRenderProcessing();
+    $.contextMenu({
+        selector: "#user-info",
+        trigger: 'left',
+        items: {
+            logout: {name: "Logout", callback: function(key, opt){ logout(); }},
+            index: {name : "About Me", callback: function(key, opt) { index(); }}
+        }
+    });
 }
 
-function postRenderProcessing() {
+function postRenderSideNav(DS) {
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
+
+    
+    //Custom Scrollbar for the Side Nav
+    $("#side-nav-sections").mCustomScrollbar({
+        theme: "minimal-dark",
+    });
+
+    //Side Nav click handler
+    $(".side-nav-link").click(function(){
+        $(".side-nav-link").removeClass("active");
+        $(this).addClass("active");
+
+    });
+}
+
+function postRenderMainContent(DS) {
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
 
     //Sections -- Click to Edit listener for
     //Notes -- Click to Edit listener for
     $('.section-text').editable(function(value, settings){
 
-        //Modify the DataStore
+        //Modify the DS
         //-------------------------------------------------------
         var idTail = this.id.substring("section-text-".length);
         var sectionIndex = parseInt(idTail);
 
     
-        console.log("Updating DataStore");
-        //Update the value in the DataStore
-        DataStore[sectionIndex].title = value;
-        DataStore[sectionIndex].status = 1;        //Set the status to modified
+        console.log("Updating DS");
+        //Update the value in the DS
+        ds[sectionIndex].title = value;
+        ds[sectionIndex].status = 1;        //Set the status to modified
 
         return(value);
     }, {
@@ -140,28 +173,8 @@ function postRenderProcessing() {
         width       : "100%",
     });
        
-    
-    //Custom Scrollbar for the Side Nav
-    $("#side-nav-sections").mCustomScrollbar({
-        theme: "minimal-dark",
-    });
 
-    //Side Nav click handler
-    $(".side-nav-link").click(function(){
-        $(".side-nav-link").removeClass("active");
-        $(this).addClass("active");
 
-    });
-
-    $.contextMenu({
-        selector: "#user-info",
-        trigger: 'left',
-        items: {
-            logout: {name: "Logout", callback: function(key, opt){ logout(); }},
-            index: {name : "About Me", callback: function(key, opt) { index(); }}
-        }
-        // there's more, have a look at the demos and docs...
-    });
 }
 function index() {
     var docUrl = document.URL.replace('%20', ' ');
@@ -262,7 +275,6 @@ function postSave(resultDS) {
         DataStore = JSON.parse(resultDS);
         renderSideNavFromDataStore();
         renderMainContentFromDataStore();
-        postRenderProcessing();
     }
     catch(e){
         console.error("postSave: failed to load DataStore");
