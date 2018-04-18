@@ -38,7 +38,7 @@ function renderSideNavFromDataStore(DS) {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
-    contentSideNav += `<a id="side-nav-all" class="nav-link side-nav-link">All Notes</a>`;
+    contentSideNav += `<a id="side-nav-all" class="nav-link side-nav-all side-nav-link">All Notes</a>`;
     for (var s = ds.length - 1; s >= 0; --s) {
         contentSideNav += `<a id="side-nav-` + s+ `" class="nav-link side-nav-link">` + ds[s].title +`</a>`;
     }
