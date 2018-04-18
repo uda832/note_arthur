@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="static/css/login.css">
     {% if title %}
-    <title>{{ title }} - Microblog</title>
+    <title>{{ title }} - Arthur</title>
     {% else %}
-    <title>Welcome to Microblog</title>
+    <title>Welcome to Note Arthur</title>
     {% endif %}
     <style type="text/css">
         body, td, th {
@@ -24,6 +24,8 @@
         <li><a class="active" href="#home">Microblog:</a></li>
         <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="{{ url_for('login') }}">Login</a></li>
+        <li><a href="{{ url_for('register') }}">Register</a></li>
+        <li><a href="{{ url_for('logout') }}">Logout</a></li>
     </ul>
     <div class="wrapper">
         <div class="container">
