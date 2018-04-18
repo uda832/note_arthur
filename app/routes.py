@@ -142,6 +142,11 @@ def empty_sections_notes():
     con = db.engine.connect()
     sql_delete = """
         DELETE FROM Section
+    """
+    con.execute(sql_delete)
+    db.session.commit()
+
+    sql_delete = """
         DELETE FROM Note
     """
     con.execute(sql_delete)
@@ -207,6 +212,9 @@ def update_db_from_datastore(ds):
                             DELETE FROM Note
                             WHERE id = """ + str(note["id"]) + """
                             """
+                        con.execute(sql_note)
+                        db.session.commit()
+                        sql_note = None
                     else:
                         # Treat it as 0 -- do nothing
                         continue
@@ -251,10 +259,18 @@ def update_db_from_datastore(ds):
                 sql_section = """
                     DELETE FROM Section
                     WHERE id = """ + str(section["id"]) + """;
+                    """
+                con.execute(sql_section)
+                db.session.commit()
+                sql_section = None
 
+                sql_note = """
                     DELETE FROM Note
                     WHERE section_id = """ + str(section['id']) + """
                     """
+                con.execute(sql_note)
+                db.session.commit()
+                sql_note = None
             else:
                 # Treat it as 0
                 continue
