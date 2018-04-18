@@ -19,18 +19,8 @@ def index():
     if current_user.is_authenticated:
         return render_template('base2.html', title='Home')
     #return redirect(url_for('main_arthur'))
-    user = {'username': 'Rohan'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', posts=posts)
+    
+    return render_template('index.html', title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

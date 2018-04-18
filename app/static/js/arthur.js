@@ -154,8 +154,8 @@ function postRenderProcessing() {
     });
 
     $.contextMenu({
-        
         selector: "#user-info",
+        trigger: 'left',
         items: {
             logout: {name: "Logout", callback: function(key, opt){ logout(); }},
             index: {name : "About Me", callback: function(key, opt) { index(); }}
