@@ -160,6 +160,7 @@ function postRenderMainContent(DS) {
         ds[sectionIndex].title = value;
         ds[sectionIndex].status = 1;        //Set the status to modified
 
+        saveDataStore();
         return(value);
     }, {
         event       : 'click',
@@ -257,6 +258,7 @@ function noteEditableHandler(value, settings){
         DataStore[sectionIndex].notes[noteIndex].status = 1;  //Set the status to modified
         DataStore[sectionIndex].status = 1;                //Set the section's status to modified
     }
+    saveDataStore();
     return('<a class="note-text">' + value + '</a>');
 }
 
