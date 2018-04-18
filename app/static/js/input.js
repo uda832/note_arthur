@@ -18,7 +18,6 @@ function DoneFunction() {
         DataStore.push(temp);
         renderMainContentFromDataStore();
         renderSideNavFromDataStore();
-        postRenderProcessing();
         $(".UserInputNote").each(function () {
             $("#UserInputTitle").val("");
             $(this).val("");
@@ -29,6 +28,7 @@ function DoneFunction() {
         var modal = document.getElementById('myModal');
         modal.style.display = "none";
     }
+    saveDataStore();
 }
 //increase id
 var nub = 2;

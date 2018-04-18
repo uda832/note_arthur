@@ -38,8 +38,9 @@ function renderSideNavFromDataStore(DS) {
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
+    contentSideNav += `<a id="side-nav-all" class="nav-link side-nav-all side-nav-link">All Notes</a>`;
     for (var s = ds.length - 1; s >= 0; --s) {
-        contentSideNav += `<a id="side-nav-` + ds[s].id + `" class="nav-link side-nav-link">` + ds[s].title +`</a>`;
+        contentSideNav += `<a id="side-nav-` + s+ `" class="nav-link side-nav-link">` + ds[s].title +`</a>`;
     }
     $sectionsContainer.html(contentSideNav);    
 
@@ -126,6 +127,17 @@ function postRenderSideNav(DS) {
         $(".side-nav-link").removeClass("active");
         $(this).addClass("active");
 
+        if ($(this).hasClass("side-nav-all")) {
+            renderMainContentFromDataStore();
+        }
+        else {
+            var sectionIndex = parseInt(this.id.substring("side-nav-".length));
+            var newDS = [];
+            var selectedSection = DataStore[sectionIndex];
+            newDS.push(selectedSection);
+
+            renderMainContentFromDataStore(newDS);
+        }
     });
 }
 
@@ -148,6 +160,7 @@ function postRenderMainContent(DS) {
         ds[sectionIndex].title = value;
         ds[sectionIndex].status = 1;        //Set the status to modified
 
+        saveDataStore();
         return(value);
     }, {
         event       : 'click',
@@ -245,6 +258,7 @@ function noteEditableHandler(value, settings){
         DataStore[sectionIndex].notes[noteIndex].status = 1;  //Set the status to modified
         DataStore[sectionIndex].status = 1;                //Set the section's status to modified
     }
+    saveDataStore();
     return('<a class="note-text">' + value + '</a>');
 }
 

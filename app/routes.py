@@ -130,11 +130,16 @@ def query_all_tables():
     section_rows = table_sections.fetchall()
     notes_rows = table_notes.fetchall()
     
-    str_users = "Selecting all user_rows: {}".format(user_rows)
-    str_sections = "Selecting all section_rows: {}".format(section_rows)
-    str_notes = "Selecting all notes_rows: {}".format(notes_rows)
+    str_users = "Selecting all user_rows: \n"
+    str_users += "\n".join([str(elem) for elem in user_rows])
 
-    return str_users + "\n" + str_sections + "\n" + str_notes
+    str_sections = "Selecting all section_rows: {}".format(section_rows)
+    str_sections += "\n".join([str(elem) for elem in section_rows])
+
+    str_notes = "Selecting all notes_rows: {}".format(notes_rows)
+    str_notes += "\n".join([str(elem) for elem in notes_rows])
+
+    return str_users + "\n\n" + str_sections + "\n\n" + str_notes
 #end-query_all_tables
 
 @app.route('/deleter', methods=['GET', 'POST'])
@@ -142,6 +147,11 @@ def empty_sections_notes():
     con = db.engine.connect()
     sql_delete = """
         DELETE FROM Section
+    """
+    con.execute(sql_delete)
+    db.session.commit()
+
+    sql_delete = """
         DELETE FROM Note
     """
     con.execute(sql_delete)
@@ -195,6 +205,7 @@ def update_db_from_datastore(ds):
                         sql_note = "INSERT INTO Note (body, user_id, section_id) VALUES ('" + note['text'] + "', " + str(userno) + ", " + str(section['id']) + ") "
                         con.execute(sql_note)
                         db.session.commit()
+                        sql_note = None
 
                         # Grab the id of the new Section
                         sql_note_id = "SELECT id FROM Note WHERE section_id = " + str(section["id"]) + " ORDER BY id DESC LIMIT 1"
@@ -207,6 +218,9 @@ def update_db_from_datastore(ds):
                             DELETE FROM Note
                             WHERE id = """ + str(note["id"]) + """
                             """
+                        con.execute(sql_note)
+                        db.session.commit()
+                        sql_note = None
                     else:
                         # Treat it as 0 -- do nothing
                         continue
@@ -225,13 +239,13 @@ def update_db_from_datastore(ds):
                 sql_section = " INSERT INTO Section (body, user_id) VALUES ('" + section["title"] + "'," + str(userno) + ")"
                 con.execute(sql_section)
                 db.session.commit()
+                sql_section = None
 
                 # Grab the id of the new Section
                 sql_section_get_id = "SELECT id FROM Section WHERE user_id = " + str(userno) + " ORDER BY id DESC LIMIT 1"
                 new_section_id = con.execute(sql_section_get_id).fetchone()[0]
                 section["id"] = new_section_id
                 section["status"] = 0
-                sql_section = None
                 print("DEBUG5: ")
 
                 # INSERT the Note records
@@ -251,10 +265,18 @@ def update_db_from_datastore(ds):
                 sql_section = """
                     DELETE FROM Section
                     WHERE id = """ + str(section["id"]) + """;
+                    """
+                con.execute(sql_section)
+                db.session.commit()
+                sql_section = None
 
+                sql_note = """
                     DELETE FROM Note
                     WHERE section_id = """ + str(section['id']) + """
                     """
+                con.execute(sql_note)
+                db.session.commit()
+                sql_note = None
             else:
                 # Treat it as 0
                 continue
