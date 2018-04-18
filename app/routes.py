@@ -15,25 +15,17 @@ from app.forms import LoginForm, RegistrationForm
 
 @app.route('/')
 @app.route('/index')
-@login_required
 def index():
-    user = {'username': 'Rohan'}
-    posts = [
-        {
-            'author': {'username': 'John'},
-            'body': 'Beautiful day in Portland!'
-        },
-        {
-            'author': {'username': 'Susan'},
-            'body': 'The Avengers movie was so cool!'
-        }
-    ]
-    return render_template('index.html', title='Home', posts=posts)
+    if current_user.is_authenticated:
+        return render_template('base2.html', title='Home')
+    #return redirect(url_for('main_arthur'))
+    
+    return render_template('index.html', title='Home')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('index'))
+        return redirect(url_for('main_arthur'))
     form = LoginForm()
     con = db.engine.connect()
     if form.validate_on_submit():
@@ -49,7 +41,7 @@ def login():
         login_user(loginUser,remember=form.remember_me.data)
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('main_arthur')
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
@@ -350,7 +342,5 @@ def build_json_string(userno):
         data_store.append(cur_section)
     #end-for-sections
 
-
     return json.dumps(data_store)
 
-#end-build_json_string

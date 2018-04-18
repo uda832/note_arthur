@@ -1,5 +1,4 @@
 <head>
-    <link rel="stylesheet" href="/static/css/navStyle.css">
 
     <!--<link rel="stylesheet" type="text/css" href="../../acc/libraries/select2-4.0.5/dist/css/select2.min.css" >-->
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
@@ -14,10 +13,13 @@
     <link href="static/lib/malihu-custom-scrollbar/jquery.mCustomScrollbar.css" rel="stylesheet">
     <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="//code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="/static/css/navStyle.css">
+
+
     <script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
+    <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.13.0/popper.min.js"></script>
     <script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+    <script defer type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <!--<script type="text/javascript" src="../../acc/libraries/stickybits/dist/stickybits.min.js"></script>-->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.bundle.js"></script>
     <script type="text/javascript" src="static/lib/malihu-custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
@@ -83,46 +85,6 @@
     <div id="main-content-container" class="main-content-container">
         <!-- Main Content -->
         <ul id="main-content" class="mdl-grid main-content">
-            <li id="section-1" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header">
-                            <span id="section-text-1" class="section-text">Software Eng</span>
-                        </div>
-                    </div>
-                    <ul class="list-group list-group-flush notes-list">
-                        <li id="note-1-0" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">complete presentation review</a>
-                        </li>
-                        <li id="note-1-1" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">schedule next team arthur meeting</a>
-                        </li>
-                        <li id="note-1-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
-                            <a class="note-text note-text-addl">+</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li id="section-0" class="section">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-header">
-                            <span id="section-text-0" class="section-text">Python</span>
-                        </div>
-                    </div>
-                    <ul class="list-group list-group-flush notes-list">
-                        <li id="note-0-0" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">do Python hw</a>
-                        </li>
-                        <li id="note-0-1" class="list-group-item note-text-container" title="Click to Edit...">
-                            <a class="note-text">install django</a>
-                        </li>
-                        <li id="note-0-add" class="list-group-item note-text-container note-text-addl-container" title="Click to Edit...">
-                            <a class="note-text note-text-addl">+</a>
-                        </li>
-                    </ul>
-                </div>
-            </li>
         </ul>
     </div>
     <!-- Side bar Navigation -->
@@ -185,22 +147,7 @@
 
 
     </script>
-    <div id="main-side-nav" class="side-nav">
-
-        <!-- Top Bar -->
-        <nav class="navbar navbar-default" style="height: 7vh; background-color: #007bff;">
-            <div class="ml-auto hamburger-wrapper">
-                <div class="hamburger hamburger-closer" onclick="closeNav()">☰</div>
-            </div>
-        </nav>
-
-        <!-- List of Sections -->
-        <nav class="nav nav-pills flex-column side-nav-sections-container">
-            <ul id="side-nav-sections" class="side-nav-sections"></ul>
-
-        </nav>
-    </div>
-    <!-- Use any element to open the sidenav -->
+   
 
     <script>
         var dataStoreJSON = "";
@@ -210,7 +157,10 @@
             initPage();
         
         });
-        
+        window.setInterval(function(){
+            saveDataStore();
+        },30000);
+
     </script>
     <!--hello Rohan and Bo-->
     <!--hello-->
