@@ -32,14 +32,13 @@ var DataStore = [];         //global object used to pass data back/forth between
     
 //Renders the Left Navigation Drawer from the DataStore
 function renderSideNavFromDataStore() {
-
     //Render the side-nav
     var $sectionsContainer = $("#side-nav-sections");
     var contentSideNav = "";
     for (var s = DataStore.length - 1; s >= 0; --s) {
         contentSideNav += `<a id="side-nav-` + DataStore[s].id + `" class="nav-link side-nav-link">` + DataStore[s].title +`</a>`;
     }
-    $sectionsContainer.html(contentSideNav);
+    $sectionsContainer.html(contentSideNav);    
 }
 
 //Renders the Main Content area from the DataStore
@@ -47,6 +46,8 @@ function renderMainContentFromDataStore(DS) {
     var ds;
     ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
 
+    var ds;
+    ds = (typeof DS == "undefined") ? DataStore : DS; // inline if statement to check if DS is defined.
     //Render the main content
     var $mainContent = $("#main-content");
     var content = ""; 
@@ -151,8 +152,31 @@ function postRenderProcessing() {
         $(this).addClass("active");
 
     });
+
+    $.contextMenu({
+        selector: "#user-info",
+        trigger: 'left',
+        items: {
+            logout: {name: "Logout", callback: function(key, opt){ logout(); }},
+            index: {name : "About Me", callback: function(key, opt) { index(); }}
+        }
+        // there's more, have a look at the demos and docs...
+    });
+}
+function index() {
+    var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var url = head + "/index";
+    window.location.replace(url);
 }
 
+
+function logout() {
+    var docUrl = document.URL.replace('%20', ' ');
+    var head = docUrl.substring(0, docUrl.indexOf('/'));
+    var url = head + "/logout";
+    window.location.replace(url);
+}
 function noteEditableHandler(value, settings){
     // console.log("DEBUG: editing")
     // console.log(this);
