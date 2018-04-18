@@ -130,11 +130,16 @@ def query_all_tables():
     section_rows = table_sections.fetchall()
     notes_rows = table_notes.fetchall()
     
-    str_users = "Selecting all user_rows: {}".format(user_rows)
-    str_sections = "Selecting all section_rows: {}".format(section_rows)
-    str_notes = "Selecting all notes_rows: {}".format(notes_rows)
+    str_users = "Selecting all user_rows: \n"
+    str_users += "\n".join([str(elem) for elem in user_rows])
 
-    return str_users + "\n" + str_sections + "\n" + str_notes
+    str_sections = "Selecting all section_rows: {}".format(section_rows)
+    str_sections += "\n".join([str(elem) for elem in section_rows])
+
+    str_notes = "Selecting all notes_rows: {}".format(notes_rows)
+    str_notes += "\n".join([str(elem) for elem in notes_rows])
+
+    return str_users + "\n\n" + str_sections + "\n\n" + str_notes
 #end-query_all_tables
 
 @app.route('/deleter', methods=['GET', 'POST'])
