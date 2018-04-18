@@ -18,7 +18,6 @@ function DoneFunction() {
         DataStore.push(temp);
         renderMainContentFromDataStore();
         renderSideNavFromDataStore();
-        postRenderProcessing();
         $(".UserInputNote").each(function () {
             $("#UserInputTitle").val("");
             $(this).val("");
