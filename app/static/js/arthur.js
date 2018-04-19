@@ -61,10 +61,8 @@ function renderMainContentFromDataStore(DS) {
         var curSection = 
             `<li id="section-` + s + `" class="section"> <div class='card'> 
                 <div id="target" class="section-more-button" style="position: absolute;right: 2%;top:13px;">
-                    <button id='section-` + s + `' style="border-radius: 50%;border: 0; background: rgba(0, 0, 0, 0);" onclick="showoption(id)"> 
+                    <button id='section-` + s + `' class="card-more-button" style="border-radius: 50%;border: 0; background: rgba(0, 0, 0, 0);"> 
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18"><path d="M9 5.5c.83 0 1.5-.67 1.5-1.5S9.83 2.5 9 2.5 7.5 3.17 7.5 4 8.17 5.5 9 5.5zm0 2c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5S9.83 7.5 9 7.5zm0 5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5 1.5-.67 1.5-1.5-.67-1.5-1.5-1.5z"></path></svg></button>
-                    <button id="` + s + `" class="deletenote" style="display: none; left: 3px; position: relative; top: 1px; z-index: 2; border: 0px;">
-                        <i id="` + s + `" class="fa fa-trash" onclick="delete_note(id)"></i></button>
                 </div>
 </div>
                 <div class='card-header'>
@@ -190,11 +188,21 @@ function postRenderMainContent(DS) {
         tooltip     : 'Click to Edit...',
         width       : "100%",
     });
+
+    $.contextMenu({
+        selector: ".card-more-button",
+        trigger: 'left',
+        items: {
+            delete: {name: "Delete", callback: function(key, opt){ delete_section(opt); }},
+        }
+    });
        
 }
-function delete_note(a) {
-    $("#section-" + a).remove();
-    DataStore[a].status = -1;
+function delete_section(opt) {
+    var elemId = opt.$trigger[0].id;
+    var index = parseInt(elemId.substring("section-".length));
+    $("#section-" + index).remove();
+    DataStore[index].status = -1;
     saveDataStore();
 }
 function index() {
