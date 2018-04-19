@@ -271,3 +271,9 @@ form {
     top: 66%;
     left: 30%;
 }
+.username_error {
+    color: red;
+    top: 28%;
+    left: 37%;
+    position: absolute;
+}
