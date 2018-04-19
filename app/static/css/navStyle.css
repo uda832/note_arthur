@@ -117,3 +117,12 @@ body{
     transition: 0.2s; /* 0.5 second transition effect to slide in the side-nav */
     margin-top: 7vh; /* Topbar is fixed, so need this margin to prevent overlapping*/
 }
+/* 
+.card-header {
+    background: aliceblue !important;
+} */
+
+
+body {
+    background: aliceblue !important;
+}
